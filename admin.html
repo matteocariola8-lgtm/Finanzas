@@ -5,152 +5,301 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Area Privata — Sagoma Finanziaria</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="stylesheet" href="css/style.css" />
   <style>
-    .login-wrap { min-height: 100vh; background: var(--navy); display: flex; align-items: center; justify-content: center; }
-    .login-box { background: var(--navy-light); border: 1px solid var(--border); border-radius: 8px; padding: 48px 40px; width: 100%; max-width: 400px; }
-    .login-box h2 { color: var(--white); text-align: center; margin-bottom: 8px; }
-    .login-box p { color: rgba(255,255,255,0.4); text-align: center; font-size: 0.85rem; margin-bottom: 32px; }
-    .login-box input { width: 100%; padding: 12px 16px; background: var(--navy); border: 1.5px solid var(--border); border-radius: 4px; color: var(--white); font-size: 0.95rem; outline: none; margin-bottom: 16px; font-family: var(--font-body); }
-    .login-box input:focus { border-color: var(--gold); }
-    .login-error { color: #fc8181; font-size: 0.82rem; text-align: center; margin-bottom: 12px; display: none; }
-    .admin-wrap { display: none; min-height: 100vh; background: var(--navy); padding-top: 68px; }
-    .admin-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navy); border-bottom: 1px solid var(--border); height: 68px; display: flex; align-items: center; padding: 0 24px; justify-content: space-between; }
-    .admin-nav-logo { font-family: var(--font-display); color: var(--white); font-size: 1rem; display: flex; align-items: center; gap: 10px; }
-    .admin-nav-logo .logo-icon { width: 32px; height: 32px; background: var(--gold); display: flex; align-items: center; justify-content: center; color: var(--navy); font-weight: 700; font-size: 0.8rem; }
-    .admin-badge { font-size: 0.7rem; background: rgba(197,168,75,0.15); color: var(--gold); padding: 3px 10px; border-radius: 100px; border: 1px solid rgba(197,168,75,0.3); }
-    .tab-bar { display: flex; gap: 4px; padding: 20px 24px 0; border-bottom: 1px solid var(--border); }
-    .tab-btn { padding: 10px 20px; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: 0.2s; font-family: var(--font-body); }
-    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .tab-btn:hover { color: var(--white); }
-    .tab-content { display: none; padding: 32px 24px; }
-    .tab-content.active { display: block; }
-    .tool-card { background: var(--navy-light); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin-bottom: 24px; }
-    .tool-card h3 { color: var(--white); margin-bottom: 8px; font-size: 1.1rem; }
-    .tool-card p { color: rgba(255,255,255,0.5); font-size: 0.88rem; margin-bottom: 20px; }
-    .tool-iframe { width: 100%; height: 700px; border: none; border-radius: 6px; background: var(--navy); }
-    .logout-btn { font-size: 0.78rem; color: rgba(255,255,255,0.4); background: none; border: 1px solid var(--border); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: var(--font-body); transition: 0.2s; }
-    .logout-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #48bb78; display: inline-block; margin-right: 6px; }
-    .agent-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--gold); color: var(--navy); border-radius: 4px; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.2s; }
-    .agent-link:hover { background: var(--gold-light); }
-    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-    .stat-card { background: var(--navy); border: 1px solid var(--border); border-radius: 6px; padding: 20px; text-align: center; }
-    .stat-card .val { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--gold); }
-    .stat-card .lbl { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+    :root{--navy:#0A1628;--navy2:#132038;--gold:#C5A84B;--gold-l:#D4BC72;--white:#FFFFFF;--border:rgba(197,168,75,0.2);--muted:rgba(255,255,255,0.5);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);}
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:48px 40px;width:100%;max-width:380px;}
+    .login-logo{width:52px;height:52px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:1.1rem;margin:0 auto 24px;}
+    .login-box h2{font-family:'Playfair Display',serif;font-size:1.4rem;text-align:center;margin-bottom:6px;}
+    .login-box .sub{text-align:center;font-size:0.82rem;color:var(--muted);margin-bottom:32px;}
+    .login-box input{width:100%;padding:12px 16px;background:var(--navy);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;font-family:'Inter',sans-serif;outline:none;margin-bottom:14px;transition:.2s;}
+    .login-box input:focus{border-color:var(--gold);}
+    .btn-login{width:100%;padding:13px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;}
+    .btn-login:hover{background:var(--gold-l);}
+    .login-error{color:#fc8181;font-size:0.8rem;text-align:center;margin-bottom:12px;display:none;}
+    #adminScreen{display:none;height:100vh;flex-direction:column;}
+    .top-bar{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    .top-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1rem;}
+    .logo-sq{width:30px;height:30px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-size:0.75rem;}
+    .badge{font-size:0.65rem;background:rgba(197,168,75,0.12);color:var(--gold);border:1px solid rgba(197,168,75,0.25);padding:2px 8px;border-radius:100px;margin-left:6px;}
+    .btn-logout{font-size:0.75rem;color:var(--muted);background:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;}
+    .btn-logout:hover{color:var(--white);}
+    .tab-row{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;flex-shrink:0;}
+    .tab{padding:12px 20px;font-size:0.82rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin-bottom:-1px;}
+    .tab:hover{color:var(--white);}
+    .tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+    .panels{flex:1;overflow:hidden;}
+    .panel{display:none;height:100%;padding:24px;overflow-y:auto;}
+    .panel.active{display:block;}
+    .card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:20px;}
+    .card-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:6px;}
+    .card-desc{font-size:0.82rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+    .stat-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center;}
+    .stat-val{font-size:1.4rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;}
+    .stat-lbl{font-size:0.7rem;color:var(--muted);margin-top:4px;}
+    .btn-gold{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:.2s;margin-right:8px;margin-bottom:8px;}
+    .btn-gold:hover{background:var(--gold-l);}
+    .btn-ol{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--gold);border:1px solid var(--border);border-radius:5px;font-size:0.82rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:.2s;margin-right:8px;margin-bottom:8px;}
+    .btn-ol:hover{border-color:var(--gold);}
+    .info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .info-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px 20px;}
+    .info-box .lbl{font-size:0.7rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
+    .info-box .val{font-size:0.9rem;font-weight:500;}
+    .dot-g{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;margin-right:6px;}
+    .dot-y{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:6px;}
+    .quick-add{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:20px;align-items:end;}
+    .quick-add input,.quick-add select{padding:9px 12px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.82rem;font-family:'Inter',sans-serif;outline:none;width:100%;}
+    .quick-add input:focus,.quick-add select:focus{border-color:var(--gold);}
+    .flbl{font-size:0.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+    .ptable{width:100%;border-collapse:collapse;font-size:0.82rem;}
+    .ptable th{text-align:left;padding:8px 12px;font-size:0.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border);}
+    .ptable td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);vertical-align:top;}
+    .ptable tr:hover td{background:rgba(255,255,255,0.02);}
+    .sbadge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:0.68rem;font-weight:600;}
+    .s-new{background:rgba(59,130,246,.15);color:#60a5fa;}
+    .s-contact{background:rgba(197,168,75,.15);color:var(--gold);}
+    .s-reply{background:rgba(46,204,113,.15);color:#4ade80;}
+    .s-meet{background:rgba(168,85,247,.15);color:#c084fc;}
+    .blog-form{display:flex;flex-direction:column;gap:14px;}
+    .blog-form input,.blog-form select,.blog-form textarea{padding:10px 14px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;}
+    .blog-form input:focus,.blog-form select:focus,.blog-form textarea:focus{border-color:var(--gold);}
+    .blog-form textarea{min-height:100px;resize:vertical;}
+    .blog-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+    .bstatus{padding:12px 16px;border-radius:5px;font-size:0.82rem;font-weight:500;display:none;margin-top:4px;}
+    .bstatus.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:#4ade80;display:block;}
+    .bstatus.err{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:#f87171;display:block;}
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:var(--navy);}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
   </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-wrap" id="loginWrap">
+<div id="loginScreen">
   <div class="login-box">
-    <div style="text-align:center;margin-bottom:24px;">
-      <div style="width:48px;height:48px;background:var(--gold);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:var(--navy);font-size:1.1rem;">SF</div>
-    </div>
+    <div class="login-logo">SF</div>
     <h2>Area Privata</h2>
-    <p>Accesso riservato · Sagoma Finanziaria</p>
-    <div class="login-error" id="loginError">Password errata. Riprova.</div>
+    <p class="sub">Accesso riservato · Sagoma Finanziaria</p>
+    <div class="login-error" id="loginErr">Password errata. Riprova.</div>
     <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" />
-    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()">Accedi →</button>
+    <button class="btn-login" id="loginBtn">Accedi →</button>
   </div>
 </div>
 
-<!-- ADMIN AREA -->
-<div class="admin-wrap" id="adminWrap">
-  <div class="admin-nav">
-    <div class="admin-nav-logo">
-      <div class="logo-icon">SF</div>
-      Area Privata <span class="admin-badge">Solo tu</span>
+<div id="adminScreen">
+  <div class="top-bar">
+    <div class="top-logo">
+      <div class="logo-sq">SF</div>
+      Area Privata <span class="badge">Solo tu</span>
     </div>
-    <button class="logout-btn" onclick="doLogout()">Esci</button>
+    <button class="btn-logout" id="logoutBtn">Esci</button>
   </div>
-
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('trading')">📈 Trading Agent</button>
-    <button class="tab-btn" onclick="switchTab('lead')">🎯 Lead Prospecting</button>
-    <button class="tab-btn" onclick="switchTab('portfolio')">📊 Portfolio Manager</button>
+  <div class="tab-row">
+    <button class="tab active" data-tab="trading">📈 Trading</button>
+    <button class="tab" data-tab="lead">🎯 Lead Pipeline</button>
+    <button class="tab" data-tab="blog">✍️ Pubblica Post</button>
   </div>
+  <div class="panels">
 
-  <!-- TAB TRADING -->
-  <div class="tab-content active" id="tab-trading">
-    <div class="tool-card">
-      <h3>📈 Agente di Trading</h3>
-      <p>Monitor delle posizioni Alpaca, sentiment di mercato e performance del tuo agente automatizzato su Railway.</p>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="val" id="tradingStatus">–</div><div class="lbl">Stato agente</div></div>
-        <div class="stat-card"><div class="val">SPY QQQ</div><div class="lbl">ETF monitorati</div></div>
-        <div class="stat-card"><div class="val">Railway</div><div class="lbl">Deploy attivo</div></div>
+    <div class="panel active" id="panel-trading">
+      <div class="card">
+        <div class="card-title">📈 Agente di Trading</div>
+        <div class="card-desc">Monitor posizioni Alpaca paper trading, sentiment Finnhub e performance agente su Railway.</div>
+        <div style="margin-bottom:20px;">
+          <a href="https://railway.app/dashboard" class="btn-gold" target="_blank">🚂 Railway Dashboard</a>
+          <a href="https://app.alpaca.markets/paper-trading/overview" class="btn-gold" target="_blank">📊 Alpaca Paper</a>
+          <a href="https://finnhub.io/dashboard" class="btn-ol" target="_blank">📰 Finnhub</a>
+          <a href="trading-dashboard.html" class="btn-ol" target="_blank">📋 Dashboard Locale</a>
+        </div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Stato agente</div><div class="val"><span class="dot-g"></span>Railway attivo</div></div>
+          <div class="info-box"><div class="lbl">ETF monitorati</div><div class="val">SPY · QQQ · GLD · TLT · UUP</div></div>
+          <div class="info-box"><div class="lbl">Modalità</div><div class="val"><span class="dot-y"></span>Paper Trading</div></div>
+          <div class="info-box"><div class="lbl">Strategia</div><div class="val">Momentum + Scalping</div></div>
+          <div class="info-box"><div class="lbl">AI Model</div><div class="val">claude-sonnet-4-6</div></div>
+          <div class="info-box"><div class="lbl">Sentiment</div><div class="val">Finnhub News API</div></div>
+        </div>
       </div>
-      <p style="color:rgba(255,255,255,0.4);font-size:0.82rem;margin-bottom:16px;">Apri la dashboard completa dell'agente di trading:</p>
-      <a href="https://railway.app" class="agent-link" target="_blank" rel="noopener">🚂 Apri Railway Dashboard →</a>
-      <a href="https://alpaca.markets/paper-trading" class="agent-link" target="_blank" rel="noopener" style="margin-left:8px;background:var(--navy);color:var(--gold);border:1px solid var(--border);">📊 Alpaca Paper Trading →</a>
     </div>
-  </div>
 
-  <!-- TAB LEAD -->
-  <div class="tab-content" id="tab-lead">
-    <div class="tool-card">
-      <h3>🎯 LinkedIn Lead Prospecting</h3>
-      <p>Pipeline di acquisizione clienti, messaggi personalizzati e tracking dei contatti.</p>
-      <iframe class="tool-iframe" id="leadFrame" src="about:blank" title="Lead Prospecting"></iframe>
-      <p style="color:rgba(255,255,255,0.4);font-size:0.78rem;margin-top:12px;">Se il pannello non si carica, apri l'app HTML del prospecting direttamente.</p>
+    <div class="panel" id="panel-lead">
+      <div class="card">
+        <div class="card-title">🎯 Pipeline Acquisizione Clienti</div>
+        <div class="card-desc">Traccia contatti LinkedIn, stato avanzamento e messaggi. Dati salvati nel browser.</div>
+        <div class="quick-add">
+          <div><label class="flbl">Nome e Cognome</label><input type="text" id="leadName" placeholder="Mario Rossi" /></div>
+          <div><label class="flbl">Professione</label><input type="text" id="leadJob" placeholder="Avvocato · La Spezia" /></div>
+          <div><label class="flbl">Stato</label>
+            <select id="leadStatus">
+              <option value="new">🔵 Nuovo</option>
+              <option value="contact">🟡 Contattato</option>
+              <option value="reply">🟢 Ha risposto</option>
+              <option value="meet">🟣 Meeting fissato</option>
+            </select>
+          </div>
+          <div><label class="flbl">&nbsp;</label><button class="btn-gold" onclick="addLead()">+ Aggiungi</button></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-val" id="cnt-total">0</div><div class="stat-lbl">Totale</div></div>
+          <div class="stat-box"><div class="stat-val" id="cnt-contact">0</div><div class="stat-lbl">Contattati</div></div>
+          <div class="stat-box"><div class="stat-val" id="cnt-reply">0</div><div class="stat-lbl">Risposte</div></div>
+          <div class="stat-box"><div class="stat-val" id="cnt-meet">0</div><div class="stat-lbl">Meeting</div></div>
+        </div>
+        <table class="ptable">
+          <thead><tr><th>Nome</th><th>Professione</th><th>Stato</th><th>Data</th><th></th></tr></thead>
+          <tbody id="pipelineTbody"></tbody>
+        </table>
+        <p style="font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:12px;">Dati salvati localmente. Nessun server coinvolto.</p>
+      </div>
     </div>
-  </div>
 
-  <!-- TAB PORTFOLIO -->
-  <div class="tab-content" id="tab-portfolio">
-    <div class="tool-card">
-      <h3>📊 Portfolio Manager AI</h3>
-      <p>Generatore di portafogli con profilazione MiFID, catalogo fondi ING e grafici SVG.</p>
-      <iframe class="tool-iframe" id="portfolioFrame" src="about:blank" title="Portfolio Manager"></iframe>
-      <p style="color:rgba(255,255,255,0.4);font-size:0.78rem;margin-top:12px;">Se il pannello non si carica, apri portfolio-v4.html direttamente.</p>
+    <div class="panel" id="panel-blog">
+      <div class="card">
+        <div class="card-title">✍️ Pubblica Post sul Blog</div>
+        <div class="card-desc">Compila e clicca Pubblica — il post appare in cima al blog e Netlify rideploya in ~10 secondi.</div>
+        <div class="blog-form">
+          <div><label class="flbl">Titolo *</label><input type="text" id="bTitolo" placeholder="Come il taglio BCE cambia la strategia degli investitori" /></div>
+          <div class="blog-row">
+            <div><label class="flbl">Categoria</label>
+              <select id="bCategoria"><option>Investimenti</option><option>Previdenza</option><option>Protezione</option><option>Partite IVA</option><option>Risparmio</option><option>Mercati</option><option>Fiscalità</option></select>
+            </div>
+            <div><label class="flbl">Emoji</label>
+              <select id="bEmoji"><option>📊</option><option>💰</option><option>🛡️</option><option>🏦</option><option>🧾</option><option>📈</option><option>📉</option><option>🎯</option><option>💡</option></select>
+            </div>
+            <div><label class="flbl">Data</label><input type="text" id="bData" /></div>
+          </div>
+          <div><label class="flbl">Estratto * (~100 parole)</label><textarea id="bEstratto" placeholder="Descrivi l'articolo in modo chiaro e diretto..."></textarea></div>
+          <div><label class="flbl">Tag (separati da virgola)</label><input type="text" id="bTags" placeholder="#BCE, #Tassi, #Investimenti" /></div>
+          <div><label class="flbl">GitHub Token</label><input type="password" id="bToken" placeholder="ghp_..." autocomplete="off" /></div>
+          <button class="btn-gold" onclick="publishPost()" id="publishBtn">🚀 Pubblica sul Blog</button>
+          <div class="bstatus" id="blogStatus"></div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
 <script>
 const HASH = 'b5317143bc5af972e2b2ce4578588315eb4ec01f1bf535e1410fbb99528c6d32';
+const REPO = 'matteocariola8-lgtm/Finanzas';
+const BRANCH = 'main';
 
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+
+document.getElementById('loginBtn').onclick=doLogin;
+document.getElementById('pwdInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('logoutBtn').onclick=()=>{sessionStorage.removeItem('sf_admin');location.reload();};
+
+async function doLogin(){
+  const h=await sha256(document.getElementById('pwdInput').value);
+  if(h===HASH){sessionStorage.setItem('sf_admin','1');showAdmin();}
+  else{document.getElementById('loginErr').style.display='block';document.getElementById('pwdInput').value='';}
 }
 
-async function doLogin() {
-  const pwd = document.getElementById('pwdInput').value;
-  const h = await sha256(pwd);
-  if (h === HASH) {
-    sessionStorage.setItem('sf_admin', '1');
-    document.getElementById('loginWrap').style.display = 'none';
-    document.getElementById('adminWrap').style.display = 'block';
-    document.getElementById('tradingStatus').textContent = '🟢 Online';
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-    document.getElementById('pwdInput').value = '';
-  }
+function showAdmin(){
+  document.getElementById('loginScreen').style.display='none';
+  const a=document.getElementById('adminScreen');
+  a.style.display='flex';a.style.flexDirection='column';
+  renderPipeline();
+  const now=new Date();
+  const m=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  document.getElementById('bData').value=`${now.getDate()} ${m[now.getMonth()]} ${now.getFullYear()}`;
 }
 
-function doLogout() {
-  sessionStorage.removeItem('sf_admin');
-  location.reload();
-}
+if(sessionStorage.getItem('sf_admin')==='1')showAdmin();
 
-function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
-}
-
-document.getElementById('pwdInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('panel-'+this.dataset.tab).classList.add('active');
+  });
 });
 
-if (sessionStorage.getItem('sf_admin') === '1') {
-  document.getElementById('loginWrap').style.display = 'none';
-  document.getElementById('adminWrap').style.display = 'block';
+function getLeads(){try{return JSON.parse(localStorage.getItem('sf_leads')||'[]');}catch{return[];}}
+function saveLeads(l){localStorage.setItem('sf_leads',JSON.stringify(l));}
+
+function addLead(){
+  const name=document.getElementById('leadName').value.trim();
+  const job=document.getElementById('leadJob').value.trim();
+  const status=document.getElementById('leadStatus').value;
+  if(!name)return;
+  const leads=getLeads();
+  leads.unshift({id:Date.now(),name,job,status,date:new Date().toLocaleDateString('it-IT')});
+  saveLeads(leads);
+  document.getElementById('leadName').value='';
+  document.getElementById('leadJob').value='';
+  renderPipeline();
 }
+
+function deleteLead(id){saveLeads(getLeads().filter(l=>l.id!==id));renderPipeline();}
+function updateStatus(id,val){const leads=getLeads();const l=leads.find(x=>x.id===id);if(l){l.status=val;saveLeads(leads);renderPipeline();}}
+
+function renderPipeline(){
+  const leads=getLeads();
+  const sm={new:['🔵 Nuovo','s-new'],contact:['🟡 Contattato','s-contact'],reply:['🟢 Ha risposto','s-reply'],meet:['🟣 Meeting','s-meet']};
+  const tbody=document.getElementById('pipelineTbody');
+  tbody.innerHTML=leads.length===0
+    ?'<tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px;">Nessun contatto. Aggiungine uno sopra.</td></tr>'
+    :leads.map(l=>{
+      const[label,cls]=sm[l.status]||['–',''];
+      return`<tr><td style="font-weight:500;color:#fff;">${l.name}</td><td>${l.job||'–'}</td><td><span class="sbadge ${cls}">${label}</span></td><td>${l.date}</td><td>
+        <select onchange="updateStatus(${l.id},this.value)" style="background:var(--navy);border:1px solid var(--border);color:rgba(255,255,255,0.6);padding:3px 6px;border-radius:3px;font-size:0.72rem;">
+          <option value="new" ${l.status==='new'?'selected':''}>Nuovo</option>
+          <option value="contact" ${l.status==='contact'?'selected':''}>Contattato</option>
+          <option value="reply" ${l.status==='reply'?'selected':''}>Risposto</option>
+          <option value="meet" ${l.status==='meet'?'selected':''}>Meeting</option>
+        </select>
+        <button onclick="deleteLead(${l.id})" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;margin-left:6px;">✕</button>
+      </td></tr>`;
+    }).join('');
+  document.getElementById('cnt-total').textContent=leads.length;
+  document.getElementById('cnt-contact').textContent=leads.filter(l=>l.status!=='new').length;
+  document.getElementById('cnt-reply').textContent=leads.filter(l=>['reply','meet'].includes(l.status)).length;
+  document.getElementById('cnt-meet').textContent=leads.filter(l=>l.status==='meet').length;
+}
+
+async function publishPost(){
+  const titolo=document.getElementById('bTitolo').value.trim();
+  const estratto=document.getElementById('bEstratto').value.trim();
+  const token=document.getElementById('bToken').value.trim();
+  const status=document.getElementById('blogStatus');
+  if(!titolo||!estratto){showStatus('Compila titolo ed estratto.','err');return;}
+  if(!token){showStatus('Inserisci il GitHub Token.','err');return;}
+  const categoria=document.getElementById('bCategoria').value;
+  const emoji=document.getElementById('bEmoji').value;
+  const data=document.getElementById('bData').value;
+  const tags=document.getElementById('bTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const btn=document.getElementById('publishBtn');
+  btn.textContent='⏳ Pubblicazione...';btn.disabled=true;
+  status.className='bstatus';status.style.display='none';
+  const tagsHtml=tags.map(t=>`<span class="post-tag">${t}</span>`).join('');
+  const postHtml=`\n      <a href="#" class="blog-post-card" style="display:grid;">\n        <div class="blog-post-thumb" style="background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:2rem;">${emoji}</div>\n        <div>\n          <div class="post-meta"><span class="post-cat">${categoria}</span><span class="post-date">${data}</span></div>\n          <h2 class="post-title">${titolo}</h2>\n          <p class="post-excerpt">${estratto}</p>\n          <div class="post-tags">${tagsHtml}</div>\n        </div>\n      </a>`;
+  try{
+    const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/blog.html?ref=${BRANCH}`,{headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github+json'}});
+    if(!getRes.ok)throw new Error('Errore recupero file. Controlla il token.');
+    const fd=await getRes.json();
+    const content=decodeURIComponent(escape(atob(fd.content.replace(/\n/g,''))));
+    const marker='<!-- ═══ INIZIO POSTS — inserire nuovi articoli qui sotto ═══ -->';
+    if(!content.includes(marker))throw new Error('Marker non trovato in blog.html.');
+    const updated=content.replace(marker,marker+postHtml);
+    const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/blog.html`,{method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:`📝 Nuovo post: ${titolo.substring(0,60)}`,content:btoa(unescape(encodeURIComponent(updated))),sha:fd.sha,branch:BRANCH})});
+    if(!putRes.ok){const e=await putRes.json();throw new Error(e.message||'Errore push.');}
+    showStatus('✅ Post pubblicato! Netlify rideploya in ~10 secondi.','ok');
+    document.getElementById('bTitolo').value='';
+    document.getElementById('bEstratto').value='';
+    document.getElementById('bTags').value='';
+  }catch(e){showStatus('❌ '+e.message,'err');}
+  finally{btn.textContent='🚀 Pubblica sul Blog';btn.disabled=false;}
+}
+
+function showStatus(msg,type){const s=document.getElementById('blogStatus');s.textContent=msg;s.className='bstatus '+type;}
 </script>
 </body>
 </html>
