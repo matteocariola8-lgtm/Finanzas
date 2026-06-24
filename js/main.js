@@ -1,4 +1,4 @@
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/XXXXXXXX';
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xpqgqwpb';
 const WHATSAPP_NUMBER = '393519048233';
 
 document.addEventListener('DOMContentLoaded', () => {
