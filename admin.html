@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
-    :root{--navy:#0A1628;--navy2:#132038;--gold:#C5A84B;--gold-l:#D4BC72;--white:#FFFFFF;--border:rgba(197,168,75,0.2);--muted:rgba(255,255,255,0.5);}
+    :root{--navy:#0A1628;--navy2:#132038;--gold:#C5A84B;--gold-l:#D4BC72;--white:#FFFFFF;--border:rgba(197,168,75,0.2);--muted:rgba(255,255,255,0.5);--green:#4ade80;--red:#f87171;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);}
     #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
@@ -17,7 +17,7 @@
     .login-box .sub{text-align:center;font-size:0.82rem;color:var(--muted);margin-bottom:32px;}
     .login-box input{width:100%;padding:12px 16px;background:var(--navy);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;font-family:'Inter',sans-serif;outline:none;margin-bottom:14px;transition:.2s;}
     .login-box input:focus{border-color:var(--gold);}
-    .btn-login{width:100%;padding:13px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;}
+    .btn-login{width:100%;padding:13px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
     .btn-login:hover{background:var(--gold-l);}
     .login-error{color:#fc8181;font-size:0.8rem;text-align:center;margin-bottom:12px;display:none;}
     #adminScreen{display:none;height:100vh;flex-direction:column;}
@@ -25,8 +25,7 @@
     .top-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1rem;}
     .logo-sq{width:30px;height:30px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-size:0.75rem;}
     .badge{font-size:0.65rem;background:rgba(197,168,75,0.12);color:var(--gold);border:1px solid rgba(197,168,75,0.25);padding:2px 8px;border-radius:100px;margin-left:6px;}
-    .btn-logout{font-size:0.75rem;color:var(--muted);background:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;}
-    .btn-logout:hover{color:var(--white);}
+    .btn-logout{font-size:0.75rem;color:var(--muted);background:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'Inter',sans-serif;}
     .tab-row{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;flex-shrink:0;}
     .tab{padding:12px 20px;font-size:0.82rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin-bottom:-1px;}
     .tab:hover{color:var(--white);}
@@ -37,41 +36,47 @@
     .card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:20px;}
     .card-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:6px;}
     .card-desc{font-size:0.82rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+    .fi{width:100%;padding:10px 14px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;}
+    .fi:focus{border-color:var(--gold);}
+    .flbl{font-size:0.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+    .fg{margin-bottom:14px;}
+    .btn-g{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;margin-right:8px;margin-bottom:8px;}
+    .btn-g:hover{background:var(--gold-l);}
+    .btn-ol{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--gold);border:1px solid var(--border);border-radius:5px;font-size:0.82rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;margin-right:8px;margin-bottom:8px;}
+    .btn-ol:hover{border-color:var(--gold);}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
     .stat-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center;}
     .stat-val{font-size:1.4rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;}
     .stat-lbl{font-size:0.7rem;color:var(--muted);margin-top:4px;}
-    .btn-gold{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:.2s;margin-right:8px;margin-bottom:8px;}
-    .btn-gold:hover{background:var(--gold-l);}
-    .btn-ol{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--gold);border:1px solid var(--border);border-radius:5px;font-size:0.82rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;transition:.2s;margin-right:8px;margin-bottom:8px;}
-    .btn-ol:hover{border-color:var(--gold);}
     .info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
     .info-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px 20px;}
     .info-box .lbl{font-size:0.7rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
     .info-box .val{font-size:0.9rem;font-weight:500;}
     .dot-g{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;margin-right:6px;}
     .dot-y{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:6px;}
-    .quick-add{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;margin-bottom:20px;align-items:end;}
-    .quick-add input,.quick-add select{padding:9px 12px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.82rem;font-family:'Inter',sans-serif;outline:none;width:100%;}
-    .quick-add input:focus,.quick-add select:focus{border-color:var(--gold);}
-    .flbl{font-size:0.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+    textarea.fi{min-height:90px;resize:vertical;}
     .ptable{width:100%;border-collapse:collapse;font-size:0.82rem;}
     .ptable th{text-align:left;padding:8px 12px;font-size:0.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border);}
     .ptable td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);vertical-align:top;}
-    .ptable tr:hover td{background:rgba(255,255,255,0.02);}
     .sbadge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:0.68rem;font-weight:600;}
     .s-new{background:rgba(59,130,246,.15);color:#60a5fa;}
     .s-contact{background:rgba(197,168,75,.15);color:var(--gold);}
     .s-reply{background:rgba(46,204,113,.15);color:#4ade80;}
     .s-meet{background:rgba(168,85,247,.15);color:#c084fc;}
-    .blog-form{display:flex;flex-direction:column;gap:14px;}
-    .blog-form input,.blog-form select,.blog-form textarea{padding:10px 14px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;}
-    .blog-form input:focus,.blog-form select:focus,.blog-form textarea:focus{border-color:var(--gold);}
-    .blog-form textarea{min-height:100px;resize:vertical;}
-    .blog-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-    .bstatus{padding:12px 16px;border-radius:5px;font-size:0.82rem;font-weight:500;display:none;margin-top:4px;}
-    .bstatus.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:#4ade80;display:block;}
-    .bstatus.err{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:#f87171;display:block;}
+    .msg-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:12px;font-size:0.85rem;line-height:1.7;white-space:pre-wrap;color:rgba(255,255,255,0.85);}
+    .char-count{font-size:0.75rem;margin-top:6px;}
+    .char-ok{color:var(--green);}
+    .char-warn{color:var(--red);}
+    .ai-output{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:16px;font-size:0.88rem;line-height:1.8;color:rgba(255,255,255,0.85);white-space:pre-wrap;min-height:100px;}
+    .loading{color:var(--muted);font-style:italic;}
+    .status{padding:10px 14px;border-radius:5px;font-size:0.82rem;font-weight:500;display:none;margin-top:8px;}
+    .status.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--green);display:block;}
+    .status.err{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--red);display:block;}
+    .risk-bar{display:flex;gap:4px;margin-top:8px;}
+    .risk-seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,0.1);cursor:pointer;transition:.2s;}
+    .risk-seg.active{background:var(--gold);}
     ::-webkit-scrollbar{width:6px;}
     ::-webkit-scrollbar-track{background:var(--navy);}
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
@@ -85,39 +90,38 @@
     <h2>Area Privata</h2>
     <p class="sub">Accesso riservato · Sagoma Finanziaria</p>
     <div class="login-error" id="loginErr">Password errata. Riprova.</div>
-    <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" />
+    <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" /><input type="password" id="akeyInput" placeholder="Anthropic API Key (sk-ant-...)" autocomplete="off" />
     <button class="btn-login" id="loginBtn">Accedi →</button>
   </div>
 </div>
 
 <div id="adminScreen">
   <div class="top-bar">
-    <div class="top-logo">
-      <div class="logo-sq">SF</div>
-      Area Privata <span class="badge">Solo tu</span>
-    </div>
+    <div class="top-logo"><div class="logo-sq">SF</div>Area Privata <span class="badge">Solo tu</span></div>
     <button class="btn-logout" id="logoutBtn">Esci</button>
   </div>
   <div class="tab-row">
     <button class="tab active" data-tab="trading">📈 Trading</button>
-    <button class="tab" data-tab="lead">🎯 Lead Pipeline</button>
+    <button class="tab" data-tab="lead">🎯 Lead LinkedIn</button>
+    <button class="tab" data-tab="portfolio">📊 Portfolio AI</button>
     <button class="tab" data-tab="blog">✍️ Pubblica Post</button>
   </div>
   <div class="panels">
 
+    <!-- ══ TRADING ══ -->
     <div class="panel active" id="panel-trading">
       <div class="card">
         <div class="card-title">📈 Agente di Trading</div>
-        <div class="card-desc">Monitor posizioni Alpaca paper trading, sentiment Finnhub e performance agente su Railway.</div>
+        <div class="card-desc">Monitor posizioni Alpaca paper trading, sentiment Finnhub e agente su Railway.</div>
         <div style="margin-bottom:20px;">
-          <a href="https://railway.app/dashboard" class="btn-gold" target="_blank">🚂 Railway Dashboard</a>
-          <a href="https://app.alpaca.markets/paper-trading/overview" class="btn-gold" target="_blank">📊 Alpaca Paper</a>
+          <a href="https://railway.app/dashboard" class="btn-g" target="_blank">🚂 Railway</a>
+          <a href="https://app.alpaca.markets/paper-trading/overview" class="btn-g" target="_blank">📊 Alpaca Paper</a>
           <a href="https://finnhub.io/dashboard" class="btn-ol" target="_blank">📰 Finnhub</a>
-          <a href="trading-dashboard.html" class="btn-ol" target="_blank">📋 Dashboard Locale</a>
+          <a href="trading-dashboard.html" class="btn-ol" target="_blank">📋 Dashboard</a>
         </div>
         <div class="info-row">
-          <div class="info-box"><div class="lbl">Stato agente</div><div class="val"><span class="dot-g"></span>Railway attivo</div></div>
-          <div class="info-box"><div class="lbl">ETF monitorati</div><div class="val">SPY · QQQ · GLD · TLT · UUP</div></div>
+          <div class="info-box"><div class="lbl">Stato</div><div class="val"><span class="dot-g"></span>Railway attivo</div></div>
+          <div class="info-box"><div class="lbl">ETF</div><div class="val">SPY · QQQ · GLD · TLT · UUP</div></div>
           <div class="info-box"><div class="lbl">Modalità</div><div class="val"><span class="dot-y"></span>Paper Trading</div></div>
           <div class="info-box"><div class="lbl">Strategia</div><div class="val">Momentum + Scalping</div></div>
           <div class="info-box"><div class="lbl">AI Model</div><div class="val">claude-sonnet-4-6</div></div>
@@ -126,57 +130,170 @@
       </div>
     </div>
 
+    <!-- ══ LEAD LINKEDIN ══ -->
     <div class="panel" id="panel-lead">
       <div class="card">
-        <div class="card-title">🎯 Pipeline Acquisizione Clienti</div>
-        <div class="card-desc">Traccia contatti LinkedIn, stato avanzamento e messaggi. Dati salvati nel browser.</div>
-        <div class="quick-add">
-          <div><label class="flbl">Nome e Cognome</label><input type="text" id="leadName" placeholder="Mario Rossi" /></div>
-          <div><label class="flbl">Professione</label><input type="text" id="leadJob" placeholder="Avvocato · La Spezia" /></div>
-          <div><label class="flbl">Stato</label>
-            <select id="leadStatus">
-              <option value="new">🔵 Nuovo</option>
-              <option value="contact">🟡 Contattato</option>
-              <option value="reply">🟢 Ha risposto</option>
-              <option value="meet">🟣 Meeting fissato</option>
-            </select>
+        <div class="card-title">🎯 Ricerca Lead LinkedIn</div>
+        <div class="card-desc">Costruisci la stringa di ricerca, aggiungi il contatto alla pipeline e genera un messaggio personalizzato di 300 caratteri.</div>
+
+        <!-- SEARCH BUILDER -->
+        <div class="grid3" style="margin-bottom:16px;">
+          <div class="fg"><label class="flbl">Professione / Ruolo</label><input class="fi" id="srProfessione" placeholder="Avvocato, Commercialista, Medico..." /></div>
+          <div class="fg"><label class="flbl">Zona</label><input class="fi" id="srZona" placeholder="La Spezia, Massa Carrara, Sarzana..." /></div>
+          <div class="fg"><label class="flbl">Settore (opzionale)</label><input class="fi" id="srSettore" placeholder="Studio legale, Clinica, SRL..." /></div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <button class="btn-g" onclick="buildSearch()">🔍 Costruisci ricerca LinkedIn</button>
+          <div id="searchResult" style="display:none;margin-top:12px;">
+            <label class="flbl">Stringa di ricerca generata — copia e incolla su LinkedIn People Search</label>
+            <div class="msg-box" id="searchString"></div>
+            <a id="linkedinLink" href="#" class="btn-g" target="_blank" style="margin-top:10px;">🔗 Apri LinkedIn People Search →</a>
           </div>
-          <div><label class="flbl">&nbsp;</label><button class="btn-gold" onclick="addLead()">+ Aggiungi</button></div>
         </div>
-        <div class="stats-row">
-          <div class="stat-box"><div class="stat-val" id="cnt-total">0</div><div class="stat-lbl">Totale</div></div>
-          <div class="stat-box"><div class="stat-val" id="cnt-contact">0</div><div class="stat-lbl">Contattati</div></div>
-          <div class="stat-box"><div class="stat-val" id="cnt-reply">0</div><div class="stat-lbl">Risposte</div></div>
-          <div class="stat-box"><div class="stat-val" id="cnt-meet">0</div><div class="stat-lbl">Meeting</div></div>
+
+        <!-- ADD TO PIPELINE -->
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">➕ Aggiungi alla Pipeline</div>
+          <div class="grid3" style="margin-bottom:10px;">
+            <div class="fg"><label class="flbl">Nome e Cognome *</label><input class="fi" id="leadName" placeholder="Mario Rossi" /></div>
+            <div class="fg"><label class="flbl">Professione *</label><input class="fi" id="leadJob" placeholder="Avvocato · La Spezia" /></div>
+            <div class="fg"><label class="flbl">Stato</label>
+              <select class="fi" id="leadStatus">
+                <option value="new">🔵 Nuovo</option>
+                <option value="contact">🟡 Contattato</option>
+                <option value="reply">🟢 Ha risposto</option>
+                <option value="meet">🟣 Meeting fissato</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label class="flbl">Note (opzionale)</label><input class="fi" id="leadNote" placeholder="Ha uno studio a Sarzana, specializzato in diritto societario..." /></div>
+          <button class="btn-g" onclick="addLead()">+ Aggiungi alla pipeline</button>
         </div>
-        <table class="ptable">
-          <thead><tr><th>Nome</th><th>Professione</th><th>Stato</th><th>Data</th><th></th></tr></thead>
-          <tbody id="pipelineTbody"></tbody>
-        </table>
-        <p style="font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:12px;">Dati salvati localmente. Nessun server coinvolto.</p>
+
+        <!-- GENERATE MESSAGE -->
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">✉️ Genera Messaggio LinkedIn (max 300 car.)</div>
+          <div class="grid2" style="margin-bottom:10px;">
+            <div class="fg"><label class="flbl">Nome del contatto</label><input class="fi" id="msgNome" placeholder="Mario" /></div>
+            <div class="fg"><label class="flbl">Professione del contatto</label><input class="fi" id="msgProfessione" placeholder="Avvocato" /></div>
+          </div>
+          <div class="fg"><label class="flbl">Tema / hook personalizzato (opzionale)</label><input class="fi" id="msgHook" placeholder="Es: ha uno studio da 15 anni, specializzato in fallimenti..." /></div>
+          <button class="btn-g" onclick="generateMessage()">🤖 Genera messaggio AI</button>
+          <div id="msgOutput" style="display:none;">
+            <div class="msg-box" id="msgText" contenteditable="true"></div>
+            <div class="char-count" id="charCount"></div>
+            <button class="btn-ol" onclick="copyMsg()" style="margin-top:8px;">📋 Copia messaggio</button>
+          </div>
+          <div class="status" id="msgStatus"></div>
+        </div>
+
+        <!-- PIPELINE -->
+        <div style="border-top:1px solid var(--border);padding-top:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">📋 Pipeline</div>
+          <div class="grid4">
+            <div class="stat-box"><div class="stat-val" id="cnt-total">0</div><div class="stat-lbl">Totale</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-contact">0</div><div class="stat-lbl">Contattati</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-reply">0</div><div class="stat-lbl">Risposte</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-meet">0</div><div class="stat-lbl">Meeting</div></div>
+          </div>
+          <table class="ptable">
+            <thead><tr><th>Nome</th><th>Professione</th><th>Note</th><th>Stato</th><th>Data</th><th></th></tr></thead>
+            <tbody id="pipelineTbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
+    <!-- ══ PORTFOLIO AI ══ -->
+    <div class="panel" id="panel-portfolio">
+      <div class="card">
+        <div class="card-title">📊 Portfolio Manager AI</div>
+        <div class="card-desc">Profilazione MiFID del cliente e generazione portafoglio personalizzato con AI. Risultato pronto da presentare.</div>
+
+        <div class="grid2" style="margin-bottom:14px;">
+          <div class="fg"><label class="flbl">Nome Cliente</label><input class="fi" id="pNome" placeholder="Mario Rossi" /></div>
+          <div class="fg"><label class="flbl">Età</label><input class="fi" id="pEta" placeholder="45" type="number" /></div>
+        </div>
+        <div class="grid2" style="margin-bottom:14px;">
+          <div class="fg"><label class="flbl">Professione</label><input class="fi" id="pProfessione" placeholder="Avvocato" /></div>
+          <div class="fg"><label class="flbl">Reddito annuo stimato</label>
+            <select class="fi" id="pReddito">
+              <option>Fino a 30.000€</option>
+              <option>30.000 – 60.000€</option>
+              <option selected>60.000 – 100.000€</option>
+              <option>100.000 – 200.000€</option>
+              <option>Oltre 200.000€</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg" style="margin-bottom:14px;">
+          <label class="flbl">Patrimonio investibile</label>
+          <select class="fi" id="pPatrimonio">
+            <option>Fino a 20.000€</option>
+            <option>20.000 – 50.000€</option>
+            <option selected>50.000 – 150.000€</option>
+            <option>150.000 – 500.000€</option>
+            <option>Oltre 500.000€</option>
+          </select>
+        </div>
+        <div class="fg" style="margin-bottom:14px;">
+          <label class="flbl">Orizzonte temporale</label>
+          <select class="fi" id="pOrizzonte">
+            <option>Breve (1-3 anni)</option>
+            <option selected>Medio (3-7 anni)</option>
+            <option>Lungo (7-15 anni)</option>
+            <option>Molto lungo (oltre 15 anni)</option>
+          </select>
+        </div>
+        <div class="fg" style="margin-bottom:14px;">
+          <label class="flbl">Profilo di rischio MiFID (1=minimo, 5=aggressivo)</label>
+          <div class="risk-bar" id="riskBar">
+            <div class="risk-seg" onclick="setRisk(1)" title="1 - Conservativo"></div>
+            <div class="risk-seg" onclick="setRisk(2)" title="2 - Moderato-conservativo"></div>
+            <div class="risk-seg active" onclick="setRisk(3)" title="3 - Moderato"></div>
+            <div class="risk-seg" onclick="setRisk(4)" title="4 - Dinamico"></div>
+            <div class="risk-seg" onclick="setRisk(5)" title="5 - Aggressivo"></div>
+          </div>
+          <div id="riskLabel" style="font-size:0.78rem;color:var(--muted);margin-top:6px;">3 — Moderato</div>
+        </div>
+        <div class="fg" style="margin-bottom:14px;">
+          <label class="flbl">Obiettivi specifici (opzionale)</label>
+          <textarea class="fi" id="pObiettivi" placeholder="Es: pensione integrativa tra 20 anni, acquisto casa entro 5 anni, protezione patrimonio..."></textarea>
+        </div>
+        <div class="fg" style="margin-bottom:20px;">
+          <label class="flbl">Situazione attuale (opzionale)</label>
+          <textarea class="fi" id="pSituazione" placeholder="Es: ha già un fondo pensione, conti deposito, polizza vita scadente..."></textarea>
+        </div>
+        <button class="btn-g" onclick="generatePortfolio()" id="portfolioBtn">🤖 Genera Portafoglio AI</button>
+        <div class="status" id="portfolioStatus"></div>
+        <div id="portfolioOutput" style="display:none;">
+          <div class="ai-output" id="portfolioText"></div>
+          <button class="btn-ol" onclick="copyPortfolio()" style="margin-top:12px;">📋 Copia analisi completa</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BLOG ══ -->
     <div class="panel" id="panel-blog">
       <div class="card">
         <div class="card-title">✍️ Pubblica Post sul Blog</div>
         <div class="card-desc">Compila e clicca Pubblica — il post appare in cima al blog e Netlify rideploya in ~10 secondi.</div>
-        <div class="blog-form">
-          <div><label class="flbl">Titolo *</label><input type="text" id="bTitolo" placeholder="Come il taglio BCE cambia la strategia degli investitori" /></div>
-          <div class="blog-row">
-            <div><label class="flbl">Categoria</label>
-              <select id="bCategoria"><option>Investimenti</option><option>Previdenza</option><option>Protezione</option><option>Partite IVA</option><option>Risparmio</option><option>Mercati</option><option>Fiscalità</option></select>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="fg"><label class="flbl">Titolo *</label><input class="fi" id="bTitolo" placeholder="Come il taglio BCE cambia la strategia degli investitori" /></div>
+          <div class="grid3">
+            <div class="fg"><label class="flbl">Categoria</label>
+              <select class="fi" id="bCategoria"><option>Investimenti</option><option>Previdenza</option><option>Protezione</option><option>Partite IVA</option><option>Risparmio</option><option>Mercati</option><option>Fiscalità</option></select>
             </div>
-            <div><label class="flbl">Emoji</label>
-              <select id="bEmoji"><option>📊</option><option>💰</option><option>🛡️</option><option>🏦</option><option>🧾</option><option>📈</option><option>📉</option><option>🎯</option><option>💡</option></select>
+            <div class="fg"><label class="flbl">Emoji</label>
+              <select class="fi" id="bEmoji"><option>📊</option><option>💰</option><option>🛡️</option><option>🏦</option><option>🧾</option><option>📈</option><option>📉</option><option>🎯</option><option>💡</option></select>
             </div>
-            <div><label class="flbl">Data</label><input type="text" id="bData" /></div>
+            <div class="fg"><label class="flbl">Data</label><input class="fi" id="bData" /></div>
           </div>
-          <div><label class="flbl">Estratto * (~100 parole)</label><textarea id="bEstratto" placeholder="Descrivi l'articolo in modo chiaro e diretto..."></textarea></div>
-          <div><label class="flbl">Tag (separati da virgola)</label><input type="text" id="bTags" placeholder="#BCE, #Tassi, #Investimenti" /></div>
-          <div><label class="flbl">GitHub Token</label><input type="password" id="bToken" placeholder="ghp_..." autocomplete="off" /></div>
-          <button class="btn-gold" onclick="publishPost()" id="publishBtn">🚀 Pubblica sul Blog</button>
-          <div class="bstatus" id="blogStatus"></div>
+          <div class="fg"><label class="flbl">Estratto * (~100 parole)</label><textarea class="fi" id="bEstratto" placeholder="Descrivi l'articolo in modo chiaro..."></textarea></div>
+          <div class="fg"><label class="flbl">Tag (separati da virgola)</label><input class="fi" id="bTags" placeholder="#BCE, #Tassi, #Investimenti" /></div>
+          <div class="fg"><label class="flbl">GitHub Token</label><input type="password" class="fi" id="bToken" placeholder="ghp_..." autocomplete="off" /></div>
+          <button class="btn-g" onclick="publishPost()" id="publishBtn">🚀 Pubblica sul Blog</button>
+          <div class="status" id="blogStatus"></div>
         </div>
       </div>
     </div>
@@ -185,9 +302,11 @@
 </div>
 
 <script>
-const HASH = 'b5317143bc5af972e2b2ce4578588315eb4ec01f1bf535e1410fbb99528c6d32';
-const REPO = 'matteocariola8-lgtm/Finanzas';
-const BRANCH = 'main';
+const HASH='b5317143bc5af972e2b2ce4578588315eb4ec01f1bf535e1410fbb99528c6d32';
+const REPO='matteocariola8-lgtm/Finanzas';
+const BRANCH='main';
+const AKEY='PLACEHOLDER_KEY';
+let riskLevel=3;
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 
@@ -197,7 +316,7 @@ document.getElementById('logoutBtn').onclick=()=>{sessionStorage.removeItem('sf_
 
 async function doLogin(){
   const h=await sha256(document.getElementById('pwdInput').value);
-  if(h===HASH){sessionStorage.setItem('sf_admin','1');showAdmin();}
+  if(h===HASH){sessionStorage.setItem('sf_admin','1');sessionStorage.setItem('sf_akey',document.getElementById('akeyInput').value);showAdmin();}
   else{document.getElementById('loginErr').style.display='block';document.getElementById('pwdInput').value='';}
 }
 
@@ -222,20 +341,42 @@ document.querySelectorAll('.tab').forEach(btn=>{
   });
 });
 
+// ── SEARCH BUILDER ──
+function buildSearch(){
+  const prof=document.getElementById('srProfessione').value.trim();
+  const zona=document.getElementById('srZona').value.trim();
+  const sett=document.getElementById('srSettore').value.trim();
+  if(!prof&&!zona){return;}
+  let parts=[];
+  if(prof)parts.push(`"${prof}"`);
+  if(zona)parts.push(`"${zona}"`);
+  if(sett)parts.push(`"${sett}"`);
+  const str=parts.join(' AND ');
+  document.getElementById('searchString').textContent=str;
+  document.getElementById('linkedinLink').href=`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(str)}`;
+  document.getElementById('searchResult').style.display='block';
+}
+
+// ── PIPELINE ──
 function getLeads(){try{return JSON.parse(localStorage.getItem('sf_leads')||'[]');}catch{return[];}}
 function saveLeads(l){localStorage.setItem('sf_leads',JSON.stringify(l));}
 
 function addLead(){
   const name=document.getElementById('leadName').value.trim();
   const job=document.getElementById('leadJob').value.trim();
+  const note=document.getElementById('leadNote').value.trim();
   const status=document.getElementById('leadStatus').value;
   if(!name)return;
   const leads=getLeads();
-  leads.unshift({id:Date.now(),name,job,status,date:new Date().toLocaleDateString('it-IT')});
+  leads.unshift({id:Date.now(),name,job,note,status,date:new Date().toLocaleDateString('it-IT')});
   saveLeads(leads);
   document.getElementById('leadName').value='';
   document.getElementById('leadJob').value='';
+  document.getElementById('leadNote').value='';
   renderPipeline();
+  // Auto-fill message fields
+  document.getElementById('msgNome').value=name.split(' ')[0];
+  document.getElementById('msgProfessione').value=job;
 }
 
 function deleteLead(id){saveLeads(getLeads().filter(l=>l.id!==id));renderPipeline();}
@@ -246,18 +387,26 @@ function renderPipeline(){
   const sm={new:['🔵 Nuovo','s-new'],contact:['🟡 Contattato','s-contact'],reply:['🟢 Ha risposto','s-reply'],meet:['🟣 Meeting','s-meet']};
   const tbody=document.getElementById('pipelineTbody');
   tbody.innerHTML=leads.length===0
-    ?'<tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px;">Nessun contatto. Aggiungine uno sopra.</td></tr>'
+    ?'<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px;">Nessun contatto. Aggiungine uno sopra.</td></tr>'
     :leads.map(l=>{
       const[label,cls]=sm[l.status]||['–',''];
-      return`<tr><td style="font-weight:500;color:#fff;">${l.name}</td><td>${l.job||'–'}</td><td><span class="sbadge ${cls}">${label}</span></td><td>${l.date}</td><td>
-        <select onchange="updateStatus(${l.id},this.value)" style="background:var(--navy);border:1px solid var(--border);color:rgba(255,255,255,0.6);padding:3px 6px;border-radius:3px;font-size:0.72rem;">
-          <option value="new" ${l.status==='new'?'selected':''}>Nuovo</option>
-          <option value="contact" ${l.status==='contact'?'selected':''}>Contattato</option>
-          <option value="reply" ${l.status==='reply'?'selected':''}>Risposto</option>
-          <option value="meet" ${l.status==='meet'?'selected':''}>Meeting</option>
-        </select>
-        <button onclick="deleteLead(${l.id})" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;margin-left:6px;">✕</button>
-      </td></tr>`;
+      return`<tr>
+        <td style="font-weight:500;color:#fff;">${l.name}</td>
+        <td>${l.job||'–'}</td>
+        <td style="max-width:180px;font-size:0.78rem;color:var(--muted);">${l.note||'–'}</td>
+        <td><span class="sbadge ${cls}">${label}</span></td>
+        <td>${l.date}</td>
+        <td>
+          <select onchange="updateStatus(${l.id},this.value)" style="background:var(--navy);border:1px solid var(--border);color:rgba(255,255,255,0.6);padding:3px 6px;border-radius:3px;font-size:0.72rem;">
+            <option value="new" ${l.status==='new'?'selected':''}>Nuovo</option>
+            <option value="contact" ${l.status==='contact'?'selected':''}>Contattato</option>
+            <option value="reply" ${l.status==='reply'?'selected':''}>Risposto</option>
+            <option value="meet" ${l.status==='meet'?'selected':''}>Meeting</option>
+          </select>
+          <button onclick="prefillMsg(${l.id})" style="background:none;border:none;color:var(--gold);cursor:pointer;margin-left:4px;font-size:0.75rem;">✉️</button>
+          <button onclick="deleteLead(${l.id})" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;margin-left:2px;">✕</button>
+        </td>
+      </tr>`;
     }).join('');
   document.getElementById('cnt-total').textContent=leads.length;
   document.getElementById('cnt-contact').textContent=leads.filter(l=>l.status!=='new').length;
@@ -265,20 +414,125 @@ function renderPipeline(){
   document.getElementById('cnt-meet').textContent=leads.filter(l=>l.status==='meet').length;
 }
 
+function prefillMsg(id){
+  const l=getLeads().find(x=>x.id===id);
+  if(!l)return;
+  document.getElementById('msgNome').value=l.name.split(' ')[0];
+  document.getElementById('msgProfessione').value=l.job;
+  document.getElementById('msgHook').value=l.note||'';
+  document.querySelector('.tab[data-tab="lead"]').click();
+  document.getElementById('msgNome').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── GENERATE MESSAGE ──
+async function generateMessage(){
+  const nome=document.getElementById('msgNome').value.trim();
+  const prof=document.getElementById('msgProfessione').value.trim();
+  const hook=document.getElementById('msgHook').value.trim();
+  if(!nome||!prof){showStatus('msgStatus','Inserisci nome e professione.','err');return;}
+  showStatus('msgStatus','','');
+  document.getElementById('msgOutput').style.display='none';
+
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia a La Spezia.
+Scrivi un messaggio LinkedIn di connessione personalizzato per ${nome}, ${prof}.
+${hook?`Contesto: ${hook}`:''}
+REGOLE ASSOLUTE:
+- Massimo 280 caratteri (conta spazi e punteggiatura)
+- Tono professionale ma diretto, non commerciale
+- Non menzionare prodotti finanziari specifici
+- Non usare emoji
+- Firma: Matteo Cariola, Consulente Finanziario
+Scrivi SOLO il messaggio, nient'altro.`;
+
+  try{
+    const res=await callClaude(prompt);
+    const msg=res.trim();
+    document.getElementById('msgText').textContent=msg;
+    const len=msg.length;
+    const cc=document.getElementById('charCount');
+    cc.textContent=`${len}/300 caratteri`;
+    cc.className='char-count '+(len<=300?'char-ok':'char-warn');
+    document.getElementById('msgOutput').style.display='block';
+  }catch(e){showStatus('msgStatus','Errore AI: '+e.message,'err');}
+}
+
+function copyMsg(){
+  const t=document.getElementById('msgText').textContent;
+  navigator.clipboard.writeText(t).then(()=>showStatus('msgStatus','✅ Copiato!','ok'));
+}
+
+// ── RISK BAR ──
+function setRisk(n){
+  riskLevel=n;
+  const labels={1:'1 — Conservativo',2:'2 — Moderato-conservativo',3:'3 — Moderato',4:'4 — Dinamico',5:'5 — Aggressivo'};
+  document.getElementById('riskLabel').textContent=labels[n];
+  document.querySelectorAll('.risk-seg').forEach((s,i)=>s.classList.toggle('active',i<n));
+}
+
+// ── GENERATE PORTFOLIO ──
+async function generatePortfolio(){
+  const nome=document.getElementById('pNome').value.trim()||'Cliente';
+  const eta=document.getElementById('pEta').value||'N/D';
+  const prof=document.getElementById('pProfessione').value.trim()||'N/D';
+  const reddito=document.getElementById('pReddito').value;
+  const patrimonio=document.getElementById('pPatrimonio').value;
+  const orizzonte=document.getElementById('pOrizzonte').value;
+  const obiettivi=document.getElementById('pObiettivi').value.trim();
+  const situazione=document.getElementById('pSituazione').value.trim();
+  const btn=document.getElementById('portfolioBtn');
+  btn.textContent='⏳ Generazione in corso...';btn.disabled=true;
+  document.getElementById('portfolioStatus').className='status';
+  document.getElementById('portfolioOutput').style.display='none';
+
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia.
+Genera una proposta di portafoglio per questo cliente:
+
+PROFILO CLIENTE:
+- Nome: ${nome}
+- Età: ${eta} anni
+- Professione: ${prof}
+- Reddito annuo: ${reddito}
+- Patrimonio investibile: ${patrimonio}
+- Orizzonte temporale: ${orizzonte}
+- Profilo rischio MiFID: ${riskLevel}/5
+${obiettivi?`- Obiettivi: ${obiettivi}`:''}
+${situazione?`- Situazione attuale: ${situazione}`:''}
+
+Fornisci:
+1. SINTESI DEL PROFILO (2-3 righe)
+2. ALLOCAZIONE CONSIGLIATA (percentuali per macro asset class: liquidità, obbligazioni, azionario, alternativi)
+3. STRUMENTI SUGGERITI (ETF o fondi per ciascuna classe, con motivazione breve)
+4. PRIORITÀ IMMEDIATE (le 3 azioni concrete da fare subito)
+5. NOTE FISCALI (considerazioni su regime fiscale, deducibilità, ecc.)
+
+Usa un tono professionale ma comprensibile. Sii concreto e specifico.`;
+
+  try{
+    const res=await callClaude(prompt,2000);
+    document.getElementById('portfolioText').textContent=res;
+    document.getElementById('portfolioOutput').style.display='block';
+  }catch(e){showStatus('portfolioStatus','Errore AI: '+e.message,'err');}
+  finally{btn.textContent='🤖 Genera Portafoglio AI';btn.disabled=false;}
+}
+
+function copyPortfolio(){
+  navigator.clipboard.writeText(document.getElementById('portfolioText').textContent)
+    .then(()=>showStatus('portfolioStatus','✅ Analisi copiata!','ok'));
+}
+
+// ── BLOG PUBLISHER ──
 async function publishPost(){
   const titolo=document.getElementById('bTitolo').value.trim();
   const estratto=document.getElementById('bEstratto').value.trim();
   const token=document.getElementById('bToken').value.trim();
-  const status=document.getElementById('blogStatus');
-  if(!titolo||!estratto){showStatus('Compila titolo ed estratto.','err');return;}
-  if(!token){showStatus('Inserisci il GitHub Token.','err');return;}
+  if(!titolo||!estratto){showStatus('blogStatus','Compila titolo ed estratto.','err');return;}
+  if(!token){showStatus('blogStatus','Inserisci il GitHub Token.','err');return;}
   const categoria=document.getElementById('bCategoria').value;
   const emoji=document.getElementById('bEmoji').value;
   const data=document.getElementById('bData').value;
   const tags=document.getElementById('bTags').value.split(',').map(t=>t.trim()).filter(Boolean);
   const btn=document.getElementById('publishBtn');
   btn.textContent='⏳ Pubblicazione...';btn.disabled=true;
-  status.className='bstatus';status.style.display='none';
   const tagsHtml=tags.map(t=>`<span class="post-tag">${t}</span>`).join('');
   const postHtml=`\n      <a href="#" class="blog-post-card" style="display:grid;">\n        <div class="blog-post-thumb" style="background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:2rem;">${emoji}</div>\n        <div>\n          <div class="post-meta"><span class="post-cat">${categoria}</span><span class="post-date">${data}</span></div>\n          <h2 class="post-title">${titolo}</h2>\n          <p class="post-excerpt">${estratto}</p>\n          <div class="post-tags">${tagsHtml}</div>\n        </div>\n      </a>`;
   try{
@@ -291,15 +545,40 @@ async function publishPost(){
     const updated=content.replace(marker,marker+postHtml);
     const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/blog.html`,{method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:`📝 Nuovo post: ${titolo.substring(0,60)}`,content:btoa(unescape(encodeURIComponent(updated))),sha:fd.sha,branch:BRANCH})});
     if(!putRes.ok){const e=await putRes.json();throw new Error(e.message||'Errore push.');}
-    showStatus('✅ Post pubblicato! Netlify rideploya in ~10 secondi.','ok');
+    showStatus('blogStatus','✅ Post pubblicato! Netlify rideploya in ~10 secondi.','ok');
     document.getElementById('bTitolo').value='';
     document.getElementById('bEstratto').value='';
     document.getElementById('bTags').value='';
-  }catch(e){showStatus('❌ '+e.message,'err');}
+  }catch(e){showStatus('blogStatus','❌ '+e.message,'err');}
   finally{btn.textContent='🚀 Pubblica sul Blog';btn.disabled=false;}
 }
 
-function showStatus(msg,type){const s=document.getElementById('blogStatus');s.textContent=msg;s.className='bstatus '+type;}
+// ── CLAUDE API ──
+async function callClaude(prompt,maxTokens=500){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':AKEY,'anthropic-version':'2023-06-01'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+  });
+  if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'Errore API');}
+  const d=await res.json();
+  return d.content[0].text;
+}
+
+function showStatus(id,msg,type){
+  const s=document.getElementById(id);
+  s.textContent=msg;
+  s.className='status'+(type?' '+type:'');
+}
+
+// ── MSG CHAR COUNTER ──
+document.addEventListener('input',e=>{
+  if(e.target.id==='msgText'){
+    const len=e.target.textContent.length;
+    const cc=document.getElementById('charCount');
+    if(cc){cc.textContent=`${len}/300 caratteri`;cc.className='char-count '+(len<=300?'char-ok':'char-warn');}
+  }
+});
 </script>
 </body>
 </html>
