@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Sagoma Finanziaria · Dashboard Settimana 1</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;background:#f0f2f5;color:#333}
+    .header{background:#0A1628;color:#fff;padding:24px 32px;display:flex;
+             justify-content:space-between;align-items:center}
+    .header h1{color:#C5A84B;font-size:24px}
+    .header p{color:#aaa;font-size:14px;margin-top:4px}
+    .badge{background:#C5A84B;color:#0A1628;padding:6px 16px;
+            border-radius:20px;font-weight:bold;font-size:14px}
+    .container{max-width:1100px;margin:24px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+    .card{background:#fff;border-radius:8px;padding:20px;
+           box-shadow:0 2px 6px rgba(0,0,0,.07)}
+    .card h2{color:#0A1628;margin-bottom:16px;font-size:18px}
+    .progress-bar{background:#e0e0e0;border-radius:8px;height:16px;overflow:hidden}
+    .progress-fill{background:linear-gradient(90deg,#0A1628,#C5A84B);
+                   height:100%;border-radius:8px;width:7%;
+                   transition:width .5s ease}
+    table{width:100%;border-collapse:collapse}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>Sagoma Finanziaria</h1>
+      <p>Dashboard · Settimana 1 · Il Regime Fiscale Giusto</p>
+    </div>
+    <span class="badge">Settimana 1/14</span>
+  </div>
+
+  <div class="container">
+    <!-- Progress -->
+    <div class="card" style="margin-bottom:20px">
+      <h2>📊 Progresso Calendario Editoriale</h2>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="color:#555">Completamento</span>
+        <strong style="color:#0A1628">7% (1/14 settimane)</strong>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap">
+        <div style="text-align:center;padding:10px 20px;background:#f8f9fa;border-radius:6px">
+          <div style="font-size:24px;font-weight:bold;color:#0A1628">1</div>
+          <div style="font-size:12px;color:#888">Settimane completate</div>
+        </div>
+        <div style="text-align:center;padding:10px 20px;background:#f8f9fa;border-radius:6px">
+          <div style="font-size:24px;font-weight:bold;color:#C5A84B">13</div>
+          <div style="font-size:12px;color:#888">Settimane rimanenti</div>
+        </div>
+        <div style="text-align:center;padding:10px 20px;background:#f8f9fa;border-radius:6px">
+          <div style="font-size:24px;font-weight:bold;color:#0A1628">3</div>
+          <div style="font-size:12px;color:#888">Post totali generati</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Content cards -->
+      <div>
+        <h2 style="margin-bottom:16px;color:#0A1628">
+          📝 Contenuti Settimana 1</h2>
+        
+        <div style="background:#fff;border-radius:8px;padding:20px;margin-bottom:16px;
+                    border-left:5px solid #C5A84B;box-shadow:0 2px 6px rgba(0,0,0,.08)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="background:#0A1628;color:#C5A84B;padding:4px 10px;
+                         border-radius:20px;font-size:12px;font-weight:bold">
+              LINKEDIN</span>
+          </div>
+          <h3 style="margin:10px 0 6px;color:#0A1628">Regime fiscale 2026: stai pagando più tasse del necessario?</h3>
+          <p style="color:#555;font-size:14px;margin:0 0 12px">…</p>
+          <div><a href="https://drive.google.com/file/d/1acq0gx2Yk7kiY02GIy7Msu2RU_IU2B8k/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">linkedin_regime_fiscale_2026_stai_pagando_più_tas.txt</a><a href="https://drive.google.com/file/d/1NbIfVTT5kK256yxZxy7OWVujk2kMSUac/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">linkedin_regime_fiscale_2026_stai_pagando_più_tas_cover.png</a></div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:20px;margin-bottom:16px;
+                    border-left:5px solid #C5A84B;box-shadow:0 2px 6px rgba(0,0,0,.08)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="background:#0A1628;color:#C5A84B;padding:4px 10px;
+                         border-radius:20px;font-size:12px;font-weight:bold">
+              INSTAGRAM</span>
+          </div>
+          <h3 style="margin:10px 0 6px;color:#0A1628">Forfettario vs regime ordinario: scegli quello giusto</h3>
+          <p style="color:#555;font-size:14px;margin:0 0 12px">…</p>
+          <div><a href="https://drive.google.com/file/d/14eMbnqB0vt1Y7HCJt39QzDZIvVsVn0cw/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_01.png</a><a href="https://drive.google.com/file/d/1NOQyKA_JTUuo-pFnPh8ZPoUoh06_6iBL/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_02.png</a><a href="https://drive.google.com/file/d/12lsQtvUWJ9cQO5HFDNYBHXZPSO5dTRN9/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_03.png</a><a href="https://drive.google.com/file/d/1d1wGd3fDao8WVcdu8ysnWI4huuSovM-F/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_04.png</a><a href="https://drive.google.com/file/d/1RkGKC4wGF1-QwQ7tJBq8qvrn64OOxPX1/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_05.png</a><a href="https://drive.google.com/file/d/1k4rRmMdxiWc1tpqoAL63UciNwD1djp4T/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_06.png</a><a href="https://drive.google.com/file/d/1t7NhKaq8CUmQMEihT8fIVVjLnl7cBmiD/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">slide_07.png</a><a href="https://drive.google.com/file/d/1dHwPz6R7FNdBnzgoMNnw4YWfS9kpMbU4/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">carousel.pdf</a><a href="https://drive.google.com/file/d/1CldrICWs8Eqb0QYvZFzVf46pFazLh966/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">caption.txt</a></div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:20px;margin-bottom:16px;
+                    border-left:5px solid #C5A84B;box-shadow:0 2px 6px rgba(0,0,0,.08)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="background:#0A1628;color:#C5A84B;padding:4px 10px;
+                         border-radius:20px;font-size:12px;font-weight:bold">
+              TIKTOK</span>
+          </div>
+          <h3 style="margin:10px 0 6px;color:#0A1628">Il regime fiscale che ti fa risparmiare migliaia di euro</h3>
+          <p style="color:#555;font-size:14px;margin:0 0 12px">…</p>
+          <div><a href="https://drive.google.com/file/d/1LciMpPa1N-bltrhva7BFzf7NiCb2e2hG/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">tiktok_il_regime_fiscale_che_ti_fa_risparmiare.txt</a><a href="https://drive.google.com/file/d/1LKR0SELAwHeCwUheFZf8kvcBpM8Xjf92/view?usp=drivesdk" target="_blank" style="display:inline-block;margin:3px;padding:4px 10px;background:#C5A84B;color:#0A1628;border-radius:4px;text-decoration:none;font-size:12px">tiktok_il_regime_fiscale_che_ti_fa_risparmiare_caption.txt</a></div>
+        </div>
+      </div>
+
+      <!-- Sidebar: chart + upcoming -->
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <h2>📈 Post per Piattaforma</h2>
+          <canvas id="platChart" height="200"></canvas>
+        </div>
+        <div class="card">
+          <h2>📅 Prossimi 7 giorni</h2>
+          <table>
+            <thead>
+              <tr style="background:#0A1628;color:#C5A84B">
+                <th style="padding:8px;text-align:left;font-size:12px">Data</th>
+                <th style="padding:8px;text-align:left;font-size:12px">Canale</th>
+                <th style="padding:8px;text-align:left;font-size:12px">Topic</th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">29/06/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">LINKEDIN</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">Cash flow: il dato che ogni imprenditore ignora fino alla crisi</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">01/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">INSTAGRAM</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">Come gestire la liquidità aziendale in 5 mosse</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">03/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">TIKTOK</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">Perché le aziende falliscono anche quando fanno utili</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">06/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">LINKEDIN</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">ETF vs fondi attivi: 7 anni di dati italiani spiegano tutto</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">08/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">INSTAGRAM</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">Come iniziare a investire con meno di 1.000 euro</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">10/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">TIKTOK</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">ETF: cos'è e perché batte il 90% dei fondi gestiti</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee">13/07/2026</td>
+          <td style="padding:8px;border-bottom:1px solid #eee">
+            <span style="background:#0A1628;color:#C5A84B;padding:2px 8px;
+                         border-radius:12px;font-size:11px">LINKEDIN</span></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;color:#333">Aspettare 5 anni per il fondo pensione ti costa 34.000 euro</td>
+        </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align:center;color:#aaa;font-size:12px;margin-top:24px">
+      Generato automaticamente · 2026-06-21 · Sagoma Finanziaria
+    </p>
+  </div>
+
+  <script>
+    const d = {"labels": ["linkedin", "instagram", "tiktok"], "values": [1, 1, 1]};
+    new Chart(document.getElementById('platChart'), {
+      type: 'doughnut',
+      data: {
+        labels: d.labels,
+        datasets: [{
+          data: d.values,
+          backgroundColor: ['#0A1628','#C5A84B','#4a7ab5'],
+          borderWidth: 2,
+          borderColor: '#fff',
+        }]
+      },
+      options: {plugins:{legend:{position:'bottom'}},cutout:'65%'}
+    });
+  </script>
+</body>
+</html>
