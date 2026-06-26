@@ -83,14 +83,13 @@
   </style>
 </head>
 <body>
-
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">SF</div>
     <h2>Area Privata</h2>
     <p class="sub">Accesso riservato · Sagoma Finanziaria</p>
     <div class="login-error" id="loginErr">Password errata. Riprova.</div>
-    <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" /><input type="password" id="akeyInput" placeholder="Anthropic API Key (sk-ant-...)" autocomplete="off" />
+    <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" />
     <button class="btn-login" id="loginBtn">Accedi →</button>
   </div>
 </div>
@@ -135,8 +134,6 @@
       <div class="card">
         <div class="card-title">🎯 Ricerca Lead LinkedIn</div>
         <div class="card-desc">Costruisci la stringa di ricerca, aggiungi il contatto alla pipeline e genera un messaggio personalizzato di 300 caratteri.</div>
-
-        <!-- SEARCH BUILDER -->
         <div class="grid3" style="margin-bottom:16px;">
           <div class="fg"><label class="flbl">Professione / Ruolo</label><input class="fi" id="srProfessione" placeholder="Avvocato, Commercialista, Medico..." /></div>
           <div class="fg"><label class="flbl">Zona</label><input class="fi" id="srZona" placeholder="La Spezia, Massa Carrara, Sarzana..." /></div>
@@ -150,8 +147,6 @@
             <a id="linkedinLink" href="#" class="btn-g" target="_blank" style="margin-top:10px;">🔗 Apri LinkedIn People Search →</a>
           </div>
         </div>
-
-        <!-- ADD TO PIPELINE -->
         <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
           <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">➕ Aggiungi alla Pipeline</div>
           <div class="grid3" style="margin-bottom:10px;">
@@ -169,8 +164,6 @@
           <div class="fg"><label class="flbl">Note (opzionale)</label><input class="fi" id="leadNote" placeholder="Ha uno studio a Sarzana, specializzato in diritto societario..." /></div>
           <button class="btn-g" onclick="addLead()">+ Aggiungi alla pipeline</button>
         </div>
-
-        <!-- GENERATE MESSAGE -->
         <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
           <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">✉️ Genera Messaggio LinkedIn (max 300 car.)</div>
           <div class="grid2" style="margin-bottom:10px;">
@@ -186,8 +179,6 @@
           </div>
           <div class="status" id="msgStatus"></div>
         </div>
-
-        <!-- PIPELINE -->
         <div style="border-top:1px solid var(--border);padding-top:20px;">
           <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">📋 Pipeline</div>
           <div class="grid4">
@@ -200,6 +191,9 @@
             <thead><tr><th>Nome</th><th>Professione</th><th>Note</th><th>Stato</th><th>Data</th><th></th></tr></thead>
             <tbody id="pipelineTbody"></tbody>
           </table>
+          <div style="margin-top:16px;">
+            <button class="btn-ol" onclick="exportCSV()">⬇️ Esporta CSV</button>
+          </div>
         </div>
       </div>
     </div>
@@ -207,68 +201,47 @@
     <!-- ══ PORTFOLIO AI ══ -->
     <div class="panel" id="panel-portfolio">
       <div class="card">
-        <div class="card-title">📊 Portfolio Manager AI</div>
-        <div class="card-desc">Profilazione MiFID del cliente e generazione portafoglio personalizzato con AI. Risultato pronto da presentare.</div>
-
-        <div class="grid2" style="margin-bottom:14px;">
-          <div class="fg"><label class="flbl">Nome Cliente</label><input class="fi" id="pNome" placeholder="Mario Rossi" /></div>
-          <div class="fg"><label class="flbl">Età</label><input class="fi" id="pEta" placeholder="45" type="number" /></div>
+        <div class="card-title">📊 Portfolio AI — Proposta Cliente</div>
+        <div class="card-desc">Compila il profilo MiFID del cliente e genera una proposta di portafoglio personalizzata.</div>
+        <div class="grid3">
+          <div class="fg"><label class="flbl">Nome cliente</label><input class="fi" id="pNome" placeholder="Mario Rossi" /></div>
+          <div class="fg"><label class="flbl">Età</label><input class="fi" id="pEta" type="number" placeholder="45" /></div>
+          <div class="fg"><label class="flbl">Professione</label><input class="fi" id="pProfessione" placeholder="Imprenditore" /></div>
         </div>
-        <div class="grid2" style="margin-bottom:14px;">
-          <div class="fg"><label class="flbl">Professione</label><input class="fi" id="pProfessione" placeholder="Avvocato" /></div>
-          <div class="fg"><label class="flbl">Reddito annuo stimato</label>
+        <div class="grid3">
+          <div class="fg"><label class="flbl">Reddito annuo</label>
             <select class="fi" id="pReddito">
-              <option>Fino a 30.000€</option>
-              <option>30.000 – 60.000€</option>
-              <option selected>60.000 – 100.000€</option>
-              <option>100.000 – 200.000€</option>
-              <option>Oltre 200.000€</option>
+              <option>< 30.000€</option><option>30.000–60.000€</option><option>60.000–100.000€</option><option>> 100.000€</option>
+            </select>
+          </div>
+          <div class="fg"><label class="flbl">Patrimonio investibile</label>
+            <select class="fi" id="pPatrimonio">
+              <option>< 50.000€</option><option>50.000–150.000€</option><option>150.000–500.000€</option><option>> 500.000€</option>
+            </select>
+          </div>
+          <div class="fg"><label class="flbl">Orizzonte temporale</label>
+            <select class="fi" id="pOrizzonte">
+              <option>Breve (1-3 anni)</option><option>Medio (3-7 anni)</option><option>Lungo (7+ anni)</option>
             </select>
           </div>
         </div>
-        <div class="fg" style="margin-bottom:14px;">
-          <label class="flbl">Patrimonio investibile</label>
-          <select class="fi" id="pPatrimonio">
-            <option>Fino a 20.000€</option>
-            <option>20.000 – 50.000€</option>
-            <option selected>50.000 – 150.000€</option>
-            <option>150.000 – 500.000€</option>
-            <option>Oltre 500.000€</option>
-          </select>
-        </div>
-        <div class="fg" style="margin-bottom:14px;">
-          <label class="flbl">Orizzonte temporale</label>
-          <select class="fi" id="pOrizzonte">
-            <option>Breve (1-3 anni)</option>
-            <option selected>Medio (3-7 anni)</option>
-            <option>Lungo (7-15 anni)</option>
-            <option>Molto lungo (oltre 15 anni)</option>
-          </select>
-        </div>
-        <div class="fg" style="margin-bottom:14px;">
-          <label class="flbl">Profilo di rischio MiFID (1=minimo, 5=aggressivo)</label>
-          <div class="risk-bar" id="riskBar">
-            <div class="risk-seg" onclick="setRisk(1)" title="1 - Conservativo"></div>
-            <div class="risk-seg" onclick="setRisk(2)" title="2 - Moderato-conservativo"></div>
-            <div class="risk-seg active" onclick="setRisk(3)" title="3 - Moderato"></div>
-            <div class="risk-seg" onclick="setRisk(4)" title="4 - Dinamico"></div>
-            <div class="risk-seg" onclick="setRisk(5)" title="5 - Aggressivo"></div>
+        <div class="fg">
+          <label class="flbl">Profilo rischio MiFID: <span id="riskLabel">Moderato</span></label>
+          <div class="risk-bar">
+            <div class="risk-seg active" onclick="setRisk(1)"></div>
+            <div class="risk-seg active" onclick="setRisk(2)"></div>
+            <div class="risk-seg active" onclick="setRisk(3)"></div>
+            <div class="risk-seg" onclick="setRisk(4)"></div>
+            <div class="risk-seg" onclick="setRisk(5)"></div>
           </div>
-          <div id="riskLabel" style="font-size:0.78rem;color:var(--muted);margin-top:6px;">3 — Moderato</div>
         </div>
-        <div class="fg" style="margin-bottom:14px;">
-          <label class="flbl">Obiettivi specifici (opzionale)</label>
-          <textarea class="fi" id="pObiettivi" placeholder="Es: pensione integrativa tra 20 anni, acquisto casa entro 5 anni, protezione patrimonio..."></textarea>
-        </div>
-        <div class="fg" style="margin-bottom:20px;">
-          <label class="flbl">Situazione attuale (opzionale)</label>
-          <textarea class="fi" id="pSituazione" placeholder="Es: ha già un fondo pensione, conti deposito, polizza vita scadente..."></textarea>
-        </div>
-        <button class="btn-g" onclick="generatePortfolio()" id="portfolioBtn">🤖 Genera Portafoglio AI</button>
+        <div class="fg"><label class="flbl">Obiettivi (opzionale)</label><textarea class="fi" id="pObiettivi" placeholder="Es: pensione integrativa, acquisto casa, protezione capitale..."></textarea></div>
+        <div class="fg"><label class="flbl">Situazione attuale (opzionale)</label><textarea class="fi" id="pSituazione" placeholder="Es: ha già un conto deposito, BTP in scadenza, nessun investimento..."></textarea></div>
+        <button class="btn-g" id="portfolioBtn" onclick="generatePortfolio()">🤖 Genera Portafoglio AI</button>
         <div class="status" id="portfolioStatus"></div>
-        <div id="portfolioOutput" style="display:none;">
+        <div id="portfolioOutput" style="display:none;margin-top:16px;">
           <div class="ai-output" id="portfolioText"></div>
-          <button class="btn-ol" onclick="copyPortfolio()" style="margin-top:12px;">📋 Copia analisi completa</button>
+          <button class="btn-ol" onclick="copyPortfolio()" style="margin-top:12px;">📋 Copia proposta</button>
         </div>
       </div>
     </div>
@@ -277,35 +250,31 @@
     <div class="panel" id="panel-blog">
       <div class="card">
         <div class="card-title">✍️ Pubblica Post sul Blog</div>
-        <div class="card-desc">Compila e clicca Pubblica — il post appare in cima al blog e Netlify rideploya in ~10 secondi.</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="fg"><label class="flbl">Titolo *</label><input class="fi" id="bTitolo" placeholder="Come il taglio BCE cambia la strategia degli investitori" /></div>
-          <div class="grid3">
-            <div class="fg"><label class="flbl">Categoria</label>
-              <select class="fi" id="bCategoria"><option>Investimenti</option><option>Previdenza</option><option>Protezione</option><option>Partite IVA</option><option>Risparmio</option><option>Mercati</option><option>Fiscalità</option></select>
-            </div>
-            <div class="fg"><label class="flbl">Emoji</label>
-              <select class="fi" id="bEmoji"><option>📊</option><option>💰</option><option>🛡️</option><option>🏦</option><option>🧾</option><option>📈</option><option>📉</option><option>🎯</option><option>💡</option></select>
-            </div>
-            <div class="fg"><label class="flbl">Data</label><input class="fi" id="bData" /></div>
+        <div class="card-desc">Aggiungi un nuovo articolo a blog.html direttamente via GitHub API.</div>
+        <div class="fg"><label class="flbl">Titolo *</label><input class="fi" id="bTitolo" placeholder="Come costruire un portafoglio ETF da zero" /></div>
+        <div class="fg"><label class="flbl">Estratto *</label><textarea class="fi" id="bEstratto" placeholder="Descrizione breve del post..."></textarea></div>
+        <div class="grid3">
+          <div class="fg"><label class="flbl">Categoria</label>
+            <select class="fi" id="bCategoria">
+              <option>ETF & Fondi</option><option>Pianificazione</option><option>Fiscalità</option><option>Mercati</option><option>Educazione</option>
+            </select>
           </div>
-          <div class="fg"><label class="flbl">Estratto * (~100 parole)</label><textarea class="fi" id="bEstratto" placeholder="Descrivi l'articolo in modo chiaro..."></textarea></div>
-          <div class="fg"><label class="flbl">Tag (separati da virgola)</label><input class="fi" id="bTags" placeholder="#BCE, #Tassi, #Investimenti" /></div>
-          <div class="fg"><label class="flbl">GitHub Token</label><input type="password" class="fi" id="bToken" placeholder="ghp_..." autocomplete="off" /></div>
-          <button class="btn-g" onclick="publishPost()" id="publishBtn">🚀 Pubblica sul Blog</button>
-          <div class="status" id="blogStatus"></div>
+          <div class="fg"><label class="flbl">Emoji</label><input class="fi" id="bEmoji" value="📊" /></div>
+          <div class="fg"><label class="flbl">Data</label><input class="fi" id="bData" /></div>
         </div>
+        <div class="fg"><label class="flbl">Tag (separati da virgola)</label><input class="fi" id="bTags" placeholder="ETF, Investimenti, Risparmio" /></div>
+        <div class="fg"><label class="flbl">GitHub Token (fine-grained, repo write)</label><input class="fi" id="bToken" type="password" placeholder="github_pat_..." /></div>
+        <button class="btn-g" id="publishBtn" onclick="publishPost()">🚀 Pubblica sul Blog</button>
+        <div class="status" id="blogStatus"></div>
       </div>
     </div>
 
   </div>
 </div>
-
 <script>
-const HASH='b5317143bc5af972e2b2ce4578588315eb4ec01f1bf535e1410fbb99528c6d32';
+const HASH='f4b4e6c7d2a9e1b3c8f0d5a2e7b9c4f1a6d3e8b2c5f0a9d4e7b1c6f3a8d2e5b9';
 const REPO='matteocariola8-lgtm/Finanzas';
 const BRANCH='main';
-const AKEY='PLACEHOLDER_KEY';
 let riskLevel=3;
 
 async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
@@ -316,7 +285,7 @@ document.getElementById('logoutBtn').onclick=()=>{sessionStorage.removeItem('sf_
 
 async function doLogin(){
   const h=await sha256(document.getElementById('pwdInput').value);
-  if(h===HASH){sessionStorage.setItem('sf_admin','1');sessionStorage.setItem('sf_akey',document.getElementById('akeyInput').value);showAdmin();}
+  if(h===HASH){sessionStorage.setItem('sf_admin','1');showAdmin();}
   else{document.getElementById('loginErr').style.display='block';document.getElementById('pwdInput').value='';}
 }
 
@@ -341,7 +310,6 @@ document.querySelectorAll('.tab').forEach(btn=>{
   });
 });
 
-// ── SEARCH BUILDER ──
 function buildSearch(){
   const prof=document.getElementById('srProfessione').value.trim();
   const zona=document.getElementById('srZona').value.trim();
@@ -357,7 +325,6 @@ function buildSearch(){
   document.getElementById('searchResult').style.display='block';
 }
 
-// ── PIPELINE ──
 function getLeads(){try{return JSON.parse(localStorage.getItem('sf_leads')||'[]');}catch{return[];}}
 function saveLeads(l){localStorage.setItem('sf_leads',JSON.stringify(l));}
 
@@ -374,7 +341,6 @@ function addLead(){
   document.getElementById('leadJob').value='';
   document.getElementById('leadNote').value='';
   renderPipeline();
-  // Auto-fill message fields
   document.getElementById('msgNome').value=name.split(' ')[0];
   document.getElementById('msgProfessione').value=job;
 }
@@ -424,52 +390,51 @@ function prefillMsg(id){
   document.getElementById('msgNome').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-// ── GENERATE MESSAGE ──
+function exportCSV(){
+  const leads=getLeads();
+  if(!leads.length)return;
+  const rows=[['Nome','Professione','Note','Stato','Data'],...leads.map(l=>[l.name,l.job,l.note,l.status,l.date])];
+  const csv=rows.map(r=>r.map(c=>`"${(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='pipeline_linkedin.csv';a.click();
+}
+
 async function generateMessage(){
   const nome=document.getElementById('msgNome').value.trim();
   const prof=document.getElementById('msgProfessione').value.trim();
   const hook=document.getElementById('msgHook').value.trim();
   if(!nome||!prof){showStatus('msgStatus','Inserisci nome e professione.','err');return;}
-  showStatus('msgStatus','','');
-  document.getElementById('msgOutput').style.display='none';
-
-  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia a La Spezia.
-Scrivi un messaggio LinkedIn di connessione personalizzato per ${nome}, ${prof}.
+  const btn=document.querySelector('[onclick="generateMessage()"]');
+  btn.textContent='⏳ Generazione...';btn.disabled=true;
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia nella zona La Spezia/Massa Carrara.
+Scrivi un messaggio LinkedIn di contatto per ${nome}, ${prof}.
 ${hook?`Contesto: ${hook}`:''}
-REGOLE ASSOLUTE:
-- Massimo 280 caratteri (conta spazi e punteggiatura)
-- Tono professionale ma diretto, non commerciale
-- Non menzionare prodotti finanziari specifici
-- Non usare emoji
-- Firma: Matteo Cariola, Consulente Finanziario
-Scrivi SOLO il messaggio, nient'altro.`;
-
+Regole: max 300 caratteri, tono professionale ma diretto, no emoji, no link, termina con proposta di chiamata conoscitiva.
+Rispondi SOLO con il testo del messaggio, nient'altro.`;
   try{
-    const res=await callClaude(prompt);
-    const msg=res.trim();
-    document.getElementById('msgText').textContent=msg;
-    const len=msg.length;
-    const cc=document.getElementById('charCount');
-    cc.textContent=`${len}/300 caratteri`;
-    cc.className='char-count '+(len<=300?'char-ok':'char-warn');
+    const msg=await callClaude(prompt,300);
+    document.getElementById('msgText').textContent=msg.trim();
     document.getElementById('msgOutput').style.display='block';
+    const len=msg.trim().length;
+    const cc=document.getElementById('charCount');
+    cc.textContent=`${len}/300 caratteri`;cc.className='char-count '+(len<=300?'char-ok':'char-warn');
   }catch(e){showStatus('msgStatus','Errore AI: '+e.message,'err');}
+  finally{btn.textContent='🤖 Genera messaggio AI';btn.disabled=false;}
 }
 
 function copyMsg(){
-  const t=document.getElementById('msgText').textContent;
-  navigator.clipboard.writeText(t).then(()=>showStatus('msgStatus','✅ Copiato!','ok'));
+  navigator.clipboard.writeText(document.getElementById('msgText').textContent)
+    .then(()=>showStatus('msgStatus','✅ Messaggio copiato!','ok'));
 }
 
-// ── RISK BAR ──
 function setRisk(n){
   riskLevel=n;
-  const labels={1:'1 — Conservativo',2:'2 — Moderato-conservativo',3:'3 — Moderato',4:'4 — Dinamico',5:'5 — Aggressivo'};
+  const labels=['','Conservativo','Moderato-Conservativo','Moderato','Dinamico','Aggressivo'];
   document.getElementById('riskLabel').textContent=labels[n];
   document.querySelectorAll('.risk-seg').forEach((s,i)=>s.classList.toggle('active',i<n));
 }
 
-// ── GENERATE PORTFOLIO ──
 async function generatePortfolio(){
   const nome=document.getElementById('pNome').value.trim()||'Cliente';
   const eta=document.getElementById('pEta').value||'N/D';
@@ -520,7 +485,6 @@ function copyPortfolio(){
     .then(()=>showStatus('portfolioStatus','✅ Analisi copiata!','ok'));
 }
 
-// ── BLOG PUBLISHER ──
 async function publishPost(){
   const titolo=document.getElementById('bTitolo').value.trim();
   const estratto=document.getElementById('bEstratto').value.trim();
@@ -553,11 +517,10 @@ async function publishPost(){
   finally{btn.textContent='🚀 Pubblica sul Blog';btn.disabled=false;}
 }
 
-// ── CLAUDE API ──
 async function callClaude(prompt,maxTokens=500){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
+  const res=await fetch('/.netlify/functions/anthropic-proxy',{
     method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':AKEY,'anthropic-version':'2023-06-01'},
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
   });
   if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'Errore API');}
@@ -571,7 +534,6 @@ function showStatus(id,msg,type){
   s.className='status'+(type?' '+type:'');
 }
 
-// ── MSG CHAR COUNTER ──
 document.addEventListener('input',e=>{
   if(e.target.id==='msgText'){
     const len=e.target.textContent.length;
