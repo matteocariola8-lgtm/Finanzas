@@ -198,6 +198,7 @@ async function notifyMakeWebhook({ linkedin_post, hashtags, hook, imageFileName 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       text: fullText,
+      content: fullText,
       linkedin_post,
       hashtags: hashtags || [],
       hook,
