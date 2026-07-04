@@ -238,12 +238,16 @@ async function main() {
   history.push({ topic: data.topic, title: data.blog_title, date: new Date().toISOString().slice(0, 10) });
   await saveHistory(history);
 
-  await notifyMakeWebhook({
-    linkedin_post: data.linkedin_post,
-    hashtags: data.hashtags,
-    hook: data.hook,
-    imageFileName
-  });
+  try {
+    await notifyMakeWebhook({
+      linkedin_post: data.linkedin_post,
+      hashtags: data.hashtags,
+      hook: data.hook,
+      imageFileName
+    });
+  } catch (err) {
+    console.warn('AVVISO: notifica Make.com fallita (il blog è già aggiornato):', err.message);
+  }
 
   console.log('Fatto. Argomento:', data.topic);
 }
