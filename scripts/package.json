@@ -1,0 +1,10 @@
+{
+  "name": "sagoma-linkedin-content-generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Genera contenuto LinkedIn + blog in automatico per Sagoma Finanziaria, eseguito da GitHub Actions.",
+  "dependencies": {
+    "puppeteer": "^22.0.0"
+  }
+}
