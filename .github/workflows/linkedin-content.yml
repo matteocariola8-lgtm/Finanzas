@@ -37,6 +37,7 @@ jobs:
         run: |
           git config user.name "Sagoma Content Bot"
           git config user.email "actions@github.com"
-          git add blog.html content/topics-history.json assets/social/
+          git add blog.html content/topics-history.json
+          git add assets/social/ 2>/dev/null || true
           git diff --cached --quiet && echo "Nessuna modifica da committare" || git commit -m "🤖 Contenuto LinkedIn + articolo blog automatico"
           git push
