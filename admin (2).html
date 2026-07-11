@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Area Privata — Sagoma Finanziaria</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+    :root{--navy:#0A1628;--navy2:#132038;--gold:#C5A84B;--gold-l:#D4BC72;--white:#FFFFFF;--border:rgba(197,168,75,0.2);--muted:rgba(255,255,255,0.5);--green:#4ade80;--red:#f87171;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);}
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:48px 40px;width:100%;max-width:380px;}
+    .login-logo{width:52px;height:52px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:1.1rem;margin:0 auto 24px;}
+    .login-box h2{font-family:'Playfair Display',serif;font-size:1.4rem;text-align:center;margin-bottom:6px;}
+    .login-box .sub{text-align:center;font-size:0.82rem;color:var(--muted);margin-bottom:32px;}
+    .login-box input{width:100%;padding:12px 16px;background:var(--navy);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;font-family:'Inter',sans-serif;outline:none;margin-bottom:14px;transition:.2s;}
+    .login-box input:focus{border-color:var(--gold);}
+    .btn-login{width:100%;padding:13px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+    .btn-login:hover{background:var(--gold-l);}
+    .login-error{color:#fc8181;font-size:0.8rem;text-align:center;margin-bottom:12px;display:none;}
+    #adminScreen{display:none;height:100vh;flex-direction:column;}
+    .top-bar{background:var(--navy2);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    .top-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1rem;}
+    .logo-sq{width:30px;height:30px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-size:0.75rem;}
+    .badge{font-size:0.65rem;background:rgba(197,168,75,0.12);color:var(--gold);border:1px solid rgba(197,168,75,0.25);padding:2px 8px;border-radius:100px;margin-left:6px;}
+    .btn-logout{font-size:0.75rem;color:var(--muted);background:none;border:1px solid var(--border);padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'Inter',sans-serif;}
+    .tab-row{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;flex-shrink:0;}
+    .tab{padding:12px 20px;font-size:0.82rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin-bottom:-1px;}
+    .tab:hover{color:var(--white);}
+    .tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+    .panels{flex:1;overflow:hidden;}
+    .panel{display:none;height:100%;padding:24px;overflow-y:auto;}
+    .panel.active{display:block;}
+    .card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:20px;}
+    .card-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:6px;}
+    .card-desc{font-size:0.82rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+    .fi{width:100%;padding:10px 14px;background:var(--navy);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;transition:.2s;}
+    .fi:focus{border-color:var(--gold);}
+    .flbl{font-size:0.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+    .fg{margin-bottom:14px;}
+    .btn-g{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;margin-right:8px;margin-bottom:8px;}
+    .btn-g:hover{background:var(--gold-l);}
+    .btn-ol{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--gold);border:1px solid var(--border);border-radius:5px;font-size:0.82rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Inter',sans-serif;margin-right:8px;margin-bottom:8px;}
+    .btn-ol:hover{border-color:var(--gold);}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+    .stat-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center;}
+    .stat-val{font-size:1.4rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;}
+    .stat-lbl{font-size:0.7rem;color:var(--muted);margin-top:4px;}
+    .info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .info-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px 20px;}
+    .info-box .lbl{font-size:0.7rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
+    .info-box .val{font-size:0.9rem;font-weight:500;}
+    .dot-g{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;margin-right:6px;}
+    .dot-y{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:6px;}
+    textarea.fi{min-height:90px;resize:vertical;}
+    .ptable{width:100%;border-collapse:collapse;font-size:0.82rem;}
+    .ptable th{text-align:left;padding:8px 12px;font-size:0.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border);}
+    .ptable td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);vertical-align:top;}
+    .sbadge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:0.68rem;font-weight:600;}
+    .s-new{background:rgba(59,130,246,.15);color:#60a5fa;}
+    .s-contact{background:rgba(197,168,75,.15);color:var(--gold);}
+    .s-reply{background:rgba(46,204,113,.15);color:#4ade80;}
+    .s-meet{background:rgba(168,85,247,.15);color:#c084fc;}
+    .msg-box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:12px;font-size:0.85rem;line-height:1.7;white-space:pre-wrap;color:rgba(255,255,255,0.85);}
+    .char-count{font-size:0.75rem;margin-top:6px;}
+    .char-ok{color:var(--green);}
+    .char-warn{color:var(--red);}
+    .ai-output{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:16px;font-size:0.88rem;line-height:1.8;color:rgba(255,255,255,0.85);white-space:pre-wrap;min-height:100px;}
+    .loading{color:var(--muted);font-style:italic;}
+    .status{padding:10px 14px;border-radius:5px;font-size:0.82rem;font-weight:500;display:none;margin-top:8px;}
+    .status.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--green);display:block;}
+    .status.err{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--red);display:block;}
+    .risk-bar{display:flex;gap:4px;margin-top:8px;}
+    .risk-seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,0.1);cursor:pointer;transition:.2s;}
+    .risk-seg.active{background:var(--gold);}
+    .euro-wrap{position:relative;}
+    .euro-wrap .fi{padding-left:28px;}
+    .euro-sym{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.85rem;pointer-events:none;}
+    .catalog-note{font-size:0.72rem;color:var(--gold);background:rgba(197,168,75,0.08);border:1px solid var(--border);border-radius:5px;padding:8px 12px;margin-bottom:14px;}
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:var(--navy);}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+  </style>
+</head>
+<body>
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">SF</div>
+    <h2>Area Privata</h2>
+    <p class="sub">Accesso riservato · Sagoma Finanziaria</p>
+    <div class="login-error" id="loginErr">Password errata. Riprova.</div>
+    <input type="password" id="pwdInput" placeholder="Password" autocomplete="current-password" />
+    <button class="btn-login" id="loginBtn">Accedi →</button>
+  </div>
+</div>
+
+<div id="adminScreen">
+  <div class="top-bar">
+    <div class="top-logo"><div class="logo-sq">SF</div>Area Privata <span class="badge">Solo tu</span></div>
+    <button class="btn-logout" id="logoutBtn">Esci</button>
+  </div>
+  <div class="tab-row">
+    <button class="tab active" data-tab="trading">📈 Trading</button>
+    <button class="tab" data-tab="lead">🎯 Lead LinkedIn</button>
+    <button class="tab" data-tab="portfolio">📊 Portfolio AI</button>
+    <button class="tab" data-tab="blog">✍️ Pubblica Post</button>
+  </div>
+  <div class="panels">
+
+    <!-- ══ TRADING ══ -->
+    <div class="panel active" id="panel-trading">
+      <div class="card">
+        <div class="card-title">📈 Agente di Trading</div>
+        <div class="card-desc">Monitor posizioni Alpaca paper trading, sentiment Finnhub e agente su Railway.</div>
+        <div style="margin-bottom:20px;">
+          <a href="https://railway.app/dashboard" class="btn-g" target="_blank">🚂 Railway</a>
+          <a href="https://app.alpaca.markets/paper-trading/overview" class="btn-g" target="_blank">📊 Alpaca Paper</a>
+          <a href="https://finnhub.io/dashboard" class="btn-ol" target="_blank">📰 Finnhub</a>
+          <a href="trading-dashboard.html" class="btn-ol" target="_blank">📋 Dashboard</a>
+        </div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Stato</div><div class="val"><span class="dot-g"></span>Railway attivo</div></div>
+          <div class="info-box"><div class="lbl">ETF</div><div class="val">SPY · QQQ · GLD · TLT · UUP</div></div>
+          <div class="info-box"><div class="lbl">Modalità</div><div class="val"><span class="dot-y"></span>Paper Trading</div></div>
+          <div class="info-box"><div class="lbl">Strategia</div><div class="val">Momentum + Scalping</div></div>
+          <div class="info-box"><div class="lbl">AI Model</div><div class="val">claude-sonnet-4-6</div></div>
+          <div class="info-box"><div class="lbl">Sentiment</div><div class="val">Finnhub News API</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ LEAD LINKEDIN ══ -->
+    <div class="panel" id="panel-lead">
+      <div class="card">
+        <div class="card-title">🎯 Ricerca Lead LinkedIn</div>
+        <div class="card-desc">Costruisci la stringa di ricerca, aggiungi il contatto alla pipeline e genera un messaggio personalizzato di 300 caratteri.</div>
+        <div class="grid3" style="margin-bottom:16px;">
+          <div class="fg"><label class="flbl">Professione / Ruolo</label><input class="fi" id="srProfessione" placeholder="Avvocato, Commercialista, Medico..." /></div>
+          <div class="fg"><label class="flbl">Zona</label><input class="fi" id="srZona" placeholder="La Spezia, Massa Carrara, Sarzana..." /></div>
+          <div class="fg"><label class="flbl">Settore (opzionale)</label><input class="fi" id="srSettore" placeholder="Studio legale, Clinica, SRL..." /></div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <button class="btn-g" onclick="buildSearch()">🔍 Costruisci ricerca LinkedIn</button>
+          <div id="searchResult" style="display:none;margin-top:12px;">
+            <label class="flbl">Stringa di ricerca generata — copia e incolla su LinkedIn People Search</label>
+            <div class="msg-box" id="searchString"></div>
+            <a id="linkedinLink" href="#" class="btn-g" target="_blank" style="margin-top:10px;">🔗 Apri LinkedIn People Search →</a>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">➕ Aggiungi alla Pipeline</div>
+          <div class="grid3" style="margin-bottom:10px;">
+            <div class="fg"><label class="flbl">Nome e Cognome *</label><input class="fi" id="leadName" placeholder="Mario Rossi" /></div>
+            <div class="fg"><label class="flbl">Professione *</label><input class="fi" id="leadJob" placeholder="Avvocato · La Spezia" /></div>
+            <div class="fg"><label class="flbl">Stato</label>
+              <select class="fi" id="leadStatus">
+                <option value="new">🔵 Nuovo</option>
+                <option value="contact">🟡 Contattato</option>
+                <option value="reply">🟢 Ha risposto</option>
+                <option value="meet">🟣 Meeting fissato</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label class="flbl">Note (opzionale)</label><input class="fi" id="leadNote" placeholder="Ha uno studio a Sarzana, specializzato in diritto societario..." /></div>
+          <button class="btn-g" onclick="addLead()">+ Aggiungi alla pipeline</button>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">✉️ Genera Messaggio LinkedIn (max 300 car.)</div>
+          <div class="grid2" style="margin-bottom:10px;">
+            <div class="fg"><label class="flbl">Nome del contatto</label><input class="fi" id="msgNome" placeholder="Mario" /></div>
+            <div class="fg"><label class="flbl">Professione del contatto</label><input class="fi" id="msgProfessione" placeholder="Avvocato" /></div>
+          </div>
+          <div class="fg"><label class="flbl">Tema / hook personalizzato (opzionale)</label><input class="fi" id="msgHook" placeholder="Es: ha uno studio da 15 anni, specializzato in fallimenti..." /></div>
+          <button class="btn-g" onclick="generateMessage()">🤖 Genera messaggio AI</button>
+          <div id="msgOutput" style="display:none;">
+            <div class="msg-box" id="msgText" contenteditable="true"></div>
+            <div class="char-count" id="charCount"></div>
+            <button class="btn-ol" onclick="copyMsg()" style="margin-top:8px;">📋 Copia messaggio</button>
+          </div>
+          <div class="status" id="msgStatus"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:20px;">
+          <div class="card-title" style="font-size:0.95rem;margin-bottom:12px;">📋 Pipeline</div>
+          <div class="grid4">
+            <div class="stat-box"><div class="stat-val" id="cnt-total">0</div><div class="stat-lbl">Totale</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-contact">0</div><div class="stat-lbl">Contattati</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-reply">0</div><div class="stat-lbl">Risposte</div></div>
+            <div class="stat-box"><div class="stat-val" id="cnt-meet">0</div><div class="stat-lbl">Meeting</div></div>
+          </div>
+          <table class="ptable">
+            <thead><tr><th>Nome</th><th>Professione</th><th>Note</th><th>Stato</th><th>Data</th><th></th></tr></thead>
+            <tbody id="pipelineTbody"></tbody>
+          </table>
+          <div style="margin-top:16px;">
+            <button class="btn-ol" onclick="exportCSV()">⬇️ Esporta CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PORTFOLIO AI ══ -->
+    <div class="panel" id="panel-portfolio">
+      <div class="card">
+        <div class="card-title">📊 Portfolio AI — Proposta Cliente</div>
+        <div class="card-desc">Compila il profilo MiFID del cliente e genera una proposta di portafoglio personalizzata. Gli strumenti proposti sono selezionati esclusivamente dal catalogo fondi ING caricato (862 fondi, aggiornato).</div>
+        <div class="catalog-note">📁 Catalogo attivo: 862 fondi ING · l'AI può selezionare SOLO strumenti presenti in questo elenco</div>
+        <div class="grid3">
+          <div class="fg"><label class="flbl">Nome cliente</label><input class="fi" id="pNome" placeholder="Mario Rossi" /></div>
+          <div class="fg"><label class="flbl">Età</label><input class="fi" id="pEta" type="number" placeholder="45" /></div>
+          <div class="fg"><label class="flbl">Professione</label><input class="fi" id="pProfessione" placeholder="Imprenditore" /></div>
+        </div>
+        <div class="grid3">
+          <div class="fg">
+            <label class="flbl">Reddito annuo (€)</label>
+            <div class="euro-wrap"><span class="euro-sym">€</span><input class="fi" id="pReddito" type="number" min="0" step="1000" placeholder="Es: 45000" /></div>
+          </div>
+          <div class="fg">
+            <label class="flbl">Patrimonio investibile (€)</label>
+            <div class="euro-wrap"><span class="euro-sym">€</span><input class="fi" id="pPatrimonio" type="number" min="0" step="1000" placeholder="Es: 180000" /></div>
+          </div>
+          <div class="fg"><label class="flbl">Orizzonte temporale</label>
+            <select class="fi" id="pOrizzonte">
+              <option>Breve (1-3 anni)</option><option>Medio (3-7 anni)</option><option>Lungo (7+ anni)</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="flbl">Profilo rischio MiFID: <span id="riskLabel">Moderato</span></label>
+          <div class="risk-bar">
+            <div class="risk-seg active" onclick="setRisk(1)"></div>
+            <div class="risk-seg active" onclick="setRisk(2)"></div>
+            <div class="risk-seg active" onclick="setRisk(3)"></div>
+            <div class="risk-seg" onclick="setRisk(4)"></div>
+            <div class="risk-seg" onclick="setRisk(5)"></div>
+          </div>
+        </div>
+        <div class="fg"><label class="flbl">Obiettivi (opzionale)</label><textarea class="fi" id="pObiettivi" placeholder="Es: pensione integrativa, acquisto casa, protezione capitale..."></textarea></div>
+        <div class="fg"><label class="flbl">Note e istruzioni per l'AI — vincoli, prodotti già in portafoglio, notizie di mercato rilevanti, preferenze ESG, scadenze, o qualunque altro contesto utile</label><textarea class="fi" id="pNote" style="min-height:140px;" placeholder="Es: cliente interessato a fondi ESG Articolo 8/9, ha già un PAC con Fineco, vuole liquidare BTP in scadenza marzo 2026, preferisce case di gestione italiane, ha letto di recente sui tassi BCE..."></textarea></div>
+        <div class="fg"><label class="flbl">Situazione attuale (opzionale)</label><textarea class="fi" id="pSituazione" placeholder="Es: ha già un conto deposito, BTP in scadenza, nessun investimento..."></textarea></div>
+        <button class="btn-g" id="portfolioBtn" onclick="generatePortfolio()">🤖 Genera Portafoglio AI</button>
+        <div class="status" id="portfolioStatus"></div>
+        <div id="portfolioOutput" style="display:none;margin-top:16px;">
+          <div class="ai-output" id="portfolioText"></div>
+          <button class="btn-ol" onclick="copyPortfolio()" style="margin-top:12px;">📋 Copia proposta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BLOG ══ -->
+    <div class="panel" id="panel-blog">
+      <div class="card">
+        <div class="card-title">✍️ Pubblica Post sul Blog</div>
+        <div class="card-desc">Aggiungi un nuovo articolo a blog.html direttamente via GitHub API.</div>
+        <div class="fg"><label class="flbl">Titolo *</label><input class="fi" id="bTitolo" placeholder="Come costruire un portafoglio ETF da zero" /></div>
+        <div class="fg"><label class="flbl">Estratto *</label><textarea class="fi" id="bEstratto" placeholder="Descrizione breve del post..."></textarea></div>
+        <div class="grid3">
+          <div class="fg"><label class="flbl">Categoria</label>
+            <select class="fi" id="bCategoria">
+              <option>ETF & Fondi</option><option>Pianificazione</option><option>Fiscalità</option><option>Mercati</option><option>Educazione</option>
+            </select>
+          </div>
+          <div class="fg"><label class="flbl">Emoji</label><input class="fi" id="bEmoji" value="📊" /></div>
+          <div class="fg"><label class="flbl">Data</label><input class="fi" id="bData" /></div>
+        </div>
+        <div class="fg"><label class="flbl">Tag (separati da virgola)</label><input class="fi" id="bTags" placeholder="ETF, Investimenti, Risparmio" /></div>
+        <div class="fg"><label class="flbl">GitHub Token (fine-grained, repo write)</label><input class="fi" id="bToken" type="password" placeholder="github_pat_..." /></div>
+        <button class="btn-g" id="publishBtn" onclick="publishPost()">🚀 Pubblica sul Blog</button>
+        <div class="status" id="blogStatus"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+const HASH='b5317143bc5af972e2b2ce4578588315eb4ec01f1bf535e1410fbb99528c6d32';
+const REPO='matteocariola8-lgtm/Finanzas';
+const BRANCH='main';
+let riskLevel=3;
+
+// ══ CATALOGO FONDI ING — 862 fondi, formato: Descrizione|ISIN|Macro|Categoria|SFDR|ScoreQualità ══
+// Fonte: catalogo ING caricato il 2026-07-11. Unica fonte ammessa per Portfolio AI.
+// Per aggiornare: sostituire integralmente il contenuto tra i backtick con il nuovo export.
+const FONDI_CATALOG_RAW = `Schroder EURO Liquidity B Acc|LU0136043550|Monetari Euro|Monetari Euro|Art.6|2
+Fidelity Funds Euro Cash Fund A EUR|LU0064964074|Monetari Euro|Monetari Euro|Art.8|2
+Fidelity Funds Euro Cash Fund E Acc EUR|LU0393653836|Monetari Euro|Monetari Euro|Art.8|2
+Pictet Short-Term Money Market EUR R|LU0128495834|Monetari Euro|Monetari Euro|Art.8|3
+Pictet Sovereign Shrt-Trm Money Mkt € R|LU0366536984|Monetari Euro|Monetari Euro|Art.8|2
+BlackRock Euro Reserve Fund C2|LU0432366366|Monetari Euro|Monetari Euro|Art.6|1
+Amundi Funds Cash EUR F2 EUR C|LU0568620990|Monetari Euro|Monetari Euro|Art.8|1
+JPMF EUR Money Market VNAV D Acc EUR|LU0252500524|Monetari Euro|Monetari Euro|Art.8|1
+MSIF Floating Rate ABS Fund A EUR|LU2577889384|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|5
+Invesco Euro Ultra-Short Term Debt A Acc|LU0102737730|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|2
+Pictet Ultra Short-Term Bonds EUR R Acc|LU2009037222|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.6|2
+Invesco Euro Ultra-Short Term Debt E Acc|LU0115143595|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|2
+FF Euro Short Term Bond Fund A Acc EUR|LU0267388220|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|1
+FF Euro Short Term Bond Fund E Acc EUR|LU0346393613|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|1
+Schroder EURO Short Term Bond B Acc EUR|LU0106234726|Obblig. euro gov. breve termine|Obblig. Euro breve termine|Art.8|5
+Invesco Euro Short Term Bond A Acc EUR|LU0607519195|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|2
+Invesco Euro Short Term Bond E Acc EUR|LU0607519609|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|2
+Nordea1 EUR Corp Bond 1-3 Years|LU2496172888|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|5
+MSIF Short Maturity Euro Bond A|LU0073235904|Obblig. euro gov. breve termine|Obblig. Euro breve termine|Art.8|1
+BlackRock Euro Short Duration Bond C2|LU0147388606|Obblig. euro gov. breve termine|Obblig. Euro breve termine|Art.8|5
+JPMF Euro Gov ShDuration D Acc EUR|LU0408877842|Obblig. euro gov. breve termine|Obblig. Euro breve termine|Art.8|2
+MSIF Short Maturity Euro Bond C|LU0176162005|Obblig. euro gov. breve termine|Obblig. Euro breve termine|Art.8|1
+Liquidita Arancio|LU1766438037|Obblig. Euro breve term.|Obblig. Euro breve termine|Art.8|1
+BGF Euro Inc Fixed Mat Bond 2031 E2 EUR|LU3317465923|Obblig. Euro gov.|Obblig. Euro medio lungo termine|Art.8|N/D
+BGF Euro Inc Fixed Mat Bond 2031 E5 EUR|LU3317466061|Obblig. Euro gov.|Obblig. Euro medio lungo termine|Art.8|N/D
+MSIF European Fixed Inc Opp AR EUR Dist|LU1135359625|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+MSIF European Fixed Income Opport A|LU1109965605|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+MSIF European Fixed Inc Opp CR EUR Dist|LU1135360557|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+MSIF European Fixed Income Opport C|LU1135360391|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+MSIF Euro Strategic Bond Fund A|LU0073234253|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+MSIF Euro Strategic Bond Fund AX|LU0218442688|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Invesco Euro Bond A Acc EUR|LU0066341099|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Invesco Euro Bond A Dis EUR|LU0307019926|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Cedola Arancio|LU0244991385|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Invesco Euro Bond E Acc EUR|LU0115144304|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Nordea 1 Active Rates Opportunit E-EUR|LU1915690918|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|2
+Inflazione Piu Arancio|LU0456302859|Obblig. Indicizz. Inflation Linked|Obblig. Euro medio lungo termine|Art.6|1
+MSIF Euro Bond Fund A|LU0073254285|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|1
+SISF EURO Bond B Acc EUR|LU0106235707|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+Schroder EURO Bond B Dis|LU0093472750|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|4
+MSIF Euro Strategic Bond Fund C|LU0176161619|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+MSIF Euro Strategic Bond Fund CX - EUR|LU1807328536|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Pictet Climate Government Bonds R EUR|LU2468126086|Obblig. Euro gov.|Obblig. Euro medio lungo termine|Art.9|1
+Schroder EURO Government Bond B Dis|LU0063575632|Obblig. Euro gov. lungo termine|Obblig. Euro medio lungo termine|Art.8|2
+Pictet Climate Government Bonds HR EUR|LU2468123901|Obblig. Euro gov.|Obblig. Euro medio lungo termine|Art.9|1
+Amundi Funds Euro Aggr Bond F EUR C|LU1882468348|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+Amundi Funds Euro Aggr Bond F EUR AD|LU1882468421|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+JPMF EU Government Bond D Acc EUR|LU0355584037|Obblig. Euro gov. lungo termine|Obblig. Euro medio lungo termine|Art.8|2
+SISF EURO Government Bond B Acc EUR|LU0106236002|Obblig. Euro gov. lungo termine|Obblig. Euro medio lungo termine|Art.8|2
+GS Green Bond X Cap EUR|LU1738491338|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.9|3
+BSF ESG Euro Bond Fund E2 EUR|LU1495982354|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+JPMF Euro Aggregate Bond D Acc EUR|LU0430492834|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|3
+GS Sovereign Green Bond X Cap EUR|LU2280235743|Obblig. Euro gov.|Obblig. Euro medio lungo termine|Art.9|4
+MSIF Euro Bond Fund C|LU0176161882|Obblig. Euro all maturities|Obblig. Euro medio lungo termine|Art.8|1
+Nordea 1 European Financial Debt E-EUR|LU0772944731|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+MSIF Euro Corpo Bond – Dur Hgd AX|LU1832969577|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+MSIF Euro Corpo Bond – Dur Hgd A|LU1832969650|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+Schroder EURO Credit Convict B Dis|LU0995120598|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+Schroder EURO Credit Convict B Acc|LU0995119749|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+MSIF Euro Corpo Bond – Dur Hgd C|LU1832969148|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+Nordea 1 European Cross Credit E-EUR|LU0733674179|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+Schroder EURO Corporate Bond B Dis|LU0512749036|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+SISF EURO Corporate Bond B Acc EUR|LU0113257934|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|5
+MSIF Euro Corporate Bd Fd AX EUR Dis|LU0239680886|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+MSIF Euro Corporate Bond Fund A EUR Acc|LU0132601682|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+FF Euro Corporate Bond Fund E Acc EUR|LU0605514644|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+Schroder Sustainable Euro Credit B Acc|LU2080995157|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|4
+Invesco Euro Corporate Bond A Acc EUR|LU0243957825|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+Invesco Euro Corporate Bond A MDis EUR|LU0248037169|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+Amundi Funds Euro Cor Bd Sel F EUR C|LU1882522144|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+FF Euro Corporate Bond Fund A EUR|LU0605514560|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+Invesco Euro Corporate Bond E Acc EUR|LU0243958393|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+BlackRock Euro Corporate Bond Fund E5|LU0500207542|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|4
+FF Euro Corporate Bond Fund E MDist EUR|LU0840139355|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+MSIF Calvert Sust Euro Corp Bd A EUR|LU2198663994|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+Nordea 1 Euro Corp Sust Lbl Bd E EUR|LU2797543449|Obblig. Euro corporate|Obblig. Euro corporate|Art.9|N/D
+JPMF Euro Corporate Bond D Acc EUR|LU0408847936|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|4
+MSIF Euro Corporate Bd Fd CX EUR Dis|LU1807328452|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+MSIF Euro Corporate Bd Fd C EUR Acc|LU0176164985|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+GS Euro Sustainable Credit X Cap EUR|LU2327460098|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|4
+Nordea 1 Europ Corp Sus Stars Bd E-EUR|LU1927798048|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|3
+Nordea 1 European Corporate Bond E-EUR|LU0173777441|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|4
+GS Euro Sust Cred (ex-Fin) X Cap EUR|LU0577843344|Obblig. Euro corporate|Obblig. Euro corporate|Art.8|2
+MSIF Global Macro Fund AH EUR|LU2607191066|Obblig. globale|Obblig. Globale|Art.6|5
+MSIF Global Macro Fund C USD|LU2607190688|Obblig. globale|Obblig. Globale|Art.6|5
+SISF Glb Credit High Inc Bd B Dis EUR H|LU0587554352|Obblig. globale|Obblig. Globale|Art.8|5
+FF Global Income Fund A Acc EUR H|LU0882574998|Obblig. globale|Obblig. Globale|Art.8|4
+GS Global Income Bd Ptf E Acc. EUR-H|LU2217654198|Obblig. globale|Obblig. Globale|Art.8|4
+JPMF Flexible Credit D Acc EUR H|LU0469576879|Obblig. globale corporate|Obblig. Globale|Art.8|4
+MSIF US High Yield Bond Fund AH EUR Cap|LU2536247799|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|5
+BSF ESG Fixed Income Credit Strat E2 €|LU1965316885|Obblig. Euro corporate|Obblig. Globale|Art.8|N/D
+FF Global Corporate Bond Fd A Acc EUR|LU0532243267|Obblig. globale corporate|Obblig. Globale|Art.8|2
+JPMF Flexible Credit D Div EUR H|LU0562087980|Obblig. globale corporate|Obblig. Globale|Art.8|4
+FF Flexible Bond Fund E Acc EUR  H|LU1345485335|Obblig. globale|Obblig. Globale|Art.8|5
+Invesco Multi-Sect Cdt A Acc EUR|LU0102737144|Obblig. globale|Obblig. Globale|Art.8|4
+Invesco Multi-Sect Cdt A QDis EUR|LU1097690371|Obblig. globale|Obblig. Globale|Art.8|4
+Pictet Strategic Credit HR EUR|LU2195492454|Obblig. Dollaro US all mat|Obblig. Globale|Art.6|5
+Schroder Global Credit Inc B Acc EUR H|LU1514167995|Obblig. globale|Obblig. Globale|Art.8|4
+FF Flexible Bond Fund A Acc EUR|LU1345485095|Obblig. globale|Obblig. Globale|Art.8|5
+Schroder Global Credit Inc B Dis EUR H|LU1514168290|Obblig. globale|Obblig. Globale|Art.8|4
+FF Global Short Duration Inc E Acc EUR H|LU1731833569|Obblig. globale|Obblig. Globale|Art.8|3
+Amundi Pioneer Strategic Inc F EUR HAD|LU1883844398|Obblig. globale|Obblig. Globale|Art.8|2
+Amundi Pioneer Strategic Inc F EUR HC|LU1883844125|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Multi-Sect Cdt E Dis EUR|LU1097690967|Obblig. globale|Obblig. Globale|Art.8|4
+Invesco Multi-Sect Cdt E Acc EUR|LU0115144486|Obblig. globale|Obblig. Globale|Art.8|4
+Nordea 1 Norwegian Short-Term Bnd E-EUR|LU0173778332|Obblig. Europa|Obblig. Globale|Art.8|5
+SISF Sust Glb Multi Credit B Acc EUR H|LU1476609448|Obblig. globale|Obblig. Globale|Art.8|4
+DWS Corporate Green Bonds LD|LU1873225616|Obblig. globale|Obblig. Globale|Art.9|5
+DWS Corporate Green Bonds LC|LU1982200609|Obblig. globale|Obblig. Globale|Art.9|5
+SISF Sust Glb Multi Credit B Dis EUR H|LU1476609950|Obblig. globale|Obblig. Globale|Art.8|4
+Schroder Strategic Bond B Acc EUR H|LU0201323614|Obblig. globale|Obblig. Globale|Art.8|2
+Schroder Strategic Credit B Dis EUR H|LU1046236110|Obblig. Europa|Obblig. Globale|Art.8|5
+Invesco Global TR Bond A Acc EUR|LU0534239909|Obblig. globale|Obblig. Globale|Art.8|4
+Schroder Strategic Bond B Dis EUR H|LU0471239334|Obblig. globale|Obblig. Globale|Art.8|2
+Schroder Global Credt Inc SD B Dis|LU1910165130|Obblig. Dollaro US breve term.|Obblig. Globale|Art.8|5
+Schroder Global Credt Inc SD B Acc|LU1910164752|Obblig. Dollaro US breve term.|Obblig. Globale|Art.8|5
+MSIF Global Asset Backed Secu Fd AHX EUR|LU0858068744|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF Glb Asset Backed Secu Fd AH (EUR)|LU0858068660|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF Gbl Asset Backed Secu Fd AHR € HSC|LU0857970346|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF Global Fxd Incm Opport Fd AHR EUR D|LU1033666402|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Fxd Incm Opport Fd AH EUR C|LU0712123511|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Fxd Incm Opport Fd AHX EUR D|LU0699139464|Obblig. globale|Obblig. Globale|Art.8|2
+GS SD Opp Corp Bd Pf E (Acc) EUR-H|LU0751755231|Obblig. globale corporate|Obblig. Globale|Art.8|3
+Invesco Global TR Bond E Acc EUR|LU0534240402|Obblig. globale|Obblig. Globale|Art.8|4
+Invesco Global TR Bond E Dis EUR|LU0534240741|Obblig. globale|Obblig. Globale|Art.8|4
+BGF Fixed Income Global Opp E2 H|LU0278456818|Obblig. globale|Obblig. Globale|Art.6|2
+MSIF Global Convert Bond Fd AH EUR Cap|LU0410168768|Obblig. Convertib. Glob.|Obblig. Globale|Art.8|1
+SISF Carbon Neutral Credit B EUR Acc|LU2343327248|Obblig. globale|Obblig. Globale|Art.9|4
+FF Global Corporate Bond Fd A Acc EUR H|LU0532243341|Obblig. globale corporate|Obblig. Globale|Art.8|2
+JPMF Global Corp Duration-H D Acc EUR H|LU1628779503|Obblig. globale corporate|Obblig. Globale|Art.8|2
+GS Green Bond Shrt Dur X Cap EUR|LU1983361905|Obblig. globale|Obblig. Globale|Art.9|4
+Invesco Global IG Corp Bond A HAcc EUR|LU0432616570|Obblig. globale corporate|Obblig. Globale|Art.8|3
+MSIF Global Fxd Incm Opport Fd CH EUR C|LU0712123784|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Glb Asset Backed Secu Fd CH (EUR)|LU0858082224|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF Global Convert Bond Fd CH EUR Cap|LU0410168925|Obblig. Convertib. Glob.|Obblig. Globale|Art.8|1
+MSIF Glb Asset Backed Secu Fd CHX (EUR)|LU0858082497|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF Global Fxd Incm Opport Fd CHR EUR D|LU1033668879|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Envir Climate Opp Bd A HAcc EUR|LU0794791367|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Fxd Incm Opport Fd CHX EUR D|LU0864486377|Obblig. globale|Obblig. Globale|Art.8|2
+GS Gbl Crt Pf (Hgd) E (Acc.) EUR-Hedged|LU0413444745|Obblig. globale|Obblig. Globale|Art.8|2
+BSF ESG Fixed Income Strategies E2 EUR|LU0438336694|Obblig. globale|Obblig. Globale|Art.8|4
+Invesco Envir Climate Opp Bd E HAcc EUR|LU0794791524|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Global IG Corp Bond E HAcc EUR|LU1549404645|Obblig. globale corporate|Obblig. Globale|Art.8|3
+Invesco Global IG Corp Bond E HDis EUR|LU1504055994|Obblig. globale corporate|Obblig. Globale|Art.8|3
+FF Strategic Bond E EUR Acc Hdg|LU0718472250|Obblig. globale|Obblig. Globale|Art.8|1
+JPMF Global Corporate Bond D Acc EUR H|LU0408846961|Obblig. globale corporate|Obblig. Globale|Art.8|1
+Invesco Net0 Gbl Invest Grad Corp Bd A €|LU2317489206|Obblig. globale corporate|Obblig. Globale|Art.9|3
+Schroder Global Corp Bond B Acc EUR H|LU0203348601|Obblig. globale corporate|Obblig. Globale|Art.8|3
+Schroder Global Corp Bond B Dis EUR H|LU0671500824|Obblig. globale corporate|Obblig. Globale|Art.8|3
+JPMF Income D Acc EUR H|LU1646897196|Obblig. globale|Obblig. Globale|Art.8|2
+DWS Credit Opportunities LC|LU2715966771|Obblig. globale|Obblig. Globale|Art.8|4
+JPMF Global Corporate Bond D Div EUR H|LU0503867672|Obblig. globale corporate|Obblig. Globale|Art.8|1
+MSIF US High Yield Bond Fund C USD Cap|LU2536248094|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|5
+JPMF Income D Div EUR H|LU1065154095|Obblig. globale|Obblig. Globale|Art.8|2
+JPMF Global Bond Opp D Acc EUR H|LU0890598104|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Bond AH2X EUR|LU2804571086|Obblig. globale|Obblig. Globale|Art.8|1
+GS Gb Fxd Inc + Pf Hgd E Acc EUR-H|LU0322549691|Obblig. globale|Obblig. Globale|Art.8|4
+JPMF Global Bond Opp D Mth EUR H|LU1555763082|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Bond AH2 EUR|LU2804570609|Obblig. globale|Obblig. Globale|Art.8|1
+GS Gb Fxd Inc Pf Hgd E (Acc.)|LU0304100331|Obblig. globale|Obblig. Globale|Art.8|3
+Amundi Pioneer Strategic Inc F EUR C|LU1883843820|Obblig. globale|Obblig. Globale|Art.8|2
+Amundi Pioneer Strategic Inc F EUR QTD|LU1883844471|Obblig. globale|Obblig. Globale|Art.8|2
+Amundi Pioneer Strategic Inc F EUR AD|LU1883844042|Obblig. globale|Obblig. Globale|Art.8|2
+BGF Euro Flexible Income Bond E2 EUR Acc|LU2144843237|Obblig. globale|Obblig. Globale|Art.8|N/D
+Mondo Arancio|LU1766437146|Obblig. globale|Obblig. Globale|Art.8|3
+JPMF Global Bond Opp D Div EUR H|LU1054584526|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Calvert Gbl Green AH2 EUR|LU2804570351|Obblig. globale|Obblig. Globale|Art.9|2
+FF Global Inflation-linked Bd E Acc EURH|LU0353649352|Obblig. Global Inflation Linked|Obblig. Globale|Art.8|2
+Pictet Gbl Sust Credit HR EUR|LU0503630310|Obblig. globale corporate|Obblig. Globale|Art.9|3
+FF Global Short Duration Inc A Acc EUR|LU0766124712|Obblig. globale|Obblig. Globale|Art.8|3
+Schroder US Dollar Bond B Acc EUR H|LU0291343753|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|4
+Schroder US Dollar Bond B Dis EUR H|LU0671503257|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|4
+MSIF Calvert Gbl Green CH2 EUR|LU2804570518|Obblig. globale|Obblig. Globale|Art.9|2
+Pictet-Strategic Credit R EUR|LU2256992590|Obblig. Dollaro US all mat|Obblig. Globale|Art.6|5
+JPMF US Short Duration Bond D Acc EUR H|LU0562248152|Obblig. Dollaro US breve term.|Obblig. Globale|Art.8|4
+Nordea 1 Danish Covered Bond Fund E-EUR|LU0173775403|Obblig. altre valute|Obblig. Globale|Art.8|4
+JPMF Global Gov ShDuration D Acc EUR|LU0408876950|Obblig. globale|Obblig. Globale|Art.8|2
+FF Flexible Bond Fund E MDist EUR  H|LU1345484528|Obblig. globale|Obblig. Globale|Art.8|5
+JPMF Global Strategic D Perf Acc EUR H|LU0514680072|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Environ Climate Opp E Acc EUR|LU0115143918|Obblig. globale|Obblig. Globale|Art.8|2
+JPMF US Aggregate Bond D Acc EUR H|LU0549623634|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|2
+JPMF Global Strategic D Perf Div EUR H|LU0514680155|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Calvert Glb Green Bond Fund C USD|LU2502369726|Obblig. globale|Obblig. Globale|Art.9|2
+JPM IF Income Opp D Perf Acc EUR H|LU0289473059|Obblig. globale|Obblig. Globale|Art.6|1
+Invesco Global IG Corp Bond E Acc EUR|LU0432616497|Obblig. globale corporate|Obblig. Globale|Art.8|3
+Nordea 1 Swedish Short-Term Bond E-EUR|LU0173778175|Obblig. altre valute|Obblig. Globale|Art.8|5
+JPMF Global Short Duration D Acc EUR H|LU0430495423|Obblig. Dollaro US breve term.|Obblig. Globale|Art.8|4
+Nordea 1 Dynamic Rates Opportun E|LU2643720035|Obblig. globale|Obblig. Globale|Art.8|N/D
+Nordea1 European Sust Label Bd E EUR|LU2810865290|Obblig. globale|Obblig. Globale|Art.9|N/D
+FF Global Bond Fund A Acc EUR H|LU0337577430|Obblig. globale|Obblig. Globale|Art.8|1
+Nordea 1 Norwegian Bond Fund E-EUR|LU0173776393|Obblig. altre valute|Obblig. Globale|Art.8|4
+FF Global Income Fund E QIncG EUR H|LU0893322494|Obblig. globale|Obblig. Globale|Art.8|4
+MSIF Global Fxd Incm Opport Fd CX USD D|LU1807328700|Obblig. globale|Obblig. Globale|Art.8|2
+MSIF Global Fxd Incm Opport Fd C USD C|LU0712122976|Obblig. globale|Obblig. Globale|Art.8|2
+Schroder Global Bond B Acc EUR H|LU0694809426|Obblig. globale|Obblig. Globale|Art.8|1
+Schroder Global Bond B Dis EUR H|LU0694811679|Obblig. globale|Obblig. Globale|Art.8|1
+Nordea 1 European Covered Bond E-EUR|LU0173776989|Obblig. Europa|Obblig. Globale|Art.8|2
+MSIF Global Credit Fund C|LU0851375146|Obblig. globale corporate|Obblig. Globale|Art.8|2
+FF Strategic Bond A EUR Hdg|LU0594301060|Obblig. globale|Obblig. Globale|Art.8|1
+BlackRock Glb Inflation Linked Bd E2 H|LU0452734238|Obblig. Global Inflation Linked|Obblig. Globale|Art.6|1
+MSIF Calvert Glb Green Bond Fund CH EUR|LU2502369999|Obblig. globale|Obblig. Globale|Art.9|2
+FF China RMB Bond Fund E Acc EUR|LU0788144201|Obblig. altre valute|Obblig. Globale|Art.8|1
+Invesco Global Flexible Bond E EUR H Acc|LU2903431190|Obblig. globale|Obblig. Globale|Art.8|2
+JPMF Aggregate Bond D Acc EUR H|LU0430493725|Obblig. globale|Obblig. Globale|Art.8|1
+DI CreOpp LD|LU2715966854|Obblig. globale|Obblig. Globale|Art.8|4
+BGF Fixed Income Global Opp C2|LU1005243412|Obblig. globale|Obblig. Globale|Art.6|2
+MSIF Global Bond Fund AH (EUR)|LU0552899485|Obblig. globale|Obblig. Globale|Art.8|1
+Nordea 1 Flexible Fixed Income E-EUR|LU0915362262|Obblig. globale|Obblig. Globale|Art.6|2
+Schroder Globl Infl Link Bd B Acc|LU0180781121|Obblig. Global Inflation Linked|Obblig. Globale|Art.8|2
+Schroder Globl Infl Link Bd B Dis|LU0671502283|Obblig. Global Inflation Linked|Obblig. Globale|Art.8|2
+Nordea 1 Swedish Bond Fund E-EUR|LU0173776047|Obblig. altre valute|Obblig. Globale|Art.8|5
+JPMF Global Government Bond D Acc EUR|LU0406674589|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Global Flex Bond A HDis EUR|LU1332269742|Obblig. globale|Obblig. Globale|Art.8|2
+GS Global Fixed Inc Ptf E|LU0133266576|Obblig. globale|Obblig. Globale|Art.8|2
+Invesco Global Flex Bond A HAcc EUR|LU1332269585|Obblig. globale|Obblig. Globale|Art.8|2
+Pictet - Global Sustainable Credit R EUR|LU2053548165|Obblig. globale corporate|Obblig. Globale|Art.9|3
+Nordea 1 Multi Credit Fund of Fds E-EUR|LU0173777797|Obblig. Europa|Obblig. Globale|Art.8|3
+Dollaro Arancio|LU1766436767|Obblig. Dollaro US all mat|Obblig. Globale|Art.8|1
+FF Strategic Bond E EUR Gmdist Hdg|LU0859970500|Obblig. globale|Obblig. Globale|Art.8|1
+FF Global Short Duration Inc E QG EUR H|LU1731833643|Obblig. globale|Obblig. Globale|Art.8|3
+BlackRock Glb Government Bond C2 H|LU0297943838|Obblig. globale|Obblig. Globale|Art.8|1
+FF Global Short Duration Inc E MDist EUR|LU0718467177|Obblig. globale|Obblig. Globale|Art.8|3
+MSIF Global Bond Fund C|LU0176154598|Obblig. globale|Obblig. Globale|Art.8|1
+BGF World Bond Fund E2 EUR|LU0277197678|Obblig. globale|Obblig. Globale|Art.8|1
+FF Global Short Duration Inc E MInc EUR|LU0840141500|Obblig. globale|Obblig. Globale|Art.8|3
+MS Pictet Smart Income Strategy C ds EUR|LU3309596065|Obblig. Euro high yield|Obblig. High Yield|Art.6|N/D
+MS Pictet Smart Income Strategy R EUR|LU3280960991|Obblig. Euro high yield|Obblig. High Yield|Art.6|N/D
+Pictet Global High Yield HR EUR|LU0472949915|Obblig. globale high yield|Obblig. High Yield|Art.8|5
+Pictet Global High Yield HR dm EUR|LU0592897721|Obblig. globale high yield|Obblig. High Yield|Art.8|5
+Schroder EURO High Yield B Acc|LU1476607319|Obblig. Euro high yield|Obblig. High Yield|Art.8|4
+Schroder EURO High Yield B Dis|LU1476607822|Obblig. Euro high yield|Obblig. High Yield|Art.8|4
+Schroder Global High Yield B Acc EUR H|LU0189895229|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+Schroder Global High Yield B Dis EUR H|LU0587554196|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+JPM IF Global High Yield D Acc EUR H|LU0115103029|Obblig. globale high yield|Obblig. High Yield|Art.6|4
+FF US High Yield Fund A Acc EUR H|LU0337581549|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+Pictet EUR High Yield R EUR|LU0133807916|Obblig. Euro high yield|Obblig. High Yield|Art.8|5
+Pictet EUR High Yield R dm EUR|LU0592898299|Obblig. Euro high yield|Obblig. High Yield|Art.8|5
+GS Global HY Pf E (Acc.) (EUR-Hedged)|LU0304100257|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+JPM IF Global High Yield D Mth EUR H|LU1555763678|Obblig. globale high yield|Obblig. High Yield|Art.6|4
+FF Global High Yield Fund A EUR H|LU0740037295|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+JPM IF Global High Yield D Div EUR H|LU0848952700|Obblig. globale high yield|Obblig. High Yield|Art.6|4
+MSIF US Hi Yi Middle Mkt Bd Fd AH EUR|LU1610903871|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+BlackRock Glb High Yield Bond E5 H|LU0500207039|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+MSIF European HY Bond AX|LU0239679102|Obblig. Europa High Yield|Obblig. High Yield|Art.8|3
+MSIF European Hi Yi Bond Fund A EUR Acc|LU0073255761|Obblig. Europa High Yield|Obblig. High Yield|Art.8|3
+MSIF USD Short Duration HY Bd AH (EUR)|LU1610904176|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+FF European High Yield Fund E Acc EUR|LU0238209786|Obblig. Euro high yield|Obblig. High Yield|Art.8|3
+MSIF Gbl High Yield Bond Fd AHX EUR|LU2638073325|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+MSIF Gbl High Yield Bond Fd AH EUR|LU2638073671|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+MSIF USD Short Duration HY Bd CH (EUR)|LU1610903954|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+JPMF US High Yield Plus Bond D Div EUR H|LU0749328356|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|1
+Invesco Global High Yield A HAcc EUR|LU1775967950|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+MSIF US Hi Yi Middle Mkt Bd Fd CH EUR|LU1610903525|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+Invesco Global High Yield A H MDis EUR|LU1775968339|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+MSIF Gbl High Yield Bond Fd CHX EUR|LU2638072863|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+Invesco US High Yield Bond A HAcc EUR|LU0794787845|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+Invesco US High Yield Bond A HDis EUR|LU0794787928|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+MSIF Gbl High Yield Bond Fd CH EUR|LU2638072350|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+MSIF European HY Bond CX|LU1807328619|Obblig. Europa High Yield|Obblig. High Yield|Art.8|3
+MSIF European HY Bond C|LU0176162427|Obblig. Europa High Yield|Obblig. High Yield|Art.8|3
+JPMF Europe High Yield Bond D Acc EUR|LU0117897578|Obblig. Euro high yield|Obblig. High Yield|Art.8|1
+JPMF Europe HiYi ShDuration D Acc EUR|LU1533170467|Obblig. Europa High Yield|Obblig. High Yield|Art.8|4
+JPMF Europe High Yield Bond D Div EUR|LU0732490312|Obblig. Euro high yield|Obblig. High Yield|Art.8|1
+Nordea 1 Europ HY Sus Stars Bond E-EUR|LU1927799954|Obblig. Europa High Yield|Obblig. High Yield|Art.8|5
+JPMF Europe HiYi ShDuration D Div EUR|LU1549373071|Obblig. Europa High Yield|Obblig. High Yield|Art.8|4
+FF European High Yield Fund A EUR|LU0110060430|Obblig. Euro high yield|Obblig. High Yield|Art.8|3
+MSIF Gbl High Yield Bond Fd C USD|LU2638072277|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+MSIF Gbl High Yield Bond Fd CX USD|LU2638073085|Obblig. globale high yield|Obblig. High Yield|Art.8|4
+FF European High Yield Fund E MDist EUR|LU0718468068|Obblig. Euro high yield|Obblig. High Yield|Art.8|3
+FF Global High Yield Fund E MInc EUR H|LU0740037451|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+FF Global High Yield Fund E Acc EUR|LU0766124472|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+Amundi Funds US H-Y Bd F EUR C|LU1883863422|Obblig. Dollaro US high yield|Obblig. High Yield|Art.8|3
+Amundi Pioneer Global HY Bd F EUR QTD|LU1883836964|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+Amundi Pioneer Global HY Bd F EUR C|LU1883836881|Obblig. globale high yield|Obblig. High Yield|Art.8|3
+MSIF Emerging Mkt Debt Opport Fd A USD|LU2630425226|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|5
+BSF Em Mkts Short Dura Bd Fd E2H EUR Acc|LU1706560247|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.6|N/D
+GS Emg Mkts Debt Ptf E (Acc.) (EUR-H)|LU0556703741|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+Pictet Gbl Em Debt HR dm EUR|LU0592907629|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+Pictet Gbl Em Debt HR EUR|LU0280438648|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+FF Emerging Mkt Debt Fund A Acc EUR H|LU0337572712|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+BSF Em Mkts Short Dura Bd Fd E2 EUR Acc|LU1786037017|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.6|N/D
+MSIF Emerging Mkt Debt Opport Fd AH EUR|LU2784407020|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|5
+Pictet Emerging Debt Blend HR EUR|LU2049423820|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|4
+MSIF Emerging Mkt Local Inc Fd CR USD|LU2802096862|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+MSIF Emerging Mkt Local Inc Fd C USD|LU2802096516|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+Pictet Emerging Debt Blend R EUR|LU2049423663|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|4
+MSIF Emerging Mkt Local Inc Fd AH EUR|LU2802095542|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+MSIF Emerging Mkt Local Inc Fd AHR (EUR)|LU2802095625|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+JPMF Emerging Markets Debt D Acc EUR H|LU0117898204|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+FF Emerging Mkt Tot Ret Debt A Acc EUR H|LU1268459010|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+JPMF Emerging Markets Debt D Mth EUR H|LU1555762787|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+MSIF Emerging Mkt Local Inc Fd CH (EUR)|LU2802096607|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+MSIF Emerging Mkt Local Inc Fd CHR (EUR)|LU2802096789|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|5
+GC EM Debt Blend Prtf E Acc EUR Part H|LU0910636892|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|4
+Sviluppo Arancio|LU1766437575|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|5
+Pictet Em Loc Ccy Debt HR EUR|LU0340554327|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|4
+BGF ESG EM Local Currency Bd EUR Dis|LU1864665861|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|4
+BGF ESG EM Blended Bond EUR Dis|LU1864664625|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+Amundi Emerging Markets Bond F EUR C|LU1882452938|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+Amundi Emerging Markets Bond F EUR QTD|LU1882453076|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+BlackRock Emrg Mrkt Local Cur Bd E5 H|LU1062843260|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.6|3
+BlackRock Emrg Mrkt Local Cur Bd E2 H|LU0474536231|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.6|3
+JPMF EmergM Local Curr Debt D Mth EUR H|LU1555762944|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+BGF ESG EM Bond Fund E5H EUR|LU1864665358|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+GS Emg Mkts Debt Ptf E (Acc.)|LU0133266147|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+Pictet Em Loc Ccy Debt R dm EUR Dis|LU0785307660|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|4
+Pictet Em Loc Ccy Debt R EUR|LU0280437830|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|4
+SISF EM Debt Total Ret B Acc EUR H|LU0177222121|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+Schroder EM Debt Total Ret B Dis EUR H|LU0587553891|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+Invesco EM Local Debt A HDis 1 EUR|LU2065166238|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|3
+Invesco EM Local Debt A HAcc EUR|LU2040202058|Obblig. Paesi Emerg. Local Currency|Obblig. Emerging Markets|Art.8|3
+GS EM TR Bond Pf E (Acc.) (EUR-Hedged)|LU1706949028|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|2
+JPMF EmergM Local Curr Debt D Acc EUR|LU0332401040|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+JPMF EmergM Local Curr Debt D Div EUR|LU0503874298|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+MSIF Emerging Mkt Corp Debt AH (EUR)|LU0603408468|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+MSIF Emerging Mkt Corp Debt AHX (EUR)|LU0691070527|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+GS Asia HY Bd Ptf E (EUR Hg)|LU2255664455|Obblig. Asia|Obblig. Emerging Markets|Art.8|5
+GS Asia HY Bd Ptf E (Acc.) (EUR Hg)|LU2255664885|Obblig. Asia|Obblig. Emerging Markets|Art.8|5
+BGF China Bond Fund E2 H EUR|LU0803752129|Obblig. Asia|Obblig. Emerging Markets|Art.6|1
+BlackRock Asian Tiger Bond E2 H|LU1062842700|Obblig. Asia|Obblig. Emerging Markets|Art.6|5
+JPMF Emerging Markets Corp D Acc EUR H|LU0512128355|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+MSIF Emerging Mkt Corp Debt CHX (EUR)|LU1808493198|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+MSIF Emerging Mkt Corp Debt CH (EUR)|LU0845089696|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+JPMF Emerging Markets Corp D Mth EUR H|LU1555762514|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+Pictet Chinese Loc Ccy Dt HR EUR Acc|LU1759468884|Obblig. Paesi Emerg. Asia Local Ccy|Obblig. Emerging Markets|Art.8|4
+JPMF Emerging Markets Corp D Div EUR H|LU0714443768|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+Pictet ST Em Corp Bds HR dm EUR Dis|LU1077582671|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+Pictet ST Em Corp Bds HR EUR Acc|LU1055199159|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+Invesco Asian Flexible Bond AH|LU2305832938|Obblig. Asia|Obblig. Emerging Markets|Art.8|4
+DWS China Bonds LDH|LU0740830996|Obblig. Asia|Obblig. Emerging Markets|Art.6|3
+JPMF Emerging Markets InvG D Acc EUR H|LU0562246966|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+DWS China Bonds LCH|LU0632805262|Obblig. Asia|Obblig. Emerging Markets|Art.6|3
+FF Emerging Mkt Corp Debt A Acc EUR H|LU0900495853|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+BGF EM Corporate Bd Advanced EUR Dis|LU1864664112|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+DWS Asian Bonds LDH|LU0813324521|Obblig. Asia|Obblig. Emerging Markets|Art.6|3
+DWS Asian Bonds LCH|LU0813324364|Obblig. Asia|Obblig. Emerging Markets|Art.6|3
+BGF China Bond Fund E2 EUR|LU0764816798|Obblig. Asia|Obblig. Emerging Markets|Art.6|1
+Amundi EM Corp High Yield Bond F EUR QTD|LU1882458380|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|3
+DWS Asian Bonds LDMH|LU1880859894|Obblig. Asia|Obblig. Emerging Markets|Art.6|3
+MSIF Emerging Mkt Corp Debt CX|LU1808492976|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+MSIF Emerging Mkt Corp Debt C|LU0603408203|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+FF Emerging Mkt Corp Debt E MDist EUR H|LU0900496406|Obblig. Paesi Emerg.|Obblig. Emerging Markets|Art.8|1
+BlackRock Asian Tiger Bond Fund E2|LU0277197249|Obblig. Asia|Obblig. Emerging Markets|Art.6|5
+FF European Dividend Fund E EUR Acc|LU3158089444|Az. Europa|Az Europa|Art.8|5
+FF European Dividend Fund E EUR Mdist(G)|LU3158089527|Az. Europa|Az Europa|Art.8|5
+Nordea 1 Empower Europe Fund E EUR|LU3076185241|Az. Europa|Az Europa|Art.8|N/D
+FF Iberia Fund E Acc EUR|LU0115765678|Az. Spagna|Az Europa|Art.8|4
+FF Iberia Fund A EUR|LU0048581077|Az. Spagna|Az Europa|Art.8|4
+FF Nordic Fund A Acc EUR|LU0922334643|Az. paesi nordici|Az Europa|Art.8|5
+JPM IF Europe Strategic Div D Acc EUR|LU0169528261|Az. Europa|Az Europa|Art.8|5
+JPM IF Europe Strategic Div D Div EUR|LU0714182606|Az. Europa|Az Europa|Art.8|5
+JPM IF Europe Strategic Div D Mth EUR H|LU1555763249|Az. Europa|Az Europa|Art.8|5
+JPMF Europe Strategic Value D Acc EUR|LU0117858752|Az. Europa Value|Az Europa|Art.8|5
+Top Italia Arancio|LU0456302776|Az. Italia|Az Europa|Art.6|5
+GS Europe CORE Equ Pf E (Acc.)|LU0133265339|Az. Europa|Az Europa|Art.8|5
+JPMF Europe Equity Plus D Perf Acc EUR|LU0289214628|Az. Europa Growth|Az Europa|Art.8|5
+Nordea 1 Norwegian Equity Fund E-EUR|LU0173770354|Az. paesi nordici|Az Europa|Art.8|5
+JPMF Euroland Dynamic D Perf Acc EUR|LU0661986348|Az. Area Euro|Az Europa|Art.8|5
+JPMF Europe Equity D Acc EUR|LU0117858596|Az. Europa|Az Europa|Art.8|5
+FF Italy Fund E Acc EUR|LU0283901063|Az. Italia|Az Europa|Art.8|2
+JPMF Europe Small Cap D Acc EUR|LU0117859560|Az. Europa small cap|Az Europa|Art.8|5
+FF Italy Fund A EUR|LU0048584766|Az. Italia|Az Europa|Art.8|2
+JPMF Euroland Equity D Acc EUR|LU0117858166|Az. Area Euro|Az Europa|Art.8|4
+JPMF Europe Dynamic D Acc EUR|LU0119063039|Az. Europa|Az Europa|Art.8|4
+Amundi Funds European Eq Va F EUR C|LU1883315217|Az. Europa Value|Az Europa|Art.8|2
+Invesco Pan European Equity A Acc EUR|LU0028118809|Az. Europa|Az Europa|Art.8|2
+Invesco Pan European Equity A Dis EUR|LU0267985231|Az. Europa|Az Europa|Art.8|2
+DWS CROCI Euro LC|LU1769938041|Az. Area Euro|Az Europa|Art.8|2
+Invesco Pan European Equity E Acc EUR|LU0115141201|Az. Europa|Az Europa|Art.8|2
+JPMF Europe Dyn Smll Cap D Perf Acc EUR|LU0210075874|Az. Europa small cap|Az Europa|Art.8|5
+JPMF Europe Strategic Growth D Acc EUR|LU0117858679|Az. Europa Growth|Az Europa|Art.8|5
+Invesco Sust Pan Eur Systm Eq A Dis EUR|LU0482499141|Az. Europa|Az Europa|Art.8|4
+Invesco Sust Pan Eur Systm Eq A Acc EUR|LU0119750205|Az. Europa|Az Europa|Art.8|4
+Invesco Sust Pan Eur Systm Eq A HAcc EUR|LU1075213998|Az. Europa|Az Europa|Art.8|4
+Nordea 1 European Sus Stars Eq E-EUR|LU1706108062|Az. Europa|Az Europa|Art.8|3
+JPMF Europe Sustainable Equity D Acc EUR|LU1529809144|Az. Europa|Az Europa|Art.8|5
+Invesco Sust Pan Eur Systm Eq E Acc EUR|LU0119753308|Az. Europa|Az Europa|Art.8|4
+FF Germany Fund A Acc EUR|LU0261948227|Az. Germania|Az Europa|Art.8|4
+FF Germany Fund A EUR|LU0048580004|Az. Germania|Az Europa|Art.8|4
+Europa Arancio|LU1766436924|Az. Europa|Az Europa|Art.8|2
+Pictet Quest Europe Sustainable Eq R EUR|LU0144510053|Az. Europa|Az Europa|Art.8|4
+JPM IF Europe Select Equity D Acc EUR|LU0159405223|Az. Europa|Az Europa|Art.8|3
+FF European Dividend Fund A Acc EUR|LU0353647737|Az. Europa|Az Europa|Art.8|5
+Amundi Funds Euroland Eq F EUR C|LU1883304526|Az. Area Euro|Az Europa|Art.8|3
+BlackRock Continental European Flex C2|LU0224105808|Az. Europa|Az Europa|Art.8|1
+FF European Dividend Fund A EUR|LU0353647653|Az. Europa|Az Europa|Art.8|5
+Schroder ISF Europn Sust Eq B Acc|LU2022034933|Az. Europa|Az Europa|Art.8|2
+FF Europe Equity ESG A EUR|LU0088814487|Az. Area Euro|Az Europa|Art.8|2
+SISF European Smaller Comp B Acc EUR|LU0106238040|Az. Europa small cap|Az Europa|Art.8|2
+FF Sustainable Eurozone Equity A Acc EUR|LU0238202427|Az. Area Euro|Az Europa|Art.9|2
+Amundi European Eq ESG Improver F EUR C|LU2151176778|Az. Europa|Az Europa|Art.8|2
+FF European Growth Fund A EUR|LU0048578792|Az. Europa|Az Europa|Art.8|4
+FF Sustainable Eurozone Equity Fd A EUR|LU2219351876|Az. Area Euro|Az Europa|Art.9|2
+FF European Dividend Fund A QIncG EUR|LU0742537177|Az. Europa|Az Europa|Art.8|5
+FF European Dividend Fund A MIncG EUR|LU0857700040|Az. Europa|Az Europa|Art.8|5
+FF European Growth Fund E Acc EUR|LU0115764192|Az. Europa|Az Europa|Art.8|4
+FF European Larger Companies Fund A EUR|LU0119124278|Az. Europa|Az Europa|Art.8|3
+Amundi European Equit Small Cap F EUR C|LU1883307388|Az. Europa small cap|Az Europa|Art.8|4
+FF Europe Equity ESG E EUR Acc|LU0115764275|Az. Area Euro|Az Europa|Art.8|2
+FF European Larger Compani E Acc EUR|LU0119124435|Az. Europa|Az Europa|Art.8|3
+Nordea 1 Nordic Equity Fund E-EUR|LU0173770602|Az. paesi nordici|Az Europa|Art.8|2
+FF Sustainable Eurozone Equity E Acc EUR|LU0238202773|Az. Area Euro|Az Europa|Art.9|2
+GS Europe Enhanced Idx Sust Eq X Cap EUR|LU2098789501|Az. Europa|Az Europa|Art.8|4
+Nordea 1 Nordic Sus Stars Equity E-EUR|LU1079988538|Az. paesi nordici|Az Europa|Art.8|1
+European Smaller Companies A EUR|LU0061175625|Az. Europa small cap|Az Europa|Art.8|3
+FF European Smaller Companies E Acc EUR|LU0115764358|Az. Europa small cap|Az Europa|Art.8|3
+Nordea 1 Europ S&MCap Sus Star Eq E-EUR|LU0417818746|Az. Europa small cap|Az Europa|Art.8|2
+Schroder Europ Spec Situations B Acc|LU0246036106|Az. Europa|Az Europa|Art.8|1
+GS Europe Sustainable Equity X Cap EUR|LU1542714578|Az. Europa|Az Europa|Art.8|2
+FF European Dynamic Growth A EUR|LU0119124781|Az. Europa Growth|Az Europa|Art.8|1
+FF European Dynamic Growth E Acc EUR|LU0119124864|Az. Europa Growth|Az Europa|Art.8|1
+Amundi Funds US Pioneer Fd F EUR C|LU1883873140|Az. USA|Az USA|Art.8|4
+BlackRock US Flexible Eq C2 H|LU0200684933|Az. USA|Az USA|Art.8|2
+BlackRock US Flexible Equity Fund C2|LU0331288190|Az. USA|Az USA|Art.8|2
+GS US Sm Acc CORE Eq Pf E Acc Close|LU0234683018|Az. USA small cap|Az USA|Art.8|5
+GS US Sm Acc CORE Eq Pf E Acc Snap|LU0234682986|Az. USA small cap|Az USA|Art.8|5
+Pictet USA Index HR EUR Acc|LU0592905508|Az. USA|Az USA|Art.6|4
+Amundi Funds US Eq Research F EUR C|LU1883860089|Az. USA|Az USA|Art.8|1
+JPMF US Growth D Acc EUR H|LU0284208971|Az. USA Growth|Az USA|Art.8|3
+GS North Amer Enh Idx Sust Eq X C EUR hi|LU2327459918|Az. USA|Az USA|Art.8|4
+JPMF US Select Equity Plus D Acc EUR H|LU0281485184|Az. USA|Az USA|Art.8|3
+JPMF America Equity D Acc EUR H|LU0159059210|Az. USA|Az USA|Art.8|3
+Schroder US Large Cap B Acc EUR H|LU0271484411|Az. USA|Az USA|Art.8|3
+BlackRock US Basic Value Fund C2 Hedged|LU0200685583|Az. USA Value|Az USA|Art.6|4
+Schroder US Small & Mid-Cap Eq B Acc H|LU0334663316|Az. USA small cap|Az USA|Art.8|3
+MSIF US Value Fund AH EUR|LU2535287028|Az. USA Value|Az USA|Art.8|2
+JPM IF US Select Equity D Acc EUR H|LU0157183665|Az. USA|Az USA|Art.8|2
+Schroder US Large Cap B Acc EUR|LU0248185513|Az. USA|Az USA|Art.8|3
+America Arancio|LU1766436502|Az. USA Value|Az USA|Art.8|4
+GS US Small Cap Equity Ptf E (Acc.)|LU1829250049|Az. USA small cap|Az USA|Art.8|3
+JPMF US Value D Acc EUR H|LU0244270723|Az. USA Value|Az USA|Art.8|2
+BlackRock US Basic Value Fund E2|LU0171295891|Az. USA Value|Az USA|Art.6|4
+MSIF Calvert Sust US Eq Select Fd AH EUR|LU2459592494|Az. USA|Az USA|Art.9|1
+FF America Fund A Acc EUR H|LU0945775517|Az. USA|Az USA|Art.8|2
+MSIF Calvert Sust US Eq Select Fd CH EUR|LU2459594516|Az. USA|Az USA|Art.9|1
+Schroder US Small & Mid-Cap Eq B Acc EUR|LU0248178062|Az. USA small cap|Az USA|Art.8|3
+GS US Equity ESG Portfolio E Acc EUR-H|LU0433926119|Az. USA|Az USA|Art.8|1
+Amundi Funds US Eq Res Val F EUR C|LU1894684072|Az. USA Value|Az USA|Art.8|1
+America Fund A EUR|LU0069450822|Az. USA|Az USA|Art.8|2
+FF America Fund E Acc EUR|LU0115759606|Az. USA|Az USA|Art.8|2
+MSIF Calvert Sust US Eq Select Fd C USD|LU2459592734|Az. USA|Az USA|Art.9|1
+Nordea 1 North Am Sus Stars Eq E-EUR|LU0772958798|Az. USA|Az USA|Art.8|2
+GS US Equity ESG Portfolio E Acc|LU0234687605|Az. USA|Az USA|Art.8|1
+Fidelity Funds Global Value A Acc EUR|LU0261960354|Az. USA|Az USA|Art.8|1
+FF US Equity Fund A Acc EUR (Hedged)|LU0346393456|Az. USA Growth|Az USA|Art.8|2
+Amundi Funds US Eq Fda Gr F EUR C|LU1883855089|Az. USA Growth|Az USA|Art.8|2
+MSIF American Resilience Fund AH EUR Acc|LU2562895123|Az. USA|Az USA|Art.8|1
+MSIF American Resilience Fund CH EUR Acc|LU2562895636|Az. USA|Az USA|Art.8|1
+Fidelity Funds US Equity Fund E Acc EUR|LU0115760109|Az. USA Growth|Az USA|Art.8|2
+MSIF American Resilience Fund C USD Acc|LU2562895552|Az. USA|Az USA|Art.8|1
+FF Asia Pacific Dividend E EUR Qdist(G)|LU3155721932|Az. Asia Pacifico ex Giapp.|Az Pacifico|Art.8|5
+FF Asia Pacific Dividend Fund E EUR Ac|LU3155721429|Az. Asia Pacifico ex Giapp.|Az Pacifico|Art.8|5
+JPM IF Japan Strategic Value D Acc EUR H|LU0329206915|Az. Giappone|Az Pacifico|Art.8|5
+FF Japan Value Fund A EUR Hedged|LU0611489658|Az. Giappone|Az Pacifico|Art.8|5
+DWS CROCI Japan LCH|LU1769942233|Az. Giappone|Az Pacifico|Art.8|5
+JPM IF Japan Strategic Value D Acc EUR|LU0329206832|Az. Giappone|Az Pacifico|Art.8|5
+BlackRock Japan Flexible Eq E2 H|LU0277197835|Az. Giappone|Az Pacifico|Art.8|2
+GS Japan Equity Ptf E (Acc.) EUR-H Snap|LU0918755868|Az. Giappone|Az Pacifico|Art.8|2
+Pictet Japanese Eq Opp HR EUR|LU0650148405|Az. Giappone|Az Pacifico|Art.8|2
+FF Japan Value Fund A Acc EUR|LU0413543058|Az. Giappone|Az Pacifico|Art.8|5
+Invesco Japanese Equity Adv A HAcc EUR|LU0955866438|Az. Giappone|Az Pacifico|Art.8|2
+Invesco Japanese Equity Adv A HDis EUR|LU1960067707|Az. Giappone|Az Pacifico|Art.8|2
+Pictet Japanese Eq Select HR EUR|LU0248320581|Az. Giappone|Az Pacifico|Art.8|1
+FF Pacific Fund E Acc EUR|LU1116431997|Az. Pacifico|Az Pacifico|Art.8|4
+BlackRock Japan Small & MidCap Opp E2|LU0171289225|Az. Giappone small cap|Az Pacifico|Art.8|5
+MSIF Japanese Equity Fund C|LU0512094607|Az. Giappone|Az Pacifico|Art.8|5
+Nordea 1 Asian Stars Sus Eq Fd E-EUR|LU2152929753|Az. Asia Pacifico ex Giapp.|Az Pacifico|Art.8|3
+DI CROCI Japan LC|LU2751689634|Az. Giappone|Az Pacifico|Art.8|5
+GS Japan Equity Ptf E (Acc.) (Snap)|LU0133264795|Az. Giappone|Az Pacifico|Art.8|2
+FF Asian Smaller Companies A Acc EUR|LU0702159772|Az. Asia Pacifico ex Giapp.|Az Pacifico|Art.8|3
+Pictet Japanese Eq Opp R EUR|LU0255979584|Az. Giappone|Az Pacifico|Art.8|2
+FF Asian Smaller Companies Fd E Acc EUR|LU1116432292|Az. Asia Pacifico ex Giapp.|Az Pacifico|Art.8|3
+Pictet Japanese Eq Select R EUR|LU0255975913|Az. Giappone|Az Pacifico|Art.8|1
+FF Japan Equity ESG Fund A Acc EUR|LU0251130042|Az. Giappone|Az Pacifico|Art.8|1
+Fidelity Funds Japan Equity ESG A EUR|LU0069452018|Az. Giappone|Az Pacifico|Art.8|1
+FF Japan Equity ESG Fund E Acc EUR|LU0115766213|Az. Giappone|Az Pacifico|Art.8|1
+Amundi Funds India Equity Contra F2 EUR|LU3309607367|Az. India|Az Emerging markets|Art.8|N/D
+Fast Emerging Markets Fund A Acc EUR H|LU0688698975|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|5
+Fast Emerging Markets Fund A Acc EUR|LU1206943596|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|5
+Fast Emerging Markets Fund E Acc EUR|LU0650958076|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|5
+FF Emerging Markets Fund A Acc EUR H|LU1097728288|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+FF Asian Special Situations A Acc EUR H|LU0337569841|Az. paesi emerg. Asia|Az Emerging markets|Art.8|4
+GS EM Ex-China Equity Ptf E (Acc.)|LU2438696416|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|4
+DWS Brazilian Equities LC|LU0616856935|Az. Brasile|Az Emerging markets|Art.6|2
+SISF Emerging Markets B Acc EUR|LU0248177254|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|4
+Nordea 1 Emg exChina Sus Stars Eq E-EUR|LU2528868347|Az. Altri paesi emerg.|Az Emerging markets|Art.8|3
+SISF Global EM Opportun B Acc EUR|LU0279459704|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+Invesco EM ex-China Equ A Acc EUR|LU2790101757|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|5
+MSIF Sustainable EM Equity Fd C USD Acc|LU0176158821|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|4
+Emerging Markets Fund A EUR|LU0307839646|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+Invesco EM ex-China Equ A H Acc EUR|LU2790101831|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|5
+JPMF Emerging Markets Opp D Acc EUR|LU0846585023|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|2
+FF Emrg Europe Middle East & Africa A|LU0303816028|Az. paesi emerg. altre zone|Az Emerging markets|Art.6|5
+BlackRock Emerging Markets Eq Inc E5G H|LU0653880731|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|4
+BlackRock Emerging Markets Eq Inc E2 H|LU0653880657|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|4
+JPMF Emerging Markets Eq D Acc EUR H|LU0159050938|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+FF Emerging Markets Fund E Acc EUR|LU0115763970|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+MSIF Calvert Sus EM Eq Sel Fd AH EUR Acc|LU2459591504|Az. paesi emerg. Mondo|Az Emerging markets|Art.9|3
+FF Emrg Europe Middle East&Africa E Acc|LU0303816887|Az. paesi emerg. altre zone|Az Emerging markets|Art.6|5
+MSIF Calvert Sus EM Eq Sel Fd CH EUR Acc|LU2459591769|Az. paesi emerg. Mondo|Az Emerging markets|Art.9|3
+GS EM Enh Idx Sust Eq X Cap EUR hedged i|LU2327459751|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+SISF Frontier Markets Equity B Acc EUR|LU2407914048|Az. paesi emerg. Mondo|Az Emerging markets|Art.6|5
+GS EM CORE Equity Ptf E (Acc.) (Close)|LU1651858117|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|4
+Amundi Emg Eurp Mid East&Africa F EUR C|LU1882448407|Az. paesi emerg. altre zone|Az Emerging markets|Art.8|5
+JPMF Emerging Markets Dividend D Acc EUR|LU0862450516|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+JPMF Emerging Markets Dividend D Mth EUR|LU1555762860|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+Blackrock Emerg Markets Ex-China C2 EUR|LU2719174653|Az. Altri paesi emerg.|Az Emerging markets|Art.6|N/D
+MSIF Calvert Sus EM Eq Sel Fd C USD Acc|LU2459591843|Az. paesi emerg. Mondo|Az Emerging markets|Art.9|3
+JPMF Emerging Markets Equity D Acc EUR|LU0217576833|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+GS EM Equity Ptf E (Acc.)|LU0133267202|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|2
+JPMF Emerging Markets Dividend D Div EUR|LU0862450607|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|3
+FF Asian Special Situations E Acc EUR|LU0778324086|Az. paesi emerg. Asia|Az Emerging markets|Art.8|4
+GS EM Equity ESG Pf E (Acc) (EUR)|LU1966774298|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|2
+JPMF Greater China D Acc EUR|LU0522352946|Az. Grande Cina|Az Emerging markets|Art.8|3
+JPMF China A-Sh Opp D Acc EUR|LU1706168710|Az. Cina|Az Emerging markets|Art.8|3
+JPM MEA & Emerg Europe Oppties D acc EUR|LU2539337043|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|5
+JPM MEA and EM Europe Oppo D acc EUR Hdg|LU2659281880|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|5
+Invesco China AShare Qual Cor Eq A HAcc€|LU2091568498|Az. Cina|Az Emerging markets|Art.8|1
+Invesco China AShare Qual Cor Eq E HAcc€|LU2091568902|Az. Cina|Az Emerging markets|Art.8|1
+Nordea 1 Stable EM Equity Fund E-EUR|LU0637343731|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|2
+FF Greater China Fund E Acc EUR|LU0115765595|Az. Grande Cina|Az Emerging markets|Art.8|4
+Nordea 1 Emerging Sus Stars Eq E-EUR|LU0602538620|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+FF Asia Equity ESG A EUR|LU0069452877|Az. paesi emerg. Asia|Az Emerging markets|Art.8|2
+Emergente Arancio|LU1766436841|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+FF Asia Equity ESG E EUR Acc|LU0115768185|Az. paesi emerg. Asia|Az Emerging markets|Art.8|2
+FF EM Equity ESG A EUR|LU1102505689|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+GS Asia Equity Portfolio E (Acc.)|LU0133264282|Az. paesi emerg. Asia|Az Emerging markets|Art.8|2
+FF China Innovation Fund A Acc EUR|LU0455706654|Az. Cina|Az Emerging markets|Art.8|5
+JPMF EmergMa Smll Cap D Perf Acc EUR|LU0318933487|Az. paesi emerg. Mondo|Az Emerging markets|Art.8|1
+JPMF Asean Equity D Acc EUR|LU0441853263|Az. paesi emerg. Asia|Az Emerging markets|Art.8|4
+DWS Chinese Equities LC|LU0273157635|Az. Cina|Az Emerging markets|Art.6|3
+JPMF China D Acc EUR|LU0522352607|Az. Cina|Az Emerging markets|Art.8|2
+FF China Consumer Fund A EUR|LU0594300252|Az. Cina|Az Emerging markets|Art.8|1
+FF China Consumer Fund E Acc EUR|LU0766124126|Az. Cina|Az Emerging markets|Art.8|1
+FF ASEAN Fund E Acc EUR|LU0840140791|Az. paesi emerg. Asia|Az Emerging markets|Art.8|4
+Amundi Funds China Equity F EUR C|LU1882446377|Az. Cina|Az Emerging markets|Art.8|3
+Amundi Funds India Equity Contra F EUR|LU3015123337|Az. India|Az Emerging markets|Art.8|N/D
+GS India Equity Portfolio E (Acc.)|LU0333810850|Az. India|Az Emerging markets|Art.8|4
+FF India Focus Fund A EUR|LU0197230542|Az. India|Az Emerging markets|Art.8|3
+JPMF India D Acc EUR|LU0522352516|Az. India|Az Emerging markets|Art.8|1
+BlackRock World Gold Fund C2|LU0331289594|Az. Oro|Commodities|Art.6|2
+BlackRock World Mining Fund C2|LU0331290337|Az. energia, materie prime, oro|Commodities|Art.6|4
+BlackRock World Gold Fund C2 Hedged|LU0326422762|Az. Oro|Commodities|Art.6|2
+BGF Natural Resources E5G Hedged EUR Dis|LU0612319946|Az. energia, materie prime, oro|Commodities|Art.6|2
+BlackRock World Mining Fund C2 Hedged|LU0326424974|Az. energia, materie prime, oro|Commodities|Art.6|4
+BGF Natural Resources E2 EUR|LU0628613639|Az. energia, materie prime, oro|Commodities|Art.6|2
+Materie Prime Arancio|LU1766437062|Commodities|Commodities|Art.6|N/D
+BGF Sustainable Energy Fund C2 EUR|LU0331286574|Az. energia, materie prime, oro|Commodities|Art.9|2
+Pictet Clean Energy Transition HR EUR Ac|LU0650147852|Az. energia, materie prime, oro|Commodities|Art.9|4
+Pictet Clean Energy Transition R EUR Acc|LU0280435461|Az. energia, materie prime, oro|Commodities|Art.9|4
+SISF Global Alt Energy B Acc EUR H|LU2075271812|Az. energia, materie prime, oro|Commodities|Art.9|1
+Invesco Energy Trans Enable A H Acc EUR|LU0367024519|Az. energia, materie prime, oro|Commodities|Art.9|2
+Invesco Energy Trans Enable E Acc EUR|LU0123358656|Az. energia, materie prime, oro|Commodities|Art.9|2
+Pictet Timber HR EUR|LU0434580436|Az. energia, materie prime, oro|Commodities|Art.9|1
+Pictet Timber R EUR Acc|LU0340559805|Az. energia, materie prime, oro|Commodities|Art.9|1
+Amundi Global MultiA Cons F EUR QTD|LU3129351121|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|N/D
+ING Aria Gbl Index Prtf Conserv IT Acc|LU2907135284|Bilanc. Prud. Global|Flex bassa volatilità|Art.6|N/D
+ING Aria Gbl Index Prtf ConservIT Dis|LU2907135367|Bilanc. Prud. Global|Flex bassa volatilità|Art.6|N/D
+ING Aria Gbl Index Prtf Very Def IT Acc|LU2907136506|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|N/D
+ING Aria Gbl Index Prtf Very Def IT Dis|LU2907136688|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|N/D
+FF Multi Asset Dynamic Inf E EUR Acc Hdg|LU1431865127|Flessibili prudenti globale|Flex bassa volatilità|Art.6|5
+FF Multi Asset Dynamic Inf A EUR Hdg|LU1431864823|Flessibili prudenti globale|Flex bassa volatilità|Art.6|5
+FF Gbl MA Growth&Income Fd E Acc EUR H|LU0365263192|Bilanc. Prud. Dollaro US|Flex bassa volatilità|Art.8|3
+FF Multi Asset Dynamic Inf A EUR Acc|LU0251130554|Flessibili prudenti globale|Flex bassa volatilità|Art.6|5
+FF Gbl MA Growth&Income Fd E Acc EUR|LU0267388147|Bilanc. Prud. Dollaro US|Flex bassa volatilità|Art.8|3
+FF Global MA Defensive Fd E Acc EUR|LU0393653240|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|4
+FF Multi Asset Dynamic Inf A EUR Acc|LU0056886558|Flessibili prudenti globale|Flex bassa volatilità|Art.6|5
+Schroder Gbl Multi-Asst Inc B Acc EUR H|LU0757360614|Flessibili prudenti globale|Flex bassa volatilità|Art.8|4
+Schroder Gbl Multi-Asst Inc B Dis EUR H|LU0757361182|Flessibili prudenti globale|Flex bassa volatilità|Art.8|4
+FF Gbl MA Growth&Income Fd A EUR|LU0267387503|Bilanc. Prud. Dollaro US|Flex bassa volatilità|Art.8|3
+FF Global MA Defensive Fd A EUR|LU0413543991|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|4
+FF Global Multi Asst Inc A Acc EUR H|LU0987487336|Flessibili prudenti globale|Flex bassa volatilità|Art.8|2
+Pictet Multi Asset Gbl Opp R EUR Acc|LU0941349275|Flessibili prudenti globale|Flex bassa volatilità|Art.8|5
+Pictet Multi Asset Gbl Opp R dm EUR|LU1116037828|Flessibili prudenti globale|Flex bassa volatilità|Art.8|5
+Invesco Pan European High Inc A MDis EUR|LU1097692153|Bilanc. Prud. Europa|Flex bassa volatilità|Art.8|3
+Crescita Arancio|LU1766436684|Flessibili prudenti globale|Flex bassa volatilità|Art.6|4
+Invesco Pan European High Inc A Acc EUR|LU0243957239|Bilanc. Prud. Europa|Flex bassa volatilità|Art.8|3
+Invesco Pan European High Inc A QDis EUR|LU0243957312|Bilanc. Prud. Europa|Flex bassa volatilità|Art.8|3
+FF Global Multi Asst Inc E Acc EUR H|LU1116430676|Flessibili prudenti globale|Flex bassa volatilità|Art.8|2
+Amundi Gbl Multi-Asset Conserv F EUR C|LU1883329788|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|3
+Invesco Pan European High Inc E Acc EUR|LU0243957742|Bilanc. Prud. Europa|Flex bassa volatilità|Art.8|3
+JPM IF Glb Inc Conservative D Acc EUR|LU1458464713|Flessibili prudenti globale|Flex bassa volatilità|Art.8|3
+JPM IF Glb Inc Conservative D Mth EUR|LU1555764056|Flessibili prudenti globale|Flex bassa volatilità|Art.8|3
+MSIM Gbl Bal Inc AR EUR D|LU1092475372|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|1
+Prospettiva Arancio|LU1766437229|Bilanc. Prud. Global|Flex bassa volatilità|Art.6|3
+JPM IF Glb Inc Conservative D Div EUR|LU1458464804|Flessibili prudenti globale|Flex bassa volatilità|Art.8|3
+MSIM Gbl Bal Inc CR EUR D|LU1135010228|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|1
+ING Impact Fund Moderate IT Acc|LU2709536978|Bilanc. Prud. Global|Flex bassa volatilità|Art.9|N/D
+GS Global MA Conserv Pf E Acc EUR H|LU1057461219|Bilanc. Prud. Dollaro US|Flex bassa volatilità|Art.8|1
+FF Global Multi Asst Inc A Acc EUR|LU1116430247|Flessibili prudenti globale|Flex bassa volatilità|Art.8|2
+DWS Conservative Opportunities LC|LU2034326152|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|2
+DWS Conservative Opportunities LD|LU2034326236|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|2
+Profilo Moderato Arancio|LU0456303154|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|2
+BlackRock ESG Glb Conservative Inc E5|LU1845137576|Bilanc. Prud. Global|Flex bassa volatilità|Art.8|2
+Nordea 1 Balanced Income Fund E-EUR|LU0637308312|Bilanc. Prud. Global|Flex bassa volatilità|Art.6|1
+DWS Invest StepIn Global EQ High Conv LC|LU3303497518|Bilanc. Prud. Global|Flex media alta volatilità|Art.8|N/D
+FAST Global Inc Build Evo 50 E EUR Qdis|LU3212530912|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|N/D
+FAST Global Inc Builder Evo 50 E EUR Acc|LU3212530755|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|N/D
+FAST Global Income Builder 50 E EUR Acc|LU3034126386|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|N/D
+ING Aria Gbl Index Prtf Balanced IT Acc|LU2907135797|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|N/D
+ING Aria Gbl Index Prtf Balanced IT Dis|LU2907135870|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|N/D
+ING Aria Global Index Prtf Active IT Acc|LU2907136175|Bilanc. Aggress. Global|Flex media alta volatilità|Art.6|N/D
+ING Aria Global Index Prtf Active IT Dis|LU2907136258|Bilanc. Aggress. Global|Flex media alta volatilità|Art.6|N/D
+Invesco Step-In Inc Build I A EUR Qdist|LU3282801839|Fless. Global|Flex media alta volatilità|Art.8|N/D
+JPM Glb Equit Abs Alpha A perf acc EUR H|LU3133821762|Perf. ass. Long/Short eq.|Flex media alta volatilità|Art.8|N/D
+JPM Glb Equity Abs Alpha A perf acc EUR|LU3133821689|Perf. ass. Long/Short eq.|Flex media alta volatilità|Art.8|N/D
+JPM Global Equity Abs Alpha D Perf HEUR|LU3272121685|Perf. ass. Long/Short eq.|Flex media alta volatilità|Art.8|N/D
+MS Pictet Road To Megatrds Protect 85 R€|LU3190851140|Fless. Global|Flex media alta volatilità|Art.6|N/D
+MS Pictet Smart Road To Divid R ds EUR|LU3245544591|Fless. Global|Flex media alta volatilità|Art.8|N/D
+MS Pictet Smart Road To Dividends R EUR|LU3245543866|Fless. Global|Flex media alta volatilità|Art.8|N/D
+MSIF Gbl Opportunity Horizon 2030 A Acc|LU3253228020|Fless. Global|Flex media alta volatilità|Art.8|N/D
+MSIF Global Opportunity Horizon 2030 AH1|LU3255355391|Fless. Global|Flex media alta volatilità|Art.8|N/D
+Nordea 1 SICAV Smart Step E EUR Dist|LU3295620770|Bilanc. Aggress. Global|Flex media alta volatilità|Art.8|N/D
+Pictet Smart Road To AI R EUR|LU3040399225|Fless. Global|Flex media alta volatilità|Art.6|N/D
+SISF Inflation Plus B Acc EUR|LU0107768136|Fless. Global|Flex media alta volatilità|Art.6|5
+JPMF Europe Eq Abs Alpha D Perf Acc EUR|LU1176912761|Perf. ass. Long/Short eq.|Flex media alta volatilità|Art.8|5
+BlackRock Syst Asia Pac Eq Abs Ret E2H€|LU1508158513|Perf. assoluta Market Neutral Euro|Flex media alta volatilità|Art.8|5
+BlackRock Systemat Style Factor E2 H EUR|LU1373035234|Perf. assoluta multi-strategia|Flex media alta volatilità|Art.6|5
+BlackRock Syst Glb Eq Absol Return E2H €|LU1069251277|Perf. ass. Long/Short eq.|Flex media alta volatilità|Art.6|5
+BSF Dynamic Diversi Gwth Fd E2 EUR Acc|LU0586678897|Fless. Global|Flex media alta volatilità|Art.8|4
+Invesco Sustainable Allocation A Acc EUR|LU1701702372|Fless. Global|Flex media alta volatilità|Art.8|5
+Invesco Sustainable Allocation E Acc EUR|LU1701702703|Fless. Global|Flex media alta volatilità|Art.8|5
+JPMF Asia Pacific Income D Mth EUR H|LU1555762357|Flessibili Dollaro US|Flex media alta volatilità|Art.8|3
+FF Gbl Multi Asset Dynamic Fd E EUR H|LU1431864310|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+FF Gbl Multi Asset Dynamic Fd A Dis EURH|LU1431864153|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+JPMF Total EmergM Inc D Acc EUR|LU0972618812|Flessibili Dollaro US|Flex media alta volatilità|Art.8|4
+JPMF Total EmergM Inc D Mth EUR|LU1555763165|Flessibili Dollaro US|Flex media alta volatilità|Art.8|4
+JPM IF Global Income D Div EUR|LU0404220724|Fless. Global|Flex media alta volatilità|Art.8|3
+JPM IF Global Income D Acc EUR|LU0740858492|Fless. Global|Flex media alta volatilità|Art.8|3
+JPMF EmergM Strat D Perf Acc EUR H|LU0599214011|Perf. assoluta tassi|Flex media alta volatilità|Art.8|5
+Reddito Arancio|LU1766437492|Fless. Global|Flex media alta volatilità|Art.8|3
+JPM IF Global Income D Mth EUR|LU1555763835|Fless. Global|Flex media alta volatilità|Art.8|3
+JPMF Total EmergM Inc D Div EUR|LU1048318692|Flessibili Dollaro US|Flex media alta volatilità|Art.8|4
+Amundi Global Multi-Asset F EUR C|LU1883328384|Fless. Global|Flex media alta volatilità|Art.8|4
+BSF Global Event Driven Fund E2H EUR Acc|LU1278928574|Perf. Ass. Arbitr.Fus.-acquis. Euro|Flex media alta volatilità|Art.6|1
+FF Global Multi Asset Dynamic A Acc EUR|LU1431863932|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+Pictet Global Multi Asset Theme R EUR|LU0725974603|Fless. Global|Flex media alta volatilità|Art.6|3
+BGF Global Allocation Fund C2 Hedged EUR|LU0212926058|Fless. Global|Flex media alta volatilità|Art.6|3
+BlackRock ESG Multi-Asset Fund C2|LU0147384282|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|2
+JPMF EmergM Strat D Perf Div EUR H|LU1016062520|Perf. assoluta tassi|Flex media alta volatilità|Art.8|5
+BlackRock Systematic Style Factor E2 EUR|LU1373035150|Perf. assoluta multi-strategia|Flex media alta volatilità|Art.6|5
+FF Global Multi Asset Dynamic A EUR Inc|LU1431864070|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+Amundi Funds Income Opportunities F EUR|LU3015123253|Fless. Global|Flex media alta volatilità|Art.8|4
+ING Impact Fund Dynamic IT Acc|LU2709537273|Bilanc. Aggress. Global|Flex media alta volatilità|Art.9|N/D
+Invesco Global Income A Acc EUR|LU1097688714|Fless. Global|Flex media alta volatilità|Art.8|4
+Invesco Global Income A QDis EUR|LU1097688805|Fless. Global|Flex media alta volatilità|Art.8|4
+GS Global MA Growth Ptf E Acc EUR-Part H|LU1057463694|Bilanc. aggress. Dollaro US|Flex media alta volatilità|Art.8|3
+SISF Global Diversified Growth B Acc EUR|LU0776410846|Fless. Global|Flex media alta volatilità|Art.8|5
+BGF Dynamic High Income Fund E5 H EUR|LU1728558732|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+Schroder Gbl Multi-Asset Bal B Dis|LU0776414913|Fless. Global|Flex media alta volatilità|Art.8|3
+Schroder Gbl Multi-Asset Bal B Acc|LU0776414244|Fless. Global|Flex media alta volatilità|Art.8|3
+Rendita Arancio|LU0280766147|Fless. Global|Flex media alta volatilità|Art.6|3
+GS Gbl Str Macro Bd Pf E (Acc.) EUR-H|LU1111995665|Perf. assoluta tassi|Flex media alta volatilità|Art.6|3
+Invesco Global Income E Acc EUR|LU1097689522|Fless. Global|Flex media alta volatilità|Art.8|4
+Invesco Global Income E QDis EUR|LU1097689795|Fless. Global|Flex media alta volatilità|Art.8|4
+ING Impact Fund Active IT Acc|LU2709537190|Bilanc. Aggress. Global|Flex media alta volatilità|Art.9|N/D
+SISF Dynamic Opportunities B EUR Acc|LU2097342492|Fless. Global|Flex media alta volatilità|Art.8|4
+ING Impact Fund Balanced IT Acc|LU2709536895|Bilanc. Equil. Global|Flex media alta volatilità|Art.9|N/D
+BGF Global Allocation Fund C2 EUR|LU0331284793|Fless. Global|Flex media alta volatilità|Art.6|3
+JPMF Global Mult Strat Inc D Acc EUR|LU0697242567|Fless. Global|Flex media alta volatilità|Art.6|2
+BlackRock Glb Multi-Asset Inc E2 H|LU1062843690|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+Profilo Dinamico Arancio|LU0456302933|Bilanc. Aggress. Global|Flex media alta volatilità|Art.8|3
+JPMF Global Mult Strat Inc D Div EUR|LU0697242641|Fless. Global|Flex media alta volatilità|Art.6|2
+BlackRock Glb Multi-Asset Inc E5G H|LU0784385501|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+SISF Euro Cdt Convict Shrt Drt B Dist QV|LU1476607079|Perf. assoluta tassi|Flex media alta volatilità|Art.8|4
+SISF Euro Cdt Convict Shrt Drt B Acc|LU1476606857|Perf. assoluta tassi|Flex media alta volatilità|Art.8|4
+BlackRock Glb Multi-Asset Inc E9|LU1294567109|Flessibili Dollaro US|Flex media alta volatilità|Art.6|2
+GS Gb Dyn Bd Plus Pf E (Acc.) EUR-H|LU0600010143|Perf. assoluta tassi|Flex media alta volatilità|Art.8|4
+GS Global MA Balanced E Acc (EUR-Part H)|LU1057462456|Bilanc. Equil. Dollaro US|Flex media alta volatilità|Art.8|1
+JPMF Diversified Risk D Acc EUR H|LU0875418351|Perf. assoluta multi-strategia|Flex media alta volatilità|Art.6|3
+Invesco Asia Asset Allocation A HDis EUR|LU1075207594|Bilanc. Equil. Dollaro US|Flex media alta volatilità|Art.8|2
+Invesco Asia Asset Allocation A HAcc EUR|LU0482498259|Bilanc. Equil. Dollaro US|Flex media alta volatilità|Art.8|2
+Profilo Equilibrato Arancio|LU0456303071|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|2
+BlackRock Systemat US Eq Abs Retrn E2 H€|LU1266592614|Perf. assoluta Market Neutral Euro|Flex media alta volatilità|Art.8|2
+JPM IF Global Balanced D Acc EUR|LU0115099839|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|2
+FAST Gb MultiAsset Thematic 60 A Acc EUR|LU2597975940|Bilanc. Aggress. Global|Flex media alta volatilità|Art.8|N/D
+GS Abs Return Track Pf E (Acc.) EUR-H|LU1103308125|Perf. ass. USD|Flex media alta volatilità|Art.6|2
+MSIF Global Balanced Fund A|LU1439782738|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|1
+FF European Multi Asset Inc E Acc EUR|LU0283900842|Bilanc. Equilib. Europa|Flex media alta volatilità|Art.8|4
+FAST Gb MultiAsset Thematic 60 E Acc EUR|LU2597976088|Bilanc. Aggress. Global|Flex media alta volatilità|Art.8|N/D
+MSIF Global Balanced Fund C|LU1439782902|Bilanc. Equil. Global|Flex media alta volatilità|Art.8|1
+Pictet Smart Road To Megatrends R EUR|LU2954909003|Fless. Global|Flex media alta volatilità|Art.8|N/D
+Pictet Road To Megatrends 2028 R EUR|LU2729721840|Fless. Global|Flex media alta volatilità|Art.6|N/D
+GS Patrimonial Bal Eur Sus X Cap EUR hii|LU0121217920|Bilanc. Equilib. Europa|Flex media alta volatilità|Art.8|2
+Invesco Trans Global Income E Acc EUR|LU2708676346|Bilanc. Equil. Global|Flex media alta volatilità|Art.9|2
+Invesco Transition Global Inc A Acc EUR|LU2530422497|Bilanc. Equil. Global|Flex media alta volatilità|Art.9|2
+Invesco Transition Global Inc A Dis EUR|LU2530422570|Bilanc. Equil. Global|Flex media alta volatilità|Art.9|2
+JPMF Multi-Manager Alt D Acc EUR H|LU1303368333|Perf. ass. USD|Flex media alta volatilità|Art.8|1
+Nordea 1 Stable Return Fund E-EUR|LU0227385266|Fless. Global|Flex media alta volatilità|Art.8|1
+JPM IF Global Macro Opp D Acc EUR|LU0115098948|Perf. assoluta multi-strategia|Flex media alta volatilità|Art.8|2
+JPM IF Global Macro D Acc EUR H|LU0917670829|Flessibili Dollaro US|Flex media alta volatilità|Art.8|2
+JPM Consumer Long-Short A perf acc - EUR|LU3114270328|Az. beni di consumo|Altro azionario|Art.8|N/D
+JPM Consumer Long-Short A perf acc EUR H|LU3114270245|Az. beni di consumo|Altro azionario|Art.8|N/D
+BGF Next Generation Technology E2 EUR|LU1917164938|Az. tecnologia|Altro azionario|Art.8|2
+BlackRock World Financials Fund C2|LU0331289321|Az. servizi finanziari|Altro azionario|Art.8|3
+BGF World Technology Fund E2 EUR|LU0171310955|Az. tecnologia|Altro azionario|Art.8|4
+Pictet Robotics HR EUR|LU1279335027|Az. tecnologia|Altro azionario|Art.8|3
+Global Technology Fund A EUR Dist|LU0099574567|Az. tecnologia|Altro azionario|Art.8|4
+Pictet Robotics R EUR|LU1279334483|Az. tecnologia|Altro azionario|Art.8|3
+FF Global Technology Fund E Acc EUR|LU0115773425|Az. tecnologia|Altro azionario|Art.8|4
+FF Technology Opportunities A Acc EUR|LU1881514001|Az. telecomunicazioni|Altro azionario|Art.8|1
+JPMF Thema Gen Therapies D Acc EUR H|LU2091933452|Az. salute - farmaceutico|Altro azionario|Art.8|3
+DWS Artificial Intelligence LC|LU1863263346|Az. tecnologia|Altro azionario|Art.8|4
+JPMF US Technology D Acc EUR|LU0159053015|Az. tecnologia|Altro azionario|Art.8|2
+SISF Robotics and Automation B Acc EUR H|LU2097341684|Az. industria|Altro azionario|Art.8|2
+SISF Global Climate Leaders B Acc EUR H|LU2391338436|Az. ambiente|Altro azionario|Art.8|5
+GS Global Infra Equ Ptf E EUR|LU1533064868|Az. Servizi di pubblica utilita|Altro azionario|Art.8|2
+GS Global Infra Equ Ptf E (Acc.) (EUR)|LU1533064785|Az. Servizi di pubblica utilita|Altro azionario|Art.8|2
+BlackRock Future of Transport Fund E2|LU1917164342|Az. tecnologia|Altro azionario|Art.9|1
+MSIF Calvert Climate Aligned Fund AH EUR|LU2459593625|Az. ambiente|Altro azionario|Art.9|5
+MSIF Calvert Climate Aligned Fund CH EUR|LU2459593971|Az. ambiente|Altro azionario|Art.9|5
+Pictet Positive Change HR EUR|LU2478780252|Az. ambiente|Altro azionario|Art.8|4
+Schroder Global Cities B Acc EUR H|LU0224509215|Az. real estate Mondo|Altro azionario|Art.9|3
+MSIF Calvert Sust Dvlp Eu Eq Sl Fd A EUR|LU2459592908|Az. ambiente|Altro azionario|Art.9|5
+MSIF Calvert Sus Dvlp Mk Eq Sl Fd AH EUR|LU2459595752|Az. ambiente|Altro azionario|Art.9|5
+MSIF Calvert Sust Dvlp Eu Eq Sl Fd C EUR|LU2459590449|Az. ambiente|Altro azionario|Art.9|5
+MSIF Calvert Sus Dvlp Mk Eq Sl Fd CH EUR|LU2459593112|Az. ambiente|Altro azionario|Art.9|5
+Nordea 1 Global Climate & Envir E-EUR|LU0348927251|Az. ambiente|Altro azionario|Art.9|3
+Invesco Global Inc RE Secur A HAcc EUR|LU1981112870|Az. real estate Mondo|Altro azionario|Art.8|3
+GS Gbl Environm Impact Eq Pf E Acc|LU2106861268|Az. ambiente|Altro azionario|Art.9|1
+Amundi Funds Global Eq Resp F EUR C|LU1883319805|Az. ambiente|Altro azionario|Art.8|5
+Schroder Healthcare Innovat B Acc EUR H|LU2075272034|Az. salute - farmaceutico|Altro azionario|Art.8|3
+Pictet Positive Change R EUR|LU2478778942|Az. ambiente|Altro azionario|Art.8|4
+GS Gb Futur RE&Infra Eq Ptf E Acc|LU2508670697|Az. Servizi di pubblica utilita|Altro azionario|Art.8|1
+BlackRock World Real Estate Secur E2 EUR|LU1219733679|Az. real estate Mondo|Altro azionario|Art.8|3
+Nordea 1 Global Disruption Fund E-EUR|LU1940855320|Az. tecnologia|Altro azionario|Art.8|3
+JPMF Europe Dynamic Techno D Acc EUR|LU0117884675|Az. tecnologia|Altro azionario|Art.8|1
+JPMF Global Healthcare D Acc EUR|LU1021349151|Az. salute - farmaceutico|Altro azionario|Art.8|2
+FF Global Financial Services A EUR|LU0114722498|Az. servizi finanziari|Altro azionario|Art.8|2
+Invesco Global Inc RE Secur E Acc EUR|LU0367026050|Az. real estate Mondo|Altro azionario|Art.8|3
+MSIF Calvert Climate Aligned Fund C USD|LU2459593542|Az. ambiente|Altro azionario|Art.9|5
+Schroder Healthcare Innovat B Acc EUR|LU2027363196|Az. salute - farmaceutico|Altro azionario|Art.8|3
+FF Global Financial Services E Acc EUR|LU0114722738|Az. servizi finanziari|Altro azionario|Art.8|2
+MSIF Calvert Sus Dvlp Mk Eq Sl Fd C USD|LU2459595679|Az. ambiente|Altro azionario|Art.9|5
+FF Water & Waste A EUR Acc|LU1892829828|Az. Servizi di pubblica utilita|Altro azionario|Art.8|1
+Pictet Gbl Env Opp R EUR Acc|LU0503631987|Az. ambiente|Altro azionario|Art.9|2
+Pictet Water R EUR Acc|LU0104885248|Az. Servizi di pubblica utilita|Altro azionario|Art.9|2
+FF Global Consumer Brands E EUR Acc Hdg|LU0840141096|Az. beni di consumo|Altro azionario|Art.8|2
+FF Global Healthcare A EUR|LU0114720955|Az. salute - farmaceutico|Altro azionario|Art.8|2
+FF Global Healthcare E EUR Acc|LU0114721177|Az. salute - farmaceutico|Altro azionario|Art.8|2
+FF Global Consumer Brands Fund A EUR|LU0114721508|Az. beni di consumo|Altro azionario|Art.8|2
+FF Global Consumer Brands Fund E EUR Acc|LU0840140957|Az. beni di consumo|Altro azionario|Art.8|2
+Pictet Nutrition R EUR|LU0366534773|Az. beni di consumo|Altro azionario|Art.9|1
+Pictet Longevity R EUR|LU0255978859|Az. salute - farmaceutico|Altro azionario|Art.8|1
+GS Global Social Impact Eq X Cap EUR|LU0332192888|Az. tecnologia|Altro azionario|Art.9|2
+BGF Step Into Eq High Inc 2030 E2 EUR|LU3247021721|Az. globale|Az globale|Art.6|N/D
+BGF Step Into Eq High Inc 2030 E5 EUR|LU3247021994|Az. globale|Az globale|Art.6|N/D
+ING Aria Gbl Index Prtf Dynamic IT Acc|LU2907136928|Az. globale|Az globale|Art.8|N/D
+ING Aria Gbl Index Prtf Dynamic IT Dis|LU2907137066|Az. globale|Az globale|Art.8|N/D
+JPM IF Global Select Equity D Acc EUR H|LU0289476409|Az. globale|Az globale|Art.8|N/D
+SISF Global Equity Impact B Acc|LU3305951918|Az. globale|Az globale|Art.9|N/D
+FF Climate Solutions A Acc EUR|LU2376061086|Az. globale|Az globale|Art.9|4
+FF Climate Solutions A EUR|LU2349440961|Az. globale|Az globale|Art.9|4
+FF Climate Solutions E Acc EUR|LU2348336004|Az. globale|Az globale|Art.9|4
+Amundi Funds Global Equity F EUR|LU1883833789|Az. globale|Az globale|Art.8|5
+GS Gb CORE Eq Pf E (Acc.) EUR-H (Snap)|LU1785488757|Az. globale|Az globale|Art.8|5
+Invesco Metaverse & AI Fund A H EUR Acc|LU2473541238|Az. globale|Az globale|Art.8|5
+Schroder QEP Gb Active Value B Acc EUR|LU0248174236|Az. globale Value|Az globale|Art.6|4
+Invesco Metaverse and AI Fund E Acc EUR|LU2473541584|Az. globale|Az globale|Art.8|5
+GS Gb CORE Eq Pf E (Acc.) (Close)|LU0257370246|Az. globale|Az globale|Art.8|5
+GS Gb SC CORE Eq Pf E Acc Close|LU0245181838|Az. globale small cap|Az globale|Art.8|5
+GS Gb SC CORE Eq Pf E Acc Snap|LU0245182059|Az. globale small cap|Az globale|Art.8|5
+JPMF Global Res Enh Idx Eq A Acc EUR H|LU2402382175|Az. globale|Az globale|Art.6|5
+GS Gb CORE Eq Pf E (Acc.) (Snap)|LU0201159711|Az. globale|Az globale|Art.8|5
+Schroder Gbl Climate Change Eq B EUR H|LU0306804641|Az. globale|Az globale|Art.8|2
+BGF Systematic Global SmallCap C2 EUR|LU0331285766|Az. globale small cap|Az globale|Art.9|5
+MSIF Global Insight AH EUR|LU0868754382|Az. globale|Az globale|Art.8|4
+MSIF Global Insight CH EUR|LU0868754549|Az. globale|Az globale|Art.8|4
+BSF Systematic World Equity Fund E2 EUR|LU1278928491|Az. globale|Az globale|Art.8|5
+GS Global Enh Idx Sust Eq X Cap EUR h i|LU2327459835|Az. globale|Az globale|Art.8|4
+JPMF Global Growth D Acc EUR H|LU0336377055|Az. globale|Az globale|Art.8|4
+Fidelity Funds World Fund A EUR|LU0069449576|Az. globale|Az globale|Art.8|3
+Pictet Digital HR EUR|LU0474967485|Az. globale|Az globale|Art.8|5
+FF Global Dividend Fund A Acc EUR H|LU0605515377|Az. globale|Az globale|Art.8|5
+Invesco Sust Global Systm Eq A HDis EUR|LU1252824401|Az. globale|Az globale|Art.8|4
+Invesco Sust Global Systm Eq A HAcc EUR|LU0482497954|Az. globale|Az globale|Art.8|4
+Nordea 1 Global Divers Engagement E-EUR|LU1939215155|Az. globale|Az globale|Art.8|4
+Schroder Global Innovation B Acc EUR H|LU2075271226|Az. globale|Az globale|Art.8|3
+Schroder QEP Global Quality B Acc EUR|LU0323591916|Az. globale|Az globale|Art.8|3
+FF World Fund E Acc EUR|LU0115769746|Az. globale|Az globale|Art.8|3
+Nordea 1 Gb Climate Trans Engag E-EUR|LU2468134775|Az. globale|Az globale|Art.8|3
+BlackRock Systmatc Glb Eq Hgh Inc E5 H|LU0278719413|Az. globale|Az globale|Art.6|4
+Pictet Digital R EUR|LU0340555134|Az. globale|Az globale|Art.8|5
+BGF Sustainable Gbl Dynamic Eq C2 Hd EUR|LU0326425435|Az. globale|Az globale|Art.6|3
+FF FIRST All Country World Fd E Acc EUR|LU0267387339|Az. globale|Az globale|Art.8|4
+JPMF Global Growth D Acc EUR|LU0159036606|Az. globale|Az globale|Art.8|4
+FF Global Dividend Fund A QIncG EUR|LU0731782404|Az. globale|Az globale|Art.8|5
+JPM IF Global Select Equity A acc EUR H|LU0289476318|Az. globale|Az globale|Art.8|N/D
+FF Global Dividend Fund E Acc EUR|LU1038895451|Az. globale|Az globale|Art.8|5
+FF Global Dividend Fund E MIncG EUR H|LU0840139785|Az. globale|Az globale|Art.8|5
+JPM IF Global Dividend D Acc EUR H|LU0329203656|Az. globale|Az globale|Art.8|2
+FF Global Focus Fund E Acc EUR H|LU1366333174|Az. globale|Az globale|Art.8|3
+JPMF Global Focus D Acc EUR H|LU0289216169|Az. globale|Az globale|Art.8|3
+JPM IF Global Dividend D Mth EUR H|LU1555763595|Az. globale|Az globale|Art.8|2
+JPM IF Global Dividend D Div EUR H|LU0714180907|Az. globale|Az globale|Art.8|2
+Invesco Sust Global Systm Eq E Acc EUR|LU0267985314|Az. globale|Az globale|Art.8|4
+GS Global Equity Inc Pf E|LU0133264522|Az. globale|Az globale|Art.8|3
+Pictet Quest Gb Sustainable Eq R dm EUR|LU1372850294|Az. globale|Az globale|Art.8|3
+Pictet Quest Gb Sustainable Equit R EUR|LU0845340305|Az. globale|Az globale|Art.8|3
+FF Global Dividend Fund A MIncG EUR|LU0731782826|Az. globale|Az globale|Art.8|5
+FF Gbl Thematic Opportunities A Acc EUR|LU0251129895|Az. globale|Az globale|Art.8|2
+Global Thematic Opportunities Fund A EUR|LU0069451390|Az. globale|Az globale|Art.8|2
+MSIF Calvert Div Eq & Incl AH EUR|LU2459594789|Az. globale|Az globale|Art.9|2
+SISF Global Sust Growth B Acc EUR H|LU2032053337|Az. globale Growth|Az globale|Art.8|2
+FF Global Dividend Plus E EUR Acc|LU0115774233|Az. globale|Az globale|Art.8|5
+FF Global Equity Inc ESG A EUR Hedged|LU2220376110|Az. globale|Az globale|Art.8|4
+MSIF Calvert Div Eq & Incl CH EUR|LU2459594946|Az. globale|Az globale|Art.9|2
+Nordea 1 Global Stable Equity €H E-EUR|LU0278530729|Az. globale Value|Az globale|Art.8|2
+Dividendo Arancio|LU0228882857|Az. globale Value|Az globale|Art.8|4
+Nordea1 Global Stable Equity Plus E EUR|LU2908646826|Az. globale|Az globale|Art.8|N/D
+FF Global Dividend Plus A EUR|LU0099575291|Az. globale|Az globale|Art.8|5
+BGF Sustainable Global Dynamic Eq  C2EUR|LU0331285097|Az. globale|Az globale|Art.6|3
+Nordea 1 Global Social Empower E-EUR|LU2257592860|Az. globale|Az globale|Art.9|2
+FF Global Focus Fund A EUR|LU0157922724|Az. globale|Az globale|Art.8|3
+JPMF Global Focus D Acc EUR|LU0168343274|Az. globale|Az globale|Art.8|3
+Pictet Security HR EUR Acc|LU0650149049|Az. globale|Az globale|Art.8|1
+FF Global Focus Fund E Acc EUR|LU0157217158|Az. globale|Az globale|Art.8|3
+GS Gbl Future Gene Eq E (Acc.)|LU1897340425|Az. globale|Az globale|Art.8|2
+GS Gbl Future Gene Eq E|LU1341142237|Az. globale|Az globale|Art.8|2
+FF Global Defensive Equity A MInc(G) EUR|LU1084165056|Az. globale Value|Az globale|Art.8|4
+Pictet Gbl Megatrend Select HR EUR|LU0474970273|Az. globale|Az globale|Art.8|1
+Nordea 1 Global Stable Equity E-EUR|LU0229519805|Az. globale Value|Az globale|Art.8|1
+Nordea 1 Global Sus Stars Equity E-EUR|LU0985320646|Az. globale|Az globale|Art.8|2
+Pictet Security R EUR Acc|LU0270905242|Az. globale|Az globale|Art.8|1
+FF Global Demographics E EUR Acc Hdg|LU0528228157|Az. globale|Az globale|Art.8|1
+Pictet ReGeneration HR EUR|LU2524811093|Az. globale|Az globale|Art.9|N/D
+MSIF Calvert Div Eq & Incl C USD|LU2459595919|Az. globale|Az globale|Art.9|2
+Nordea 1 Global Portfolio Fund E-EUR|LU0476541650|Az. globale|Az globale|Art.8|3
+GS Gbl Eq Partn ESG Ptf E (Acc.)|LU0418310818|Az. globale|Az globale|Art.8|1
+GS Gbl Eq Partn ESG Ptf E|LU2417970584|Az. globale|Az globale|Art.8|1
+MSIF Global Quality Select Fund AH EUR|LU1905620776|Az. globale|Az globale|Art.8|1
+Pictet SmartCity R dy EUR|LU0503635038|Az. globale|Az globale|Art.8|1
+Pictet SmartCity R EUR|LU0503634734|Az. globale|Az globale|Art.8|1
+Pictet Gbl Megatrend Select R EUR|LU0391944815|Az. globale|Az globale|Art.8|1
+Pictet Premium Brands R EUR|LU0217138725|Az. globale|Az globale|Art.8|1
+MSIF Global Quality Select Fund CH EUR|LU1966772912|Az. globale|Az globale|Art.8|1
+MSIF Global Quality Fund AH (EUR)|LU0955011506|Az. globale|Az globale|Art.8|1
+Pictet Family R EUR|LU0131725367|Az. globale|Az globale|Art.8|2
+Nordea 1 Global Impact Fund E-EUR|LU2355687307|Az. globale|Az globale|Art.9|1
+MSIF Global Quality Fund CH (EUR)|LU0955011928|Az. globale|Az globale|Art.8|1
+Pictet Gbl Thematic Opp R EUR Acc|LU1508454599|Az. globale|Az globale|Art.8|1
+Pictet ReGeneration R EUR|LU2524812497|Az. globale|Az globale|Art.9|N/D
+MSIF Global Brands Fund AH EUR Cap|LU0335216932|Az. globale|Az globale|Art.8|1
+MSIF Global Brands Fund AHX EUR Dis|LU0552899998|Az. globale|Az globale|Art.8|1
+BlackRock Glb Long-Horizon Eq E2|LU0171285587|Az. globale|Az globale|Art.8|1
+MSIM Gbl Brands Eq Inc AHR EUR EUR D H|LU1378880410|Az. globale|Az globale|Art.8|1
+MSIF Global Brands Fund CH EUR Cap|LU0404214834|Az. globale|Az globale|Art.8|1
+MSIM Gbl Brands Eq Inc CHR EUR EUR D H|LU1378880766|Az. globale|Az globale|Art.8|1
+MSIF Global Quality Select Fund C|LU1966773050|Az. globale|Az globale|Art.8|1
+MSIF Global Quality Fund C|LU0955011092|Az. globale|Az globale|Art.8|1
+MSIF Global Brands Fund C USD Cap|LU0176160306|Az. globale|Az globale|Art.8|1
+MSIM Gbl Brands Eq Inc CR USD D|LU1378879917|Az. globale|Az globale|Art.8|1
+GS Global Equity Impact Opp X Cap EUR|LU0250170304|Az. globale|Az globale|Art.9|1
+GS Global Sustainable Equity X Cap EUR|LU0121204431|Az. globale|Az globale|Art.8|1
+Pictet-Quest European Revival-R EUR|LU3249719983|0|0|Art.8|N/D
+Pictet-Multi Asset Global Opportunities-R dq EUR|LU3246148004|0|0|Art.8|N/D
+Pictet-Global Equity Long Short R EUR|LU3286620359|0|0|Art.6|N/D
+DWS Invest Stepin Global Equity High Conviction NC|LU3303497609|0|0|Art.8|N/D
+MSINVF Strategic Income Fund - A (EUR)|LU3246261740|0|0|N/D|N/D
+MSINVF Strategic Income Fund - AYM (EUR)|LU3285761980|0|0|N/D|N/D
+MSINVF Strategic Income Fund - C (EUR)|LU3246261823|0|0|N/D|N/D
+MSINVF Strategic Income Fund - CYM (EUR)|LU3285762012|0|0|N/D|N/D`;
+
+function parseFondiCatalog(raw){
+  return raw.trim().split('\n').filter(Boolean).map(line=>{
+    const [desc,isin,macro,categoria,sfdr,score]=line.split('|');
+    return {desc,isin,macro,categoria,sfdr,score};
+  });
+}
+const FONDI_CATALOG = parseFondiCatalog(FONDI_CATALOG_RAW);
+
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+
+document.getElementById('loginBtn').onclick=doLogin;
+document.getElementById('pwdInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('logoutBtn').onclick=()=>{sessionStorage.removeItem('sf_admin');location.reload();};
+
+async function doLogin(){
+  const h=await sha256(document.getElementById('pwdInput').value);
+  if(h===HASH){sessionStorage.setItem('sf_admin','1');showAdmin();}
+  else{document.getElementById('loginErr').style.display='block';document.getElementById('pwdInput').value='';}
+}
+
+function showAdmin(){
+  document.getElementById('loginScreen').style.display='none';
+  const a=document.getElementById('adminScreen');
+  a.style.display='flex';a.style.flexDirection='column';
+  renderPipeline();
+  const now=new Date();
+  const m=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  document.getElementById('bData').value=`${now.getDate()} ${m[now.getMonth()]} ${now.getFullYear()}`;
+}
+
+if(sessionStorage.getItem('sf_admin')==='1')showAdmin();
+
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('panel-'+this.dataset.tab).classList.add('active');
+  });
+});
+
+function buildSearch(){
+  const prof=document.getElementById('srProfessione').value.trim();
+  const zona=document.getElementById('srZona').value.trim();
+  const sett=document.getElementById('srSettore').value.trim();
+  if(!prof&&!zona){return;}
+  let parts=[];
+  if(prof)parts.push(`"${prof}"`);
+  if(zona)parts.push(`"${zona}"`);
+  if(sett)parts.push(`"${sett}"`);
+  const str=parts.join(' AND ');
+  document.getElementById('searchString').textContent=str;
+  document.getElementById('linkedinLink').href=`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(str)}`;
+  document.getElementById('searchResult').style.display='block';
+}
+
+function getLeads(){try{return JSON.parse(localStorage.getItem('sf_leads')||'[]');}catch{return[];}}
+function saveLeads(l){localStorage.setItem('sf_leads',JSON.stringify(l));}
+
+function addLead(){
+  const name=document.getElementById('leadName').value.trim();
+  const job=document.getElementById('leadJob').value.trim();
+  const note=document.getElementById('leadNote').value.trim();
+  const status=document.getElementById('leadStatus').value;
+  if(!name)return;
+  const leads=getLeads();
+  leads.unshift({id:Date.now(),name,job,note,status,date:new Date().toLocaleDateString('it-IT')});
+  saveLeads(leads);
+  document.getElementById('leadName').value='';
+  document.getElementById('leadJob').value='';
+  document.getElementById('leadNote').value='';
+  renderPipeline();
+  document.getElementById('msgNome').value=name.split(' ')[0];
+  document.getElementById('msgProfessione').value=job;
+}
+
+function deleteLead(id){saveLeads(getLeads().filter(l=>l.id!==id));renderPipeline();}
+function updateStatus(id,val){const leads=getLeads();const l=leads.find(x=>x.id===id);if(l){l.status=val;saveLeads(leads);renderPipeline();}}
+
+function renderPipeline(){
+  const leads=getLeads();
+  const sm={new:['🔵 Nuovo','s-new'],contact:['🟡 Contattato','s-contact'],reply:['🟢 Ha risposto','s-reply'],meet:['🟣 Meeting','s-meet']};
+  const tbody=document.getElementById('pipelineTbody');
+  tbody.innerHTML=leads.length===0
+    ?'<tr><td colspan="6" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px;">Nessun contatto. Aggiungine uno sopra.</td></tr>'
+    :leads.map(l=>{
+      const[label,cls]=sm[l.status]||['–',''];
+      return`<tr>
+        <td style="font-weight:500;color:#fff;">${l.name}</td>
+        <td>${l.job||'–'}</td>
+        <td style="max-width:180px;font-size:0.78rem;color:var(--muted);">${l.note||'–'}</td>
+        <td><span class="sbadge ${cls}">${label}</span></td>
+        <td>${l.date}</td>
+        <td>
+          <select onchange="updateStatus(${l.id},this.value)" style="background:var(--navy);border:1px solid var(--border);color:rgba(255,255,255,0.6);padding:3px 6px;border-radius:3px;font-size:0.72rem;">
+            <option value="new" ${l.status==='new'?'selected':''}>Nuovo</option>
+            <option value="contact" ${l.status==='contact'?'selected':''}>Contattato</option>
+            <option value="reply" ${l.status==='reply'?'selected':''}>Risposto</option>
+            <option value="meet" ${l.status==='meet'?'selected':''}>Meeting</option>
+          </select>
+          <button onclick="prefillMsg(${l.id})" style="background:none;border:none;color:var(--gold);cursor:pointer;margin-left:4px;font-size:0.75rem;">✉️</button>
+          <button onclick="deleteLead(${l.id})" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;margin-left:2px;">✕</button>
+        </td>
+      </tr>`;
+    }).join('');
+  document.getElementById('cnt-total').textContent=leads.length;
+  document.getElementById('cnt-contact').textContent=leads.filter(l=>l.status!=='new').length;
+  document.getElementById('cnt-reply').textContent=leads.filter(l=>['reply','meet'].includes(l.status)).length;
+  document.getElementById('cnt-meet').textContent=leads.filter(l=>l.status==='meet').length;
+}
+
+function prefillMsg(id){
+  const l=getLeads().find(x=>x.id===id);
+  if(!l)return;
+  document.getElementById('msgNome').value=l.name.split(' ')[0];
+  document.getElementById('msgProfessione').value=l.job;
+  document.getElementById('msgHook').value=l.note||'';
+  document.querySelector('.tab[data-tab="lead"]').click();
+  document.getElementById('msgNome').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function exportCSV(){
+  const leads=getLeads();
+  if(!leads.length)return;
+  const rows=[['Nome','Professione','Note','Stato','Data'],...leads.map(l=>[l.name,l.job,l.note,l.status,l.date])];
+  const csv=rows.map(r=>r.map(c=>`"${(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='pipeline_linkedin.csv';a.click();
+}
+
+async function generateMessage(){
+  const nome=document.getElementById('msgNome').value.trim();
+  const prof=document.getElementById('msgProfessione').value.trim();
+  const hook=document.getElementById('msgHook').value.trim();
+  if(!nome||!prof){showStatus('msgStatus','Inserisci nome e professione.','err');return;}
+  const btn=document.querySelector('[onclick="generateMessage()"]');
+  btn.textContent='⏳ Generazione...';btn.disabled=true;
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia nella zona La Spezia/Massa Carrara.
+Scrivi un messaggio LinkedIn di contatto per ${nome}, ${prof}.
+${hook?`Contesto: ${hook}`:''}
+Regole: max 300 caratteri, tono professionale ma diretto, no emoji, no link, termina con proposta di chiamata conoscitiva.
+Rispondi SOLO con il testo del messaggio, nient'altro.`;
+  try{
+    const msg=await callClaude(prompt,300);
+    document.getElementById('msgText').textContent=msg.trim();
+    document.getElementById('msgOutput').style.display='block';
+    const len=msg.trim().length;
+    const cc=document.getElementById('charCount');
+    cc.textContent=`${len}/300 caratteri`;cc.className='char-count '+(len<=300?'char-ok':'char-warn');
+  }catch(e){showStatus('msgStatus','Errore AI: '+e.message,'err');}
+  finally{btn.textContent='🤖 Genera messaggio AI';btn.disabled=false;}
+}
+
+function copyMsg(){
+  navigator.clipboard.writeText(document.getElementById('msgText').textContent)
+    .then(()=>showStatus('msgStatus','✅ Messaggio copiato!','ok'));
+}
+
+function setRisk(n){
+  riskLevel=n;
+  const labels=['','Conservativo','Moderato-Conservativo','Moderato','Dinamico','Aggressivo'];
+  document.getElementById('riskLabel').textContent=labels[n];
+  document.querySelectorAll('.risk-seg').forEach((s,i)=>s.classList.toggle('active',i<n));
+}
+
+function formatEuro(v){
+  const n=parseFloat(v);
+  if(isNaN(n))return 'N/D';
+  return n.toLocaleString('it-IT',{maximumFractionDigits:0})+'€';
+}
+
+async function generatePortfolio(){
+  const nome=document.getElementById('pNome').value.trim()||'Cliente';
+  const eta=document.getElementById('pEta').value||'N/D';
+  const prof=document.getElementById('pProfessione').value.trim()||'N/D';
+  const redditoVal=document.getElementById('pReddito').value;
+  const patrimonioVal=document.getElementById('pPatrimonio').value;
+  const reddito=redditoVal?formatEuro(redditoVal):'N/D';
+  const patrimonio=patrimonioVal?formatEuro(patrimonioVal):'N/D';
+  const orizzonte=document.getElementById('pOrizzonte').value;
+  const obiettivi=document.getElementById('pObiettivi').value.trim();
+  const situazione=document.getElementById('pSituazione').value.trim();
+  const note=document.getElementById('pNote').value.trim();
+  const btn=document.getElementById('portfolioBtn');
+  btn.textContent='⏳ Generazione in corso...';btn.disabled=true;
+  document.getElementById('portfolioStatus').className='status';
+  document.getElementById('portfolioOutput').style.display='none';
+
+  // Catalogo fondi come blocco testuale compatto per il prompt —
+  // formato: Descrizione | ISIN | Macro | Categoria | SFDR | Score qualità
+  const catalogoText = FONDI_CATALOG.map(f =>
+    `${f.desc} | ${f.isin} | ${f.macro} | ${f.categoria} | ${f.sfdr} | Q:${f.score}`
+  ).join('\n');
+
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia.
+Genera una proposta di portafoglio per questo cliente:
+
+PROFILO CLIENTE:
+- Nome: ${nome}
+- Età: ${eta} anni
+- Professione: ${prof}
+- Reddito annuo: ${reddito}
+- Patrimonio investibile: ${patrimonio}
+- Orizzonte temporale: ${orizzonte}
+- Profilo rischio MiFID: ${riskLevel}/5
+${obiettivi?`- Obiettivi: ${obiettivi}`:''}
+${situazione?`- Situazione attuale: ${situazione}`:''}
+${note?`- Note e istruzioni specifiche dell'operatore: ${note}`:''}
+
+═══ CATALOGO FONDI DISPONIBILI (UNICA FONTE AMMESSA) ═══
+Formato riga: Descrizione | ISIN | Macro categoria | Categoria | Classificazione SFDR (Art.6/8/9) | Score qualità strumento (1-5, N/D se non disponibile)
+
+${catalogoText}
+
+═══ REGOLA VINCOLANTE ═══
+Puoi proporre ESCLUSIVAMENTE fondi presenti nel catalogo sopra. Per ogni fondo che proponi, cita SEMPRE il nome esatto e l'ISIN così come appaiono nel catalogo. Non inventare, non modificare, non citare fondi assenti dal catalogo, non usare la tua conoscenza generale di prodotti finanziari per suggerire strumenti non elencati. Se non trovi uno strumento adatto in una categoria per il profilo del cliente, dillo esplicitamente invece di inventarne uno.
+
+Fornisci:
+1. SINTESI DEL PROFILO (2-3 righe)
+2. ALLOCAZIONE CONSIGLIATA (percentuali per macro asset class: liquidità, obbligazioni, azionario, alternativi)
+3. STRUMENTI SUGGERITI (fondi dal catalogo per ciascuna classe, con nome esatto + ISIN + motivazione breve — includi la classificazione SFDR se rilevante per il profilo ESG del cliente)
+4. PRIORITÀ IMMEDIATE (le 3 azioni concrete da fare subito)
+5. NOTE FISCALI (considerazioni su regime fiscale, deducibilità, ecc.)
+
+Usa un tono professionale ma comprensibile. Sii concreto e specifico.`;
+
+  try{
+    const res=await callClaude(prompt,3000);
+    document.getElementById('portfolioText').textContent=res;
+    document.getElementById('portfolioOutput').style.display='block';
+  }catch(e){showStatus('portfolioStatus','Errore AI: '+e.message,'err');}
+  finally{btn.textContent='🤖 Genera Portafoglio AI';btn.disabled=false;}
+}
+
+function copyPortfolio(){
+  navigator.clipboard.writeText(document.getElementById('portfolioText').textContent)
+    .then(()=>showStatus('portfolioStatus','✅ Analisi copiata!','ok'));
+}
+
+async function publishPost(){
+  const titolo=document.getElementById('bTitolo').value.trim();
+  const estratto=document.getElementById('bEstratto').value.trim();
+  const token=document.getElementById('bToken').value.trim();
+  if(!titolo||!estratto){showStatus('blogStatus','Compila titolo ed estratto.','err');return;}
+  if(!token){showStatus('blogStatus','Inserisci il GitHub Token.','err');return;}
+  const categoria=document.getElementById('bCategoria').value;
+  const emoji=document.getElementById('bEmoji').value;
+  const data=document.getElementById('bData').value;
+  const tags=document.getElementById('bTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const btn=document.getElementById('publishBtn');
+  btn.textContent='⏳ Pubblicazione...';btn.disabled=true;
+  const tagsHtml=tags.map(t=>`<span class="post-tag">${t}</span>`).join('');
+  const postHtml=`\n      <a href="#" class="blog-post-card" style="display:grid;">\n        <div class="blog-post-thumb" style="background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:2rem;">${emoji}</div>\n        <div>\n          <div class="post-meta"><span class="post-cat">${categoria}</span><span class="post-date">${data}</span></div>\n          <h2 class="post-title">${titolo}</h2>\n          <p class="post-excerpt">${estratto}</p>\n          <div class="post-tags">${tagsHtml}</div>\n        </div>\n      </a>`;
+  try{
+    const getRes=await fetch(`https://api.github.com/repos/${REPO}/contents/blog.html?ref=${BRANCH}`,{headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github+json'}});
+    if(!getRes.ok)throw new Error('Errore recupero file. Controlla il token.');
+    const fd=await getRes.json();
+    const content=decodeURIComponent(escape(atob(fd.content.replace(/\n/g,''))));
+    const marker='<!-- ═══ INIZIO POSTS — inserire nuovi articoli qui sotto ═══ -->';
+    if(!content.includes(marker))throw new Error('Marker non trovato in blog.html.');
+    const updated=content.replace(marker,marker+postHtml);
+    const putRes=await fetch(`https://api.github.com/repos/${REPO}/contents/blog.html`,{method:'PUT',headers:{'Authorization':`Bearer ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:`📝 Nuovo post: ${titolo.substring(0,60)}`,content:btoa(unescape(encodeURIComponent(updated))),sha:fd.sha,branch:BRANCH})});
+    if(!putRes.ok){const e=await putRes.json();throw new Error(e.message||'Errore push.');}
+    showStatus('blogStatus','✅ Post pubblicato! Netlify rideploya in ~10 secondi.','ok');
+    document.getElementById('bTitolo').value='';
+    document.getElementById('bEstratto').value='';
+    document.getElementById('bTags').value='';
+  }catch(e){showStatus('blogStatus','❌ '+e.message,'err');}
+  finally{btn.textContent='🚀 Pubblica sul Blog';btn.disabled=false;}
+}
+
+async function callClaude(prompt,maxTokens=500){
+  const res=await fetch('/.netlify/functions/anthropic-proxy',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+  });
+  if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'Errore API');}
+  const d=await res.json();
+  return d.content[0].text;
+}
+
+function showStatus(id,msg,type){
+  const s=document.getElementById(id);
+  s.textContent=msg;
+  s.className='status'+(type?' '+type:'');
+}
+
+document.addEventListener('input',e=>{
+  if(e.target.id==='msgText'){
+    const len=e.target.textContent.length;
+    const cc=document.getElementById('charCount');
+    if(cc){cc.textContent=`${len}/300 caratteri`;cc.className='char-count '+(len<=300?'char-ok':'char-warn');}
+  }
+});
+</script>
+</body>
+</html>
