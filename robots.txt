@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /trading-dashboard.html
+Disallow: /content-dashboard.html
+
 Sitemap: https://sagomafinanziaria.it/sitemap.xml
