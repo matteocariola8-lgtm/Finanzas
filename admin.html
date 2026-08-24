@@ -1395,7 +1395,7 @@ async function generateMessage(){
   if(!nome||!prof){showStatus('msgStatus','Inserisci nome e professione.','err');return;}
   const btn=document.querySelector('[onclick="generateMessage()"]');
   btn.textContent='⏳ Generazione...';btn.disabled=true;
-  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia nella zona La Spezia/Massa Carrara.
+  const prompt=`Sei Matteo Cariola, consulente finanziario ING Italia, operativo in tutta Italia.
 Scrivi un messaggio LinkedIn di contatto per ${nome}, ${prof}.
 ${hook?`Contesto: ${hook}`:''}
 Regole: max 300 caratteri, tono professionale ma diretto, no emoji, no link, termina con proposta di chiamata conoscitiva.
