@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La tua liquidità lavora o dorme? — Sagoma Finanziaria</title>
+<meta name="description" content="Mini-test gratuito di 2 minuti per fare ordine sulla tua liquidità. Contenuto educativo generico, non è consulenza.">
+<link rel="canonical" href="https://sagomafinanziaria.it/test-liquidita.html">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html">Sagoma <span>Finanziaria</span></a>
+  <nav><a href="privacy.html">Privacy</a></nav>
+</div></header>
+
+<main class="wrap">
+
+  <!-- Intro -->
+  <section id="intro">
+    <span class="eyebrow">Mini-test · 2 minuti</span>
+    <h1>La tua liquidità lavora o dorme?</h1>
+    <p class="lead">6 domande a risposta multipla, nessun dato personale richiesto per vedere il risultato.</p>
+    <button class="btn" id="start" type="button">Inizia il test</button>
+    <p class="disclaimer">Strumento educativo generico. Non costituisce consulenza finanziaria, raccomandazione di investimento né profilazione di adeguatezza.</p>
+  </section>
+
+  <!-- Domande -->
+  <section id="quiz" class="hidden" aria-live="polite">
+    <div class="qnum" id="qnum"></div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="q" id="qtext"></div>
+    <div id="opts"></div>
+    <button class="back" id="back" type="button">← Indietro</button>
+  </section>
+
+  <!-- Risultato -->
+  <section id="result" class="hidden">
+    <span class="badge" id="rbadge"></span>
+    <h2 id="rtitle" style="margin-top:12px"></h2>
+    <p id="rlead"></p>
+    <ul class="tips" id="rtips"></ul>
+
+    <div class="card hidden" id="casa">
+      <h3>Bonus: 7 cose da sistemare prima di comprare casa</h3>
+      <ol class="tips" id="casalist"></ol>
+    </div>
+
+    <div class="card">
+      <h3>Vuoi un confronto di 15 minuti?</h3>
+      <p>Se vuoi parlarne, puoi scrivermi su WhatsApp. Nessun obbligo.</p>
+      <p><a class="btn gold" id="wa" target="_blank" rel="noopener" href="#">Scrivimi su WhatsApp</a></p>
+      <p class="note">Il confronto personale si svolge come consulente finanziario ING Italia (agente con contratto, non dipendente), con i canali e la documentazione ING. Questo test e il sito Sagoma Finanziaria restano contenuti educativi generici.</p>
+    </div>
+
+    <div class="card">
+      <h3>Oppure lasciami un contatto</h3>
+      <p class="note">Ti ricontatto solo se spunti il consenso qui sotto.</p>
+      <form name="test-liquidita" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead">
+        <input type="hidden" name="form-name" value="test-liquidita">
+        <p class="sr"><label>Non compilare <input name="bot-field"></label></p>
+        <input type="hidden" name="livello" id="f-livello">
+        <input type="hidden" name="risposte" id="f-risposte">
+        <label class="field" for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" autocomplete="given-name" required>
+        <label class="field" for="contatto">Email o telefono</label>
+        <input type="text" id="contatto" name="contatto" autocomplete="email" required>
+        <label class="check"><input type="checkbox" name="consenso" value="si" id="consenso" required>
+          <span>Acconsento a essere ricontattato da Matteo Cariola in merito a questo test, come descritto nell’<a href="privacy.html" target="_blank">informativa privacy</a>. Posso revocare il consenso in qualsiasi momento.</span></label>
+        <button class="btn" type="submit" id="send">Invia</button>
+        <p class="note hidden" id="sent">Grazie, ho ricevuto i tuoi dati. Ti ricontatto appena possibile.</p>
+        <p class="note hidden" id="err">Invio non riuscito. Riprova o scrivimi su WhatsApp.</p>
+      </form>
+    </div>
+
+    <button class="btn ghost" id="again" type="button">Rifai il test</button>
+    <p class="disclaimer">Risultato generico basato solo sulle tue risposte. Non è una raccomandazione personalizzata e non tiene conto della tua situazione patrimoniale complessiva.</p>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  Sagoma Finanziaria · educazione finanziaria generica · <a href="privacy.html">Privacy</a>
+</div></footer>
+
+<script src="js/test.js"></script>
+<script>
+(function(){
+  var T = window.MiniTest, Q = T.QUESTIONS, answers = {}, step = 0;
+  var $ = function(id){ return document.getElementById(id); };
+  var WA = 'https://wa.me/393519048233?text=' + encodeURIComponent('Ciao Matteo, ho fatto il test sulla liquidità e vorrei un confronto di 15 minuti.');
+
+  function show(id){ ['intro','quiz','result'].forEach(function(s){ $(s).classList.toggle('hidden', s !== id); }); window.scrollTo(0,0); }
+
+  function render(){
+    var q = Q[step];
+    $('qnum').textContent = 'Domanda ' + (step+1) + ' di ' + Q.length;
+    $('bar').style.width = ((step) / Q.length * 100) + '%';
+    $('qtext').textContent = q.q;
+    $('back').style.visibility = step === 0 ? 'hidden' : 'visible';
+    var box = $('opts'); box.innerHTML = '';
+    q.opts.forEach(function(o, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt' + (answers[q.id] === i ? ' sel' : '');
+      b.textContent = o.t;
+      b.addEventListener('click', function(){ answers[q.id] = i; next(); });
+      box.appendChild(b);
+    });
+  }
+
+  function next(){ if (step < Q.length - 1) { step++; render(); } else { finish(); } }
+
+  function finish(){
+    var r = T.compute(answers), res = T.RESULTS[r.level];
+    $('bar').style.width = '100%';
+    var b = $('rbadge'); b.textContent = res.label; b.className = 'badge ' + res.cls;
+    $('rtitle').textContent = res.label;
+    $('rlead').textContent = res.lead;
+    var ul = $('rtips'); ul.innerHTML = '';
+    res.tips.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    var casa = $('casa'), cl = $('casalist'); cl.innerHTML = '';
+    if (r.tags.casa) { T.CHECKLIST_CASA.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; cl.appendChild(li); }); casa.classList.remove('hidden'); } else { casa.classList.add('hidden'); }
+    $('wa').href = WA;
+    $('f-livello').value = res.label;
+    var parts = Q.map(function(q){ var i = answers[q.id]; return q.id + ': ' + (i == null ? '-' : q.opts[i].t); });
+    $('f-risposte').value = parts.join(' | ');
+    show('result');
+  }
+
+  $('start').addEventListener('click', function(){ step = 0; answers = {}; show('quiz'); render(); });
+  $('back').addEventListener('click', function(){ if (step > 0) { step--; render(); } });
+  $('again').addEventListener('click', function(){ step = 0; answers = {}; $('sent').classList.add('hidden'); $('err').classList.add('hidden'); $('send').disabled = false; show('intro'); });
+
+  $('lead').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!$('consenso').checked) return;
+    var f = e.target, body = new URLSearchParams(new FormData(f)).toString();
+    $('send').disabled = true; $('err').classList.add('hidden');
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+      .then(function(r){ if (!r.ok) throw new Error(r.status); $('sent').classList.remove('hidden'); f.reset(); })
+      .catch(function(){ $('err').classList.remove('hidden'); $('send').disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
