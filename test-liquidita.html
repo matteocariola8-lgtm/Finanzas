@@ -69,6 +69,7 @@
       <form name="test-liquidita" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead">
         <input type="hidden" name="form-name" value="test-liquidita">
         <p class="sr"><label>Non compilare <input name="bot-field"></label></p>
+        <input type="hidden" name="fonte" id="f-fonte">
         <input type="hidden" name="livello" id="f-livello">
         <input type="hidden" name="risposte" id="f-risposte">
         <label class="field" for="nome">Nome</label>
@@ -97,7 +98,8 @@
 (function(){
   var T = window.MiniTest, Q = T.QUESTIONS, answers = {}, step = 0;
   var $ = function(id){ return document.getElementById(id); };
-  var WA = 'https://wa.me/393519048233?text=' + encodeURIComponent('Ciao Matteo, ho fatto il test sulla liquidità e vorrei un confronto di 15 minuti.');
+  var FONTE = ''; try { FONTE = (new URLSearchParams(location.search).get('v') || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 12); } catch (e) {}
+  var WA = 'https://wa.me/393519048233?text=' + encodeURIComponent('Ciao Matteo, ho fatto il test sulla liquidità e vorrei un confronto di 15 minuti.' + (FONTE ? ' (rif. ' + FONTE + ')' : ''));
 
   function show(id){ ['intro','quiz','result'].forEach(function(s){ $(s).classList.toggle('hidden', s !== id); }); window.scrollTo(0,0); }
 
@@ -131,6 +133,7 @@
     if (r.tags.casa) { T.CHECKLIST_CASA.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; cl.appendChild(li); }); casa.classList.remove('hidden'); } else { casa.classList.add('hidden'); }
     $('wa').href = WA;
     $('f-livello').value = res.label;
+    $('f-fonte').value = FONTE;
     var parts = Q.map(function(q){ var i = answers[q.id]; return q.id + ': ' + (i == null ? '-' : q.opts[i].t); });
     $('f-risposte').value = parts.join(' | ');
     show('result');
