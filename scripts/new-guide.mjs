@@ -40,6 +40,7 @@ const hit = banned.find(r => r.test(text));
 if (hit) throw new Error(`Controllo compliance fallito: ${hit}`);
 if (!g.sections?.length || !g.faq?.length || g.description.length > 160) throw new Error('Struttura JSON non valida');
 
+const shortTitle = t => t.length <= 58 ? t : t.slice(0, 58).replace(/\s+\S*$/, '').replace(/[:,;–-]\s*$/, '');
 const today = new Date().toISOString().slice(0, 10);
 const [y, m, d] = today.split('-');
 const url = `${SITE}/guide/${topic.slug}.html`;
@@ -64,7 +65,7 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${topic.title.slice(0, 55)} | Sagoma</title>
+<title>${shortTitle(topic.title)} | Sagoma</title>
 <meta name="description" content="${e(g.description)}">
 <link rel="canonical" href="${url}">
 <link rel="stylesheet" href="../css/style.css?v=20261029">
