@@ -1,0 +1,23 @@
+# Sagoma Finanziaria
+
+> Sito di educazione finanziaria generica in italiano, di Matteo Cariola. Contenuti informativi: non costituiscono consulenza, raccomandazione di investimento né sollecitazione all'acquisto di prodotti.
+
+## Guide
+
+- [Fondo di emergenza: quanto tenere da parte per gli imprevisti](https://sagomafinanziaria.it/guide/fondo-emergenza.html): Quanti mesi di spese tenere da parte come fondo di emergenza? Un metodo in 3 passi per calcolarlo, senza consigli su prodotti.
+- [Liquidità ferma sul conto: perché il tempo conta](https://sagomafinanziaria.it/guide/liquidita-ferma.html): Cosa succede ai soldi lasciati fermi sul conto per anni: potere d'acquisto, scopo e tre domande per fare il punto. Guida generica.
+- [Comprare casa: come organizzare la liquidità](https://sagomafinanziaria.it/guide/liquidita-prima-della-casa.html): Spese da mettere in conto quando si compra casa (rogito, imposte, mutuo, lavori) e come organizzare la liquidità. Checklist generica.
+- [Dove tenere la liquidità: le categorie, non i prodotti](https://sagomafinanziaria.it/guide/conto-corrente-o-altro.html): Conto corrente, conti vincolati, strumenti di mercato: le categorie di liquidità e le tre caratteristiche da confrontare. Senza consigli su prodotti.
+- [Previdenza complementare: le domande da farsi](https://sagomafinanziaria.it/guide/previdenza-complementare-basi.html): Cos'è la previdenza complementare e quali domande porsi prima di aderire: costi, regole, fisco. Guida generica sulla pensione integrativa.
+- [5 errori comuni di chi risparmia](https://sagomafinanziaria.it/guide/errori-comuni-risparmiatori.html): Cinque errori di comportamento frequenti nel risparmio: soldi senza scopo, decisioni emotive, costi ignorati, orizzonti confusi. Guida generica.
+- [Quando scade un vincolo o un deposito: le domande da farsi](https://sagomafinanziaria.it/guide/scadenza-vincolo-liquidita.html): Cosa chiedersi quando scade un deposito o un vincolo sulla liquidità: rinnovo, scopo dei soldi, orizzonte. Domande generiche, nessun consiglio.
+- [Ricevere una liquidazione o una somma importante: da dove partire](https://sagomafinanziaria.it/guide/liquidazione-tfr-cosa-farsi-domande.html): Cosa fare quando arriva una liquidazione, un'eredità o la vendita di un immobile: priorità e attenzione alle pressioni. Metodo generico.
+
+## Strumenti
+
+- [Mini-test: la tua liquidità lavora o dorme?](https://sagomafinanziaria.it/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.
+
+## Note
+
+- Autore: Matteo Cariola, che opera anche come consulente finanziario ING Italia (agente con contratto); Sagoma Finanziaria è un'attività di educazione finanziaria separata.
+- Feed: https://sagomafinanziaria.it/feed.xml
