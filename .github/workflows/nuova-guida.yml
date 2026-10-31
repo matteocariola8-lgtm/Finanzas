@@ -1,0 +1,31 @@
+name: Nuova guida educativa (bozza)
+on:
+  schedule:
+    - cron: '0 6 * * 1,4'   # lunedì e giovedì, 06:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  genera:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Genera guida
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/new-guide.mjs
+      - name: Apri Pull Request (nessuna pubblicazione automatica)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then echo "Niente da pubblicare"; exit 0; fi
+          SLUG=$(git status --porcelain guide | grep -o 'guide/[a-z0-9-]*\.html' | grep -v index | head -1 | sed 's#guide/##;s#\.html##')
+          B="bozza/$SLUG"
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git checkout -b "$B"; git add -A; git commit -m "Nuova guida (bozza): $SLUG"
+          git push origin "$B"
+          gh pr create --title "Nuova guida: $SLUG" --base main --head "$B" \
+            --body "Bozza generata automaticamente. Leggila e fai merge solo se è corretta e priva di consigli personalizzati. Il merge pubblica la guida su Netlify."
