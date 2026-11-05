@@ -105,7 +105,7 @@ ${jsonLd}
     ${disclaimer}
   </article>
 </main>
-<footer><div class="wrap wide"><div class="cols"><a href="../index.html">Home</a><a href="../guide/">Guide</a><a href="../test-liquidita.html">Mini-test</a><a href="../privacy.html">Privacy</a></div>Sagoma Finanziaria · di Matteo Cariola · P.IVA 01598930111 · contenuti di educazione finanziaria generica, non costituiscono consulenza né sollecitazione all’investimento.</div></footer>
+<footer><div class="wrap wide"><div class="cols"><a href="../index.html">Home</a><a href="../guide/">Guide</a><a href="../test-liquidita.html">Mini-test</a><a href="../privacy.html">Privacy</a><a href="../cookie.html">Cookie</a></div>Sagoma Finanziaria · di Matteo Cariola · P.IVA 01598930111 · contenuti di educazione finanziaria generica, non costituiscono consulenza né sollecitazione all’investimento.</div></footer>
 <div class="sticky"><a class="btn gold" href="../test-liquidita.html">Fai il mini-test (2 min)</a></div>
 </body>
 </html>
