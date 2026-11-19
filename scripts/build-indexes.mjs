@@ -30,7 +30,7 @@ fs.writeFileSync('guide/index.html', gi);
 
 // Sitemap
 const today = new Date().toISOString().slice(0,10);
-const urls = [[`${SITE}/`,today],[`${SITE}/test-liquidita.html`,'2026-10-26'],[`${SITE}/guide/`,guides[0].date],
+const urls = [[`${SITE}/`,today],[`${SITE}/test-liquidita.html`,'2026-11-19'],[`${SITE}/guide/`,today],
   ...guides.map(g=>[`${SITE}/guide/${g.slug}.html`,g.modified||g.date])];
 fs.writeFileSync('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(([u,d])=>`  <url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
