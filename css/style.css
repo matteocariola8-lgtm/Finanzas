@@ -110,3 +110,67 @@ input[type=number],select{width:100%;padding:12px 14px;border:1px solid var(--li
 @media (max-width:640px){header.top .wrap{flex-wrap:wrap}nav{display:flex;flex-wrap:wrap;gap:4px 14px}nav a{margin-left:0;font-size:14px}}
 .hero{padding-bottom:8px}
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:clip}.lenis.lenis-smooth iframe{pointer-events:none}
+
+/* v4 – interfaccia */
+html{scroll-behavior:auto;scroll-padding-top:84px}
+::selection{background:var(--gold);color:#fff}
+body{font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:40;padding:14px 0;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);transition:box-shadow .2s,border-color .2s}
+header.top.scrolled{box-shadow:0 6px 24px rgba(15,34,56,.08)}
+.logo{font-size:18px;letter-spacing:-.2px}
+nav a{position:relative;padding:6px 2px;transition:color .15s}
+nav a:hover,nav a[aria-current=page]{color:var(--text)}
+nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+nav a:hover::after,nav a[aria-current=page]::after{transform:scaleX(1)}
+h1{letter-spacing:-.02em}
+h2{letter-spacing:-.01em}
+.lead{line-height:1.55}
+.btn{box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 6px 16px rgba(15,34,56,.14);transition:transform .15s,box-shadow .15s,background .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 10px 22px rgba(15,34,56,.2)}
+.btn:active{transform:translateY(0)}
+.btn.gold:hover{background:#a97b30}
+.card{box-shadow:0 1px 2px rgba(15,34,56,.04),0 10px 30px rgba(15,34,56,.05)}
+.gcard{box-shadow:0 1px 2px rgba(15,34,56,.04);position:relative;display:flex;flex-direction:column}
+.gcard:hover{box-shadow:0 14px 30px rgba(15,34,56,.1)}
+.gcard span{margin-top:auto;display:inline-flex;gap:4px;align-items:center;transition:gap .15s}
+.gcard:hover span{gap:9px}
+.steps li{box-shadow:0 1px 2px rgba(15,34,56,.04)}
+.pills li{border:1px solid rgba(184,137,59,.25)}
+/* FAQ */
+details{transition:border-color .15s,box-shadow .15s}
+details[open]{border-color:var(--gold);box-shadow:0 8px 22px rgba(15,34,56,.07)}
+summary{list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--link);display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform .2s}
+details[open] summary::after{content:"–";transform:rotate(180deg)}
+/* articolo */
+article{max-width:68ch}
+article p,article li{font-size:18px;line-height:1.7}
+article h2{margin-top:36px;padding-top:4px}
+.tips li::marker{color:var(--gold)}
+.related .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.progressbar{position:fixed;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--gold),#d9b46c);transform:scaleX(0);transform-origin:left;z-index:60;pointer-events:none}
+/* strumenti */
+.result{border:1px solid rgba(184,137,59,.3);box-shadow:0 6px 18px rgba(184,137,59,.12)}
+input[type=number]:focus,select:focus,input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,137,59,.25)}
+/* footer */
+footer{background:var(--navy);color:#b9c4d1;border-top:0;margin-top:40px;padding:34px 0 46px}
+footer a{color:#e8edf3;text-decoration:none}
+footer a:hover{color:var(--gold)}
+footer .cols{gap:10px 24px;margin-bottom:16px;font-weight:600}
+/* barra mobile */
+.sticky{backdrop-filter:blur(10px)}
+@media (max-width:640px){
+  h1{font-size:clamp(28px,8vw,36px)}
+  article p,article li{font-size:17px}
+  .hero2{padding-top:28px;gap:24px}
+  header.top{padding:10px 0}
+}
+@media (prefers-color-scheme:dark){
+  header.top.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.4)}
+  .card,.gcard:hover,details[open]{box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  footer{background:#0a121b}
+  .btn{color:#fff}
+  .btn:not(.gold){background:var(--navy-2)}
+  .result{background:#2a2418}
+}

@@ -73,3 +73,21 @@
     run();
   }
 })();
+
+// UI: header con ombra allo scroll, voce di menu attiva, barra di lettura nelle guide
+(function(){
+  var hd=document.querySelector('header.top');
+  var onS=function(){if(hd)hd.classList.toggle('scrolled',window.scrollY>8)};
+  window.addEventListener('scroll',onS,{passive:true});onS();
+  var path=location.pathname.replace(/index\.html$/,'');
+  document.querySelectorAll('header.top nav a').forEach(function(a){
+    var h=new URL(a.getAttribute('href'),location.href).pathname.replace(/index\.html$/,'');
+    if(h!=='/'&&(path===h||path.indexOf(h)===0&&h.slice(-1)==='/'))a.setAttribute('aria-current','page');
+  });
+  var art=document.querySelector('article');
+  if(art){
+    var bar=document.createElement('div');bar.className='progressbar';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);
+    var upd=function(){var r=art.getBoundingClientRect(),t=r.height-window.innerHeight*0.6;var p=Math.min(1,Math.max(0,(-r.top)/Math.max(1,t)));bar.style.transform='scaleX('+p+')'};
+    window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
+  }
+})();
