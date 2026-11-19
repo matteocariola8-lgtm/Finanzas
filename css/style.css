@@ -97,3 +97,15 @@ footer .cols a{color:var(--muted)}
  body.has-sticky{padding-bottom:70px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* v3 */
+input[type=number],select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:17px;background:var(--card);color:var(--text);font-family:inherit}
+.result{margin:20px 0 8px;padding:18px;border-radius:12px;background:var(--gold-soft);font-size:18px}
+.result b{font-size:24px}
+.term{padding:14px 0;border-bottom:1px solid var(--line)}
+.term:last-child{border-bottom:0}
+.term h3{margin:0 0 4px}
+.term p{margin:0;color:var(--muted)}
+.term:target{background:var(--gold-soft);border-radius:10px;padding-left:12px;padding-right:12px}
+@media (max-width:640px){header.top .wrap{flex-wrap:wrap}nav{display:flex;flex-wrap:wrap;gap:4px 14px}nav a{margin-left:0;font-size:14px}}
+.hero{padding-bottom:8px}

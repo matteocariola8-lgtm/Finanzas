@@ -31,7 +31,8 @@ fs.writeFileSync('guide/index.html', gi);
 // Sitemap
 const today = new Date().toISOString().slice(0,10);
 const urls = [[`${SITE}/`,today],[`${SITE}/test-liquidita.html`,'2026-11-19'],[`${SITE}/guide/`,today],
-  ...guides.map(g=>[`${SITE}/guide/${g.slug}.html`,g.modified||g.date])];
+  ...guides.map(g=>[`${SITE}/guide/${g.slug}.html`,g.modified||g.date]),
+  [`${SITE}/strumenti/`,'2026-11-19'],[`${SITE}/strumenti/versamenti-periodici.html`,'2026-11-19'],[`${SITE}/strumenti/fondo-emergenza.html`,'2026-11-19'],[`${SITE}/strumenti/potere-acquisto.html`,'2026-11-19'],[`${SITE}/glossario.html`,'2026-11-19'],[`${SITE}/chi-sono.html`,'2026-11-19']];
 fs.writeFileSync('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(([u,d])=>`  <url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join('\n') + `\n</urlset>\n`);
 
@@ -43,5 +44,5 @@ fs.writeFileSync('feed.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<rss versi
 // llms.txt
 fs.writeFileSync('llms.txt', `# Sagoma Finanziaria\n\n> Sito di educazione finanziaria generica in italiano, di Matteo Cariola. Contenuti informativi: non costituiscono consulenza, raccomandazione di investimento né sollecitazione all'acquisto di prodotti.\n\n## Guide\n\n` +
   guides.map(g=>`- [${g.title}](${SITE}/guide/${g.slug}.html): ${g.description}`).join('\n') +
-  `\n\n## Strumenti\n\n- [Mini-test: la tua liquidità lavora o dorme?](${SITE}/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.\n\n## Note\n\n- Autore: Matteo Cariola, consulente finanziario abilitato all'offerta fuori sede; Sagoma Finanziaria è un'attività di educazione finanziaria.\n- Feed: ${SITE}/feed.xml\n`);
+  `\n\n## Strumenti\n\n- [Mini-test: la tua liquidità lavora o dorme?](${SITE}/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.\n- [Calcolatore di versamenti periodici](${SITE}/strumenti/versamenti-periodici.html): somma degli importi versati, senza rendimenti.\n- [Calcolatore del fondo di emergenza](${SITE}/strumenti/fondo-emergenza.html): mesi di spese essenziali coperti dalla liquidità.\n- [Calcolatore del potere d'acquisto](${SITE}/strumenti/potere-acquisto.html): effetto illustrativo dell'inflazione con ipotesi dell'utente.\n- [Glossario](${SITE}/glossario.html): 20 termini di educazione finanziaria spiegati in modo semplice.\n- [Chi sono](${SITE}/chi-sono.html)\n\n## Note\n\n- Autore: Matteo Cariola, consulente finanziario abilitato all'offerta fuori sede; Sagoma Finanziaria è un'attività di educazione finanziaria.\n- Feed: ${SITE}/feed.xml\n`);
 console.log('ok', guides.length);

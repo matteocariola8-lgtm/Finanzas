@@ -22,6 +22,11 @@
 ## Strumenti
 
 - [Mini-test: la tua liquidità lavora o dorme?](https://sagomafinanziaria.it/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.
+- [Calcolatore di versamenti periodici](https://sagomafinanziaria.it/strumenti/versamenti-periodici.html): somma degli importi versati, senza rendimenti.
+- [Calcolatore del fondo di emergenza](https://sagomafinanziaria.it/strumenti/fondo-emergenza.html): mesi di spese essenziali coperti dalla liquidità.
+- [Calcolatore del potere d'acquisto](https://sagomafinanziaria.it/strumenti/potere-acquisto.html): effetto illustrativo dell'inflazione con ipotesi dell'utente.
+- [Glossario](https://sagomafinanziaria.it/glossario.html): 20 termini di educazione finanziaria spiegati in modo semplice.
+- [Chi sono](https://sagomafinanziaria.it/chi-sono.html)
 
 ## Note
 
