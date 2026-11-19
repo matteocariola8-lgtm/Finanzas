@@ -109,3 +109,4 @@ input[type=number],select{width:100%;padding:12px 14px;border:1px solid var(--li
 .term:target{background:var(--gold-soft);border-radius:10px;padding-left:12px;padding-right:12px}
 @media (max-width:640px){header.top .wrap{flex-wrap:wrap}nav{display:flex;flex-wrap:wrap;gap:4px 14px}nav a{margin-left:0;font-size:14px}}
 .hero{padding-bottom:8px}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:clip}.lenis.lenis-smooth iframe{pointer-events:none}
