@@ -43,5 +43,5 @@ fs.writeFileSync('feed.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<rss versi
 // llms.txt
 fs.writeFileSync('llms.txt', `# Sagoma Finanziaria\n\n> Sito di educazione finanziaria generica in italiano, di Matteo Cariola. Contenuti informativi: non costituiscono consulenza, raccomandazione di investimento né sollecitazione all'acquisto di prodotti.\n\n## Guide\n\n` +
   guides.map(g=>`- [${g.title}](${SITE}/guide/${g.slug}.html): ${g.description}`).join('\n') +
-  `\n\n## Strumenti\n\n- [Mini-test: la tua liquidità lavora o dorme?](${SITE}/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.\n\n## Note\n\n- Autore: Matteo Cariola, che opera anche come consulente finanziario ING Italia (agente con contratto); Sagoma Finanziaria è un'attività di educazione finanziaria separata.\n- Feed: ${SITE}/feed.xml\n`);
+  `\n\n## Strumenti\n\n- [Mini-test: la tua liquidità lavora o dorme?](${SITE}/test-liquidita.html): test gratuito di 2 minuti, risultato generico, nessun dato richiesto.\n\n## Note\n\n- Autore: Matteo Cariola, consulente finanziario abilitato all'offerta fuori sede; Sagoma Finanziaria è un'attività di educazione finanziaria.\n- Feed: ${SITE}/feed.xml\n`);
 console.log('ok', guides.length);
